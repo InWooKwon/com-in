@@ -1,0 +1,40 @@
+{
+    "coverage" :
+    [
+        {
+            "idx" : 1,
+            "insuranceIdx" : 100,
+            "code" : 1,
+            "amount" : 100000,
+            "content" : "충치 시 30000보장"
+        },
+        {
+            "idx" : 2,
+            "insuranceIdx" : 200,
+            "code" : 2,
+            "amount" : 30000,
+            "content" : "핸드폰 분실 시 30000원 보장"
+        },
+        {
+            "idx" : 3,
+            "insuranceIdx" : 200,
+            "code" : 3,
+            "amount" : 50000,
+            "content" : "사고 시 50000 보장"
+        },
+        {
+            "idx" : 4,
+            "insuranceIdx" : 300,
+            "code" : 4,
+            "amount" : 1000000,
+            "content" : "뇌종양 시 1000000원 보장"
+        },
+        {
+            "idx" : 5,
+            "insuranceIdx" : 400,
+            "code" : 4,
+            "amount" : 2000000,
+            "content" : "뇌종양 시 2000000원 보장"
+        }
+    ]
+}
