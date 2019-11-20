@@ -2,7 +2,9 @@ package com.example.comin;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.icu.util.IslamicCalendar;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
@@ -20,10 +23,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+
 public class MainActivity extends AppCompatActivity {
 
     static final float dp =  Resources.getSystem().getDisplayMetrics().density;
     private LinearLayout linear;
+    ArrayList<Insurance> insuranceList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -40,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         String json = loadJSONFromAsset();
-        ArrayList<Insurance> insuranceList = new ArrayList<>();
 
+        /*
         try {
             JSONObject jsonObject = new JSONObject(json);
             JSONArray insurancesArray = jsonObject.getJSONArray("insurances");
@@ -54,30 +67,90 @@ public class MainActivity extends AppCompatActivity {
 
                 insurance.setIdx(insuranceObject.getInt("idx"));
                 insurance.setProductName((insuranceObject.getString("productName")));
-                insurance.setCompany(insuranceObject.getInt("company"));
-                insurance.setType(insuranceObject.getInt("type"));
+                insurance.setCompany(insuranceObject.getString("company"));
+                insurance.setProductType(insuranceObject.getString("productType"));
                 insurance.setMinAge(insuranceObject.getInt("minAge"));
                 insurance.setMaxAge(insuranceObject.getInt("maxAge"));
                 insurance.setPrice(insuranceObject.getInt("price"));
-                insurance.setScore(insuranceObject.getInt("score"));
+                insurance.setScore(insuranceObject.getDouble("score"));
 
                 insuranceList.add(insurance);
             }
         }
         catch (JSONException e){
             e.printStackTrace();
-        }
-
-        for (Insurance ins : insuranceList)
+        }*/
+        getIsuraceList();
+        /*for (Insurance ins : insuranceList)
         {
+            Log.d("test", ins.getCompany());
             addInsuranceInfoView(ins);
-        }
-
-
-
-
-
+        }*/
     }
+
+    public void getIsuraceList(){
+        //전송
+        //final ArrayList<Insurance> insuranceList = new ArrayList<>();
+        final RequestQueue requestQueue = Volley.newRequestQueue(this);
+        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, "http://192.168.6.4:9090/insurances",null, new Response.Listener<JSONObject>() {
+
+            //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    //받은 json형식의 응답을 받아
+                    JSONObject jsonResponse = new JSONObject(response.toString());
+                    Log.d("test234",response.toString());
+                    Log.d("test345",jsonResponse.toString());
+
+                    //key값에 따라 value값을 쪼개 받아옵니다.
+                    JSONArray insurancesArray = jsonResponse.getJSONArray("insurances");
+
+
+                    for (int i = 0; i<insurancesArray.length(); i++)
+                    {
+                        JSONObject insuranceObject = insurancesArray.getJSONObject(i);
+
+                        Insurance insurance = new Insurance();
+
+                        insurance.setIdx(insuranceObject.getInt("idx"));
+                        Log.d("testidx",insuranceObject.getString("productName"));
+                        insurance.setProductName((insuranceObject.getString("productName")));
+                        insurance.setCompany(insuranceObject.getString("company"));
+                        insurance.setProductType(insuranceObject.getString("productType"));
+                        insurance.setMinAge(insuranceObject.getInt("minAge"));
+                        insurance.setMaxAge(insuranceObject.getInt("maxAge"));
+                        insurance.setPrice(insuranceObject.getInt("price"));
+                        insurance.setScore(insuranceObject.getDouble("score"));
+
+                        insuranceList.add(insurance);
+                        Log.d("testcon",Integer.toString(insuranceList.size()));
+                    }
+                    for (Insurance ins : insuranceList)
+                    {
+                        Log.d("test", ins.getCompany());
+                        addInsuranceInfoView(ins);
+                    }
+
+
+                } catch (Exception e) {
+                    Log.d("test", "error");
+                    e.printStackTrace();
+                }
+            }
+            //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다.
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("test",error.toString());
+                error.printStackTrace();
+            }
+        });
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(jsonObjectRequest);
+    }
+
+
     public  int pxToDp(int px)
     {
         return  (int)(px*dp);
