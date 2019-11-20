@@ -25,7 +25,7 @@ connection.connect();
 
 //login POST
 app.post('/login', function(req,res, next){
-    var approve ={'success':'NO', 'userID':'', 'userPassword':''};
+    var approve ={'success': false, 'userID':'', 'userPassword':''};
 
 	var body = req.body;
 	var id = body.userID;
@@ -38,32 +38,34 @@ app.post('/login', function(req,res, next){
     
 	var query = connection.query(command, function(err,rows,fields){
 		if(err){
-            approve.success='NO';
+            approve.success=false;
             throw err;
         }
         else{
             
             if(rows.length > 0){
+                console.log("db userPassword"+rows[0].userPassword);
                 if(rows[0].userPassword == password){ //비밀번호 확인
-                    approve.success='YES';
+                    approve.success=true;
                     approve.userID = id;
                     approve.userPassword = password;
                     console.log(approve.userID);
                     console.log("login success");
                 }
                 else{
-                    approve.success='NO';
+                    approve.success=false;
                     console.log("login fail, not match password");
                 }
                 
             }
             else{ //id 존재 X
-                approve.success='NO';
+                approve.success=false;
                 console.log("login fail, there is no id");
             }
     
         console.log("Data inserted");
         res.send(approve);
+        approve.success=false;
         }
 
     })

@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
 
     static final String PREF_USER_ID = "username";
     static final String PREF_USER_PASSWORD = "password";
+    static boolean is_autoLogin=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +44,40 @@ public class LoginActivity extends AppCompatActivity {
 
         final Button loginButton = (Button) findViewById(R.id.loginButton);
         final TextView registerButton = (TextView) findViewById(R.id.registerButton);
+        final CheckBox isAutoLogin = (CheckBox) findViewById(R.id.isAutoLogin);
 
         /*
         if (Build.VERSION.SDK_INT >= 23) {
             CheckPermission.checkPermissions();
         }
+
 */
+        if(getUserID(LoginActivity.this).length()==0 || getUserPassword(LoginActivity.this).length()==0){
+
+        }
+        else{
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra("userID", getUserID(this).toString());
+            startActivity(intent);
+            this.finish();
+        }
+
+
+        isAutoLogin.setOnClickListener(new CheckBox.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (((CheckBox)v).isChecked()) {
+                    // TODO : CheckBox is checked.
+                    setAutoLogin(LoginActivity.this,true);
+                } else {
+                    // TODO : CheckBox is unchecked.
+                    setAutoLogin(LoginActivity.this,false);
+                }
+
+
+            }
+        }) ;
 
 
         //register로 화면 전환
@@ -64,9 +94,15 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                final String userID = idText.getText().toString();
-                final String userPassword = passwordText.getText().toString();
-                login(userID, userPassword);
+                String userID = idText.getText().toString();
+                String userPassword = passwordText.getText().toString();
+                if(getAutoLogin(LoginActivity.this)) {
+                    setUserID(LoginActivity.this,userID);
+                    setUserPassword(LoginActivity.this,userPassword);
+                    login(userID, userPassword);
+                }
+                else
+                    login(userID,userPassword);
 
             }
 
@@ -92,6 +128,10 @@ public class LoginActivity extends AppCompatActivity {
         editor.commit();
     }
 
+    public static void setAutoLogin(Context ctx, boolean isAutoLogin){
+        is_autoLogin=isAutoLogin;
+    }
+
     // 저장된 정보 가져오기
     public static String getUserID(Context ctx) {
         return getSharedPreferences(ctx).getString(PREF_USER_ID, "");
@@ -99,6 +139,16 @@ public class LoginActivity extends AppCompatActivity {
 
     public static String getUserPassword(Context ctx) {
         return getSharedPreferences(ctx).getString(PREF_USER_PASSWORD, "");
+    }
+
+    public static boolean getAutoLogin(Context ctx){
+        return is_autoLogin;
+    }
+    // 로그아웃
+    public static void clearUserName(Context ctx) {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.clear();
+        editor.commit();
     }
 
     public void login(String userID, String userPassword){
@@ -123,9 +173,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
                         //key값에 따라 value값을 쪼개 받아옵니다.
-                        String result = jsonResponse.getString("success");
+                        Boolean result = jsonResponse.getBoolean("success");
 
-                        if (result.equals("YES")) {
+                        if (result) {
                             String userID = jsonResponse.getString("userID");
                             String userPassword=jsonResponse.getString("userPassword");
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -133,10 +183,8 @@ public class LoginActivity extends AppCompatActivity {
                             intent.putExtra("userID", userID);
                             intent.putExtra("userPassword", userPassword);
 
-                            finish();
-
-
                             LoginActivity.this.startActivity(intent);
+                            finish();
                             Log.d("test", "login success");
                         } else {
                             AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);

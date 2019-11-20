@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -18,27 +19,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        //EditText idText = (EditText) findViewById(R.id.idText);
-        //EditText passwordText = (EditText) findViewById(R.id.passwordText);
         TextView welcomeMessage = (TextView) findViewById(R.id.welcomeMessage);
+        Button logoutButton = (Button) findViewById(R.id.logoutButton);
 
-       // Button managementButton = (Button) findViewById(R.id.managementButton);
 
         Intent intent = getIntent();
         String userID = intent.getStringExtra("userID");
-       // String userpassword = intent.getStringExtra("userPassword");
 
-        String message = userID + "님";
-        Log.d("test","wecome : "+message);
-        //idText.setText(userID);
-        //passwordText.setText(userpassword);
+
+        final String message = userID + "님";
+        Log.d("test","welcome : "+message);
+
         welcomeMessage.setText(message);
 
-        /*
-        if(!userID.equals("admin")){
-            managementButton.setVisibility(View.GONE);
-        }
-*/
+        logoutButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginActivity.clearUserName(MainActivity.this);
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                finish();
+                startActivity(intent);
+            }
+        });
+
     }
 }
