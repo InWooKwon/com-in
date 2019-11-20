@@ -12,7 +12,7 @@ var connection=mysql.createConnection({
 });
 connection.connect();
 
-var app=express();
+var app=express(); 
 
 app.use(bodyparser.urlencoded({extended:false}));
 app.use(bodyparser.json());
@@ -20,7 +20,8 @@ app.use(bodyparser.json());
 app.get('/insurances',function(req,res){
     var qry="SELECT * FROM INSURANCE";
     connection.query(qry,function(err,result,fields){
-        res.json(result);
+        var rst={"insurances":result};
+        res.json(rst);
     });
 }); // 모든 보험상품 조회
 app.get('/insurances/:coverage',function(req,res){

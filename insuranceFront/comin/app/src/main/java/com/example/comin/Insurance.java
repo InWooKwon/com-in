@@ -1,14 +1,14 @@
 package com.example.comin;
 
-public class Insurance{
-    private  int idx;
+public class Insurance {
+    private int idx;
     private String productName;
-    private  int company;
-    private  int type;
-    private  int minAge;
-    private  int maxAge;
-    private  int price;
-    private  int score;
+    private String company;
+    private String productType;
+    private int minAge;
+    private int maxAge;
+    private int price;
+    private double score;
 
     public int getIdx() {
         return idx;
@@ -26,22 +26,20 @@ public class Insurance{
         this.productName = productName;
     }
 
-
-
-    public int getCompany() {
+    public String getCompany() {
         return company;
     }
 
-    public void setCompany(int company) {
+    public void setCompany(String company) {
         this.company = company;
     }
 
-    public int getType() {
-        return type;
+    public String getProductType() {
+        return productType;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setProductType(String productType) {
+        this.productType = productType;
     }
 
     public int getMinAge() {
@@ -68,11 +66,14 @@ public class Insurance{
         this.price = price;
     }
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(double score) {
         this.score = score;
     }
+
+
+
 }
