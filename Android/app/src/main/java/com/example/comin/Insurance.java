@@ -1,6 +1,42 @@
 package com.example.comin;
 
-public class Insurance {
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+class Coverage implements Serializable{
+    String type;
+    int amount;
+    String content;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+
+}
+public class Insurance implements Serializable {
+
     private int idx;
     private String productName;
     private String company;
@@ -9,6 +45,15 @@ public class Insurance {
     private int maxAge;
     private int price;
     private double score;
+    private ArrayList<Coverage> coverageList;
+
+    public ArrayList<Coverage> getCoverageList() {
+        return coverageList;
+    }
+
+    public void setCoverageList(ArrayList<Coverage> coverageList) {
+        this.coverageList = coverageList;
+    }
 
     public int getIdx() {
         return idx;

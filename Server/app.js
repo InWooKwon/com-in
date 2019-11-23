@@ -10,7 +10,8 @@ var connection = mysql.createConnection({
     port: 3306,
     user: "root",
     password: "1111",
-    database: "comindb"
+    database: "comindb",
+    multipleStatements: true
 });
 connection.connect();
 
@@ -21,9 +22,9 @@ app.use(bodyParser.json());
 
 // 모든 보험상품 조회
 app.get('/insurances', function (req, res) {
-    var qry = "SELECT * FROM INSURANCE";
+    var qry = "SELECT * FROM INSURANCE;" + "SELECT * FROM COVERAGE;";
     connection.query(qry, function (err, result, fields) {
-        var rst = { "insurances": result };
+        var rst = {"insurances" : result[0], "coverages" : result[1]};
         res.json(rst);
     });
 });
