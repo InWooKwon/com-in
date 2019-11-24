@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
 
         }
         else{
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, TotalInsuranceCheckActivity.class);
             intent.putExtra("userID", getUserID(this).toString());
             startActivity(intent);
             this.finish();
@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
-                LoginActivity.this.startActivity(registerIntent);
+                startActivity(registerIntent);
             }
         });
 
@@ -179,12 +179,12 @@ public class LoginActivity extends AppCompatActivity {
                         if (result) {
                             String userID = jsonResponse.getString("userID");
                             String userPassword=jsonResponse.getString("userPassword");
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, TotalInsuranceCheckActivity.class);
 
                             intent.putExtra("userID", userID);
                             intent.putExtra("userPassword", userPassword);
 
-                            LoginActivity.this.startActivity(intent);
+                            startActivity(intent);
                             finish();
                             Log.d("test", "login success");
                         } else {

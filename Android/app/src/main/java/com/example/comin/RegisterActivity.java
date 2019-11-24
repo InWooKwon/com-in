@@ -88,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
                                             .show();
                                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                     finish();
-                                    RegisterActivity.this.startActivity(intent);
+                                    startActivity(intent);
                                 }
                                 else{
                                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
