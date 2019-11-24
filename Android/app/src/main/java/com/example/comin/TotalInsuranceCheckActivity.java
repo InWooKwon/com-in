@@ -60,6 +60,29 @@ public class TotalInsuranceCheckActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_total_insurance_check);
+
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_menu);
+
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.navi1:
+                        break;
+                    case R.id.navi2:
+                        Intent a = new Intent(TotalInsuranceCheckActivity.this , CommunityActivity.class);
+                        startActivity(a);
+                        overridePendingTransition(0, 0);
+                        finish();
+                    case R.id.navi3:
+                        break;
+                }
+                return false;
+            }
+        });
+
+
+
         linear = findViewById(R.id.linearLayout);
         getIsuraceList();
     }

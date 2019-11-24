@@ -15,13 +15,14 @@
         <activity android:name=".FreeBoardActivity"></activity>
         <activity android:name=".QnABoardActivity" />
         <activity android:name=".ReviewBoardActivity" />
-        <activity android:name=".TotalInsuranceCheckActivity" />
-        <activity android:name=".CommunityActivity">
+        <activity android:name=".TotalInsuranceCheckActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".CommunityActivity">
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity">

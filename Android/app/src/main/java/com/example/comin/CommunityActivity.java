@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -19,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,6 +41,28 @@ public class CommunityActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_community);
+
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_menu);
+        navigation.setSelectedItemId(R.id.navi2);
+
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.navi1:
+                        Intent a = new Intent(CommunityActivity.this , TotalInsuranceCheckActivity.class);
+                        startActivity(a);
+                        overridePendingTransition(0, 0);
+                        finish();
+                    case R.id.navi2:
+                        break;
+                    case R.id.navi3:
+                        break;
+                }
+                return false;
+            }
+        });
+
         getBoardList();
     }
 
