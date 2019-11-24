@@ -2,17 +2,17 @@ CREATE TABLE `replyInfo` (
   `idx` int(11) NOT NULL AUTO_INCREMENT,
   `boardIdx` int(11) NOT NULL,
   `authorIdx` int(11) NOT NULL,
-  `date` varchar(30) NOT NULL,
+  `date` datetime NOT NULL,
   `content` varchar(100) NOT NULL,
   PRIMARY KEY (`idx`)
 );
+
 CREATE TABLE `boardUp` (
   `idx` int(11) NOT NULL AUTO_INCREMENT,
   `boardIdx` int(11) NOT NULL,
   `userIdx` int(11) NOT NULL,
   PRIMARY KEY (`idx`)
 );
-
 CREATE TABLE `boardInfo` (
   `idx` int(11) NOT NULL AUTO_INCREMENT,
   `type` int(11) NOT NULL COMMENT '게시글 type',
@@ -29,3 +29,4 @@ CREATE TABLE `boardInfo` (
   `tag5` int(11) DEFAULT NULL,
   PRIMARY KEY (`idx`)
 );
+
