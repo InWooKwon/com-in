@@ -19,7 +19,7 @@ CREATE TABLE `boardInfo` (
   `title` varchar(45) NOT NULL,
   `score` int(11) DEFAULT '5' COMMENT '보험 평점',
   `body` varchar(800) NOT NULL,
-  `date` varchar(20) NOT NULL,
+  `date` datetime NOT NULL,
   `author` varchar(45) NOT NULL,
   `up` int(11) DEFAULT NULL COMMENT '추천수',
   `tag1` int(11) DEFAULT NULL COMMENT '어떤 보험에 대한 게시글인지',
