@@ -12,14 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".FreeBoardActivity"></activity>
+        <activity android:name=".QnABoardActivity" />
+        <activity android:name=".ReviewBoardActivity" />
         <activity android:name=".TotalInsuranceCheckActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".CommunityActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".LoginActivity">
         </activity>
         <activity android:name=".InfoDetailActivity" />
         <activity android:name=".MainActivity" />

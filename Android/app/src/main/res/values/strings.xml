@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">comin</string>
-    <string name="URL">http://192.168.219.102:9090/</string>
+    <string name="URL">http://192.168.0.154:9090/</string>
 </resources>

@@ -1,18 +1,10 @@
 var express = require('express');
 var http = require('http');
 var router = express.Router();
-var mysql = require('mysql');
 var app = express();
 var bodyParser = require('body-parser');
 
-var connection = mysql.createConnection({
-    host: "127.0.0.1",
-    port: 3306,
-    user: "root",
-    password: "alzlwl258",
-    database: "comindb",
-    multipleStatements: true
-});
+var connection = require("./DBconfig.js").connection;
 connection.connect();
 
 
@@ -151,7 +143,7 @@ app.post('/register', function (req, res) {
 
         })
     }
-})
+});
 
 module.exports = router;
 http.createServer(app).listen(9090, function () {
