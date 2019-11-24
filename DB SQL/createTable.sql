@@ -1,17 +1,16 @@
 #USER TABLE CREATE
-CREATE TABLE USER (
-  idx INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  id VARCHAR(32) NOT NULL,
-  pw VARCHAR(32) NOT NULL,
-  realName VARCHAR(32) NOT NULL,
-  nickName VARCHAR(32) NOT NULL,
-  birth INT(11) NOT NULL,
-  email VARCHAR(32) NOT NULL,
-  phoneNumber INT(32) NOT NULL,
-  authKey INT(32) NOT NULL,
-  PRIMARY KEY (idx)
+CREATE TABLE `USER` (
+  `idx` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` varchar(32) NOT NULL,
+  `pw` varchar(32) NOT NULL,
+  `realName` varchar(32) NOT NULL,
+  `nickName` varchar(32) NOT NULL,
+  `birth` datetime NOT NULL,
+  `email` varchar(32) NOT NULL,
+  `phoneNumber` int(32) NOT NULL,
+  `authKey` int(32) NOT NULL,
+  PRIMARY KEY (`idx`)
 );
-insuranceinsurance
 #INSURANCE TABLE CREATE
 CREATE TABLE INSURANCE (
   idx INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,

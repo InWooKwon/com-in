@@ -4,6 +4,16 @@ public class User {
     String dup_id_check;
     String dup_nick_check;
 
+    String userBirth;
+
+    public String getUserBirth() {
+        return userBirth;
+    }
+
+    public void setUserBirth(String userBirth) {
+        this.userBirth = userBirth;
+    }
+
     public String getDup_nick_check() {
         return dup_nick_check;
     }

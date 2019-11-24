@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -31,13 +33,23 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText passwordText = (EditText) findViewById(R.id.passwordText);
         final EditText nameText = (EditText) findViewById(R.id.nameText);
         final EditText nickText = (EditText) findViewById(R.id.nickText);
-        final EditText birthText = (EditText) findViewById(R.id.birthText);
+        final DatePicker userBirth = (DatePicker)findViewById(R.id.userBirth);
         final EditText phoneText = (EditText) findViewById(R.id.phoneText);
         final EditText emailText = (EditText) findViewById(R.id.emailText);
+        final TextView birthText = (TextView) findViewById(R.id.birthText);
 
         Button registerButton = (Button) findViewById(R.id.registerButton);
         Button dup_idButton = (Button) findViewById(R.id.dup_idButton);
         Button dup_nickButton = (Button) findViewById(R.id.dup_nickButton);
+
+        userBirth.init(2019, 01, 01, new DatePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                String date = year + "-" + monthOfYear + "-" + dayOfMonth;
+                user.setUserBirth(date);
+
+            }
+        });
 
 
         dup_idButton.setOnClickListener(new Button.OnClickListener() { //id 중복확
@@ -188,7 +200,7 @@ public class RegisterActivity extends AppCompatActivity {
                     String userPassword = passwordText.getText().toString();
                     String userName = nameText.getText().toString();
                     String userNick = nickText.getText().toString();
-                    String userBirth = birthText.getText().toString();
+                    String userBirth = user.getUserBirth();
                     String userPhone = phoneText.getText().toString();
                     String userEmail = emailText.getText().toString();
                     String userAuth = "12345";
