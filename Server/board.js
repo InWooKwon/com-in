@@ -131,7 +131,7 @@ app.post('/board/down',function(req,res){
             }
             else{
                 if(rows.length>0){
-                //추천 가능일 경우 추천 테이블에 등록
+                //추천 했을 경우 삭제
                 var qry1="DELETE FROM boardUp WHERE idx = "+rows[0].idx;
                 connection.query(qry1,function(err,rows,fields){
                     var rst={"success":false, "dup":false};
@@ -231,7 +231,7 @@ app.post('/board/reply',function(req,res){
 app.delete('/board/reply/:idx',function(req,res){
     var index = req.params.idx;
     
-    var qry = "DELECT FROM replyInfo WHERE idx = ?";
+    var qry = "DELETE FROM replyInfo WHERE idx = ?";
     connection.query(qry,index,function(err,rows,fields){
         var rst = {"success":false};
         if(err){
