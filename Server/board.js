@@ -167,26 +167,28 @@ app.post('/board/down',function(req,res){
 
 //게시글 삭제
 app.delete('/board/:idx',function(req,res){
-    var body = req.body;
-   
-    var qry = "DELECT FROM boardInfo WHERE idx = ?";
+    var qry = "DELETE FROM boardInfo WHERE idx = ?";
     var qry2 = "SELECT * FROM boardInfo WHERE idx =?";
-    connection.query(qry2,req.param.idx,function(err,rows,fields){
-        if(err){
+    console.log(req.params.idx);
+    connection.query(qry2,req.params.idx,function(err,rows,fields){
+        var rst = {"success":false};
+        if(err){     
+            rst.success=false;
             console.log("there is no board in db");
         }
         else{
-            connection.query(qry,req.param.idx,function(err,rows_delete,fields){
-                var rst = {"success":false};
+            rst.success=true;
+            connection.query(qry,req.params.idx,function(err,rows_delete,fields){
+                
                 if(err){
                     console.log("error: delete board");
                 }
                 else{
-                    rst.success=updatescore(rows[0].tag1);
-                    res.json(rst);
+                    updatescore(rows[0].tag1);
                 }
             })
         }
+        res.json(rst);
 
     })
    
@@ -194,9 +196,8 @@ app.delete('/board/:idx',function(req,res){
 
 //해당 개시글의 답글 불러오기
 app.get('/board/reply/:idx',function(req,res){
-    var body = req.body;
     var qry="SELECT * FROM replyInfo WHERE boardIdx =?";
-    connection.query(qry,req.param.idx,function(err,rows,fields){
+    connection.query(qry,req.params.idx,function(err,rows,fields){
         if(err)
             console.log("error: getting in reply");
         else{
@@ -228,11 +229,10 @@ app.post('/board/reply',function(req,res){
 
 //답글 삭제
 app.delete('/board/reply/:idx',function(req,res){
-    var body = req.body;
-    var index = body.index;
+    var index = req.params.idx;
     
     var qry = "DELECT FROM replyInfo WHERE idx = ?";
-    connection.query(qry,req.param.index,function(err,rows,fields){
+    connection.query(qry,index,function(err,rows,fields){
         var rst = {"success":false};
         if(err){
             console.log("error: delete board");
@@ -247,11 +247,11 @@ app.delete('/board/reply/:idx',function(req,res){
 app.put('/board/:idx',function(req,res){
 
     var body= req.body;
-    var index = body.index;
+    var index = req.params.idx;
     var content = body.body;
     var qry = 'UPDATE boardInfo SET body = \''+content+'\' WHERE idx = ?';
     
-    connection.query(qry,req.param.idx,function(err,rows){
+    connection.query(qry,index,function(err,rows){
         var rst = {"success":false};
         if(error){
             console.log("error : error modify")
