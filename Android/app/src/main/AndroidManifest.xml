@@ -12,22 +12,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".FreeBoardActivity"></activity>
-        <activity android:name=".QnABoardActivity" />
-        <activity android:name=".ReviewBoardActivity" />
-        <activity android:name=".TotalInsuranceCheckActivity">
-        </activity>
-        <activity android:name=".CommunityActivity">
-        </activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".setting.SettingActivity"></activity>
+        <activity android:name=".community.FreeBoardActivity" />
+        <activity android:name=".community.QnABoardActivity" />
+        <activity android:name=".community.ReviewBoardActivity" />
+        <activity android:name=".insure.TotalInsuranceCheckActivity"></activity>
+        <activity android:name=".community.CommunityActivity"></activity>
+        <activity android:name=".login.RegisterActivity" />
+        <activity android:name=".login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".InfoDetailActivity" />
+        <activity android:name=".insure.InfoDetailActivity" />
         <activity android:name=".MainActivity" />
     </application>
 

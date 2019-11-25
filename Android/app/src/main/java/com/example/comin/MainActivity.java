@@ -1,20 +1,13 @@
 package com.example.comin;
 
 import android.content.Intent;
-import android.content.res.Resources;
-import android.icu.util.IslamicCalendar;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
+import com.example.comin.insure.TotalInsuranceCheckActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 

@@ -1,4 +1,4 @@
-package com.example.comin;
+package com.example.comin.community;
 import java.util.Date;
 
 public class Post {

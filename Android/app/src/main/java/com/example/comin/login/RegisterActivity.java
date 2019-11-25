@@ -1,4 +1,4 @@
-package com.example.comin;
+package com.example.comin.login;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.comin.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +38,8 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText phoneText = (EditText) findViewById(R.id.phoneText);
         final EditText emailText = (EditText) findViewById(R.id.emailText);
         final TextView birthText = (TextView) findViewById(R.id.birthText);
+        final TextView registerText = (TextView) findViewById(R.id.registerText);
+        final TextView userText = (TextView) findViewById(R.id.userText);
 
         Button registerButton = (Button) findViewById(R.id.registerButton);
         Button dup_idButton = (Button) findViewById(R.id.dup_idButton);

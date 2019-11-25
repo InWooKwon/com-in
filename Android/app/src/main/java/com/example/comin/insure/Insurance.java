@@ -1,4 +1,4 @@
-package com.example.comin;
+package com.example.comin.insure;
 
 
 import java.io.Serializable;

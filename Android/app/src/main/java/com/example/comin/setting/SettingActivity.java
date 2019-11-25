@@ -1,14 +1,16 @@
-package com.example.comin;
+package com.example.comin.setting;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class QnABoardActivity extends AppCompatActivity {
+import com.example.comin.R;
+
+public class SettingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qna_board);
+        setContentView(R.layout.activity_setting);
     }
 }

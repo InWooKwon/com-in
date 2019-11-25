@@ -1,8 +1,10 @@
-package com.example.comin;
+package com.example.comin.community;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.comin.R;
 
 public class FreeBoardActivity extends AppCompatActivity {
 

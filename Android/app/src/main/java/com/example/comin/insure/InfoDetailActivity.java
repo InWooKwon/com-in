@@ -1,14 +1,16 @@
-package com.example.comin;
+package com.example.comin.insure;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.comin.insure.Coverage;
+import com.example.comin.R;
 
 public class InfoDetailActivity extends AppCompatActivity {
 
