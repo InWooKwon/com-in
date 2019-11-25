@@ -72,7 +72,7 @@ app.post('/board/up',function(req,res){
     var index = body.index;
     var user = body.user;
     var up = body.up; //현재 게시글의 추천 수
-    var rst={"success":false, "dup":true, "up":up};
+    var rst={"success":false, "up":up};
 
     //이미 추천했는지 확인
     var qry2 = "SELECT * FROM boardUp WHERE boardIdx = \'"+index+"\' AND userIdx= \'"+user+"\'";
@@ -85,26 +85,31 @@ app.post('/board/up',function(req,res){
                 if(rows.length>0) //이미존재
                 {
                     console.log("already up");
-                    rst.dup=true;
+                    rst.success=false;
+                    res.json(rst);
                 }
                 else{ //올리기 가능
                     //추천 가능일 경우 추천 테이블에 등록
                     var qry1="INSERT INTO boardUp (boardIdx, userIdx) values (\'"+index+"\',\'"+user+"\')"
                     connection.query(qry1,function(err,rows,fields){
+                        
                         if(err){
                             console.log("error: recommend in reviewboard");
                             rst.success=false;
+                            res.json(rst);
                         }
                         else{
-                            rst.success=true;
                             var qry3 = "UPDATE boardInfo SET up = up+1 WHERE idx= "+index;
                             connection.query(qry3,function(err,rows,fields){
+                                var rst={"success":false, "up":up};
                                 if(err){
+                                    rst.success=false;
                                     console.log("board table(추천 수) update error");
                                 }
                                 else{
                                     console.log("update");
                                     rst.up=up+1;
+                                    rst.success=true;
                                     res.json(rst); //success=true 값 전송되면 추천 완료
                                 }
                             });       
