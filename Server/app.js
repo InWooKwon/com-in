@@ -32,13 +32,11 @@ app.get('/insurances/:coverage', function (req, res) {
 
 //login POST
 app.post('/login', function (req, res, next) {
-    var approve = { 'success': false, 'userID': '', 'userPassword': '' };
+    var approve = { 'success': false, 'user':""};
 
     var body = req.body;
-    console.log(body);
     var id = body.userID;
     var password = body.userPassword;
-    console.log(id + password);
 
 
     var command = 'select * from user where id=\'' + id + '\'';
@@ -54,8 +52,7 @@ app.post('/login', function (req, res, next) {
                 console.log("db userPassword" + result[0].userPassword);
                 if (result[0].pw == password) { //비밀번호 확인
                     approve.success = true;
-                    approve.userID = id;
-                    approve.userPassword = password;
+                    approve.user=rows[0];
                     console.log(approve.userID);
                     console.log("login success");
                 }
