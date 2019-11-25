@@ -2,8 +2,11 @@ package com.example.comin.login;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +28,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
-    User user = new User();
+    public User user = new User();
+    static final String PREF_USER_ID = "username";
+    static final String PREF_USER_PASSWORD = "password";
+    static boolean is_autoLogin=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,12 +51,12 @@ public class LoginActivity extends AppCompatActivity {
         }
         */
 
-        if(user.getUserID(LoginActivity.this).length()==0 || user.getUserPassword(LoginActivity.this).length()==0){
+        if(getUserID(LoginActivity.this).length()==0 || getUserPassword(LoginActivity.this).length()==0){
 
         }
         else{
             Intent intent = new Intent(LoginActivity.this, TotalInsuranceCheckActivity.class);
-            intent.putExtra("userID", user.getUserID(this).toString());
+            intent.putExtra("userID", getUserID(this).toString());
             startActivity(intent);
             this.finish();
         }
@@ -61,10 +68,10 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (((CheckBox)v).isChecked()) {
                     // TODO : CheckBox is checked.
-                    user.setAutoLogin(LoginActivity.this,true);
+                    setAutoLogin(LoginActivity.this,true);
                 } else {
                     // TODO : CheckBox is unchecked.
-                    user.setAutoLogin(LoginActivity.this,false);
+                    setAutoLogin(LoginActivity.this,false);
                 }
             }
         }) ;
@@ -86,9 +93,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 String userID = idText.getText().toString();
                 String userPassword = passwordText.getText().toString();
-                if(user.getAutoLogin(LoginActivity.this)) {
-                    user.setUserID(LoginActivity.this,userID);
-                    user.setUserPassword(LoginActivity.this,userPassword);
+                if(getAutoLogin(LoginActivity.this)) {
+                    setUserID(LoginActivity.this,userID);
+                    setUserPassword(LoginActivity.this,userPassword);
                     login(userID, userPassword);
                 }
                 else
@@ -164,4 +171,47 @@ public class LoginActivity extends AppCompatActivity {
             Log.d("test", "json object error");
         }
     }
+//자동로그인
+
+    static SharedPreferences getSharedPreferences(Context ctx) {
+        return PreferenceManager.getDefaultSharedPreferences(ctx);
+    }
+
+    // 계정 정보 저장
+    public static void setUserID(Context ctx, String userID) {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString(PREF_USER_ID, userID);
+        editor.commit();
+    }
+
+    public static void setUserPassword(Context ctx, String userPassword) {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString(PREF_USER_PASSWORD, userPassword);
+        editor.commit();
+    }
+
+    public static void setAutoLogin(Context ctx, boolean isAutoLogin){
+        is_autoLogin=isAutoLogin;
+    }
+
+    // 저장된 정보 가져오기
+    public static String getUserID(Context ctx) {
+        return getSharedPreferences(ctx).getString(PREF_USER_ID, "");
+    }
+
+    public static String getUserPassword(Context ctx) {
+        return getSharedPreferences(ctx).getString(PREF_USER_PASSWORD, "");
+    }
+
+    public static boolean getAutoLogin(Context ctx){
+        return is_autoLogin;
+    }
+    // 로그아웃
+    public static void clearUserName(Context ctx) {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.clear();
+        editor.commit();
+    }
+
+
 }
