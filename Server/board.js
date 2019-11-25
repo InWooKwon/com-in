@@ -4,23 +4,55 @@ moment.tz.setDefault("Asia/Seoul");
 
 var express = require('express');
 var http = require('http');
-var bodyparser=require('body-parser');
-var app=express(); 
 var router = express.Router();
+var app = express();
+var bodyParser = require('body-parser');
 
-
-app.use(bodyparser.json());
-
-
-var mysql=require('mysql');
-var connection=mysql.createConnection({
-    host : "127.0.0.1",
-    port : 3306,
-    user : "root",
-    password : "alzlwl258",
-    database : "boardDB"
-});
+var connection = require("./DBconfig.js").connection;
 connection.connect();
+
+
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
+
+var updatescore = function(tag) {
+    // Do Something
+    //별점 업데이트
+    //score 합산 boardInfo 적용
+    var count_score = 0;
+    var count_user = 0;
+    var insure_score = 0;
+    console.log("tag : "+tag);
+
+    var qry="SELECT * FROM boardInfo WHERE type =1 AND tag1 = "+tag;
+    console.log(tag);
+    console.log(qry);
+
+    connection.query(qry,function(err,rows,fields){
+        console.log("rows length : "+rows.length);
+        count_user = rows.length;
+        for(var i=0; i<count_user; i++) {
+            count_score = count_score + rows[i].score;
+        }
+        insure_score=parseFloat(count_score/count_user).toFixed(2);
+        var qry2= "UPDATE INSURANCE SET score = " + insure_score + " WHERE idx = "+tag;
+        console.log("test update insure_score : "+insure_score);
+        connection.query(qry2,function(err,rows,fields){
+            var score=false;
+            if(err){
+                console.log("error : update insurance score");
+                score=false;
+            }
+            else{
+                score=true;
+                console.log("score : "+score.toString());
+                return score;
+            }
+        })
+    });
+
+   
+  };
 
 //게시판 가져오기 
 app.get('/board',function(req,res){
@@ -40,7 +72,7 @@ app.post('/board/up',function(req,res){
     var index = body.index;
     var user = body.user;
     var up = body.up; //현재 게시글의 추천 수
-    var rst={"success":false, "dup":true, "up":up};
+    var rst={"success":false, "up":up};
 
     //이미 추천했는지 확인
     var qry2 = "SELECT * FROM boardUp WHERE boardIdx = \'"+index+"\' AND userIdx= \'"+user+"\'";
@@ -53,26 +85,31 @@ app.post('/board/up',function(req,res){
                 if(rows.length>0) //이미존재
                 {
                     console.log("already up");
-                    rst.dup=true;
+                    rst.success=false;
+                    res.json(rst);
                 }
                 else{ //올리기 가능
                     //추천 가능일 경우 추천 테이블에 등록
                     var qry1="INSERT INTO boardUp (boardIdx, userIdx) values (\'"+index+"\',\'"+user+"\')"
                     connection.query(qry1,function(err,rows,fields){
+                        
                         if(err){
                             console.log("error: recommend in reviewboard");
                             rst.success=false;
+                            res.json(rst);
                         }
                         else{
-                            rst.success=true;
                             var qry3 = "UPDATE boardInfo SET up = up+1 WHERE idx= "+index;
                             connection.query(qry3,function(err,rows,fields){
+                                var rst={"success":false, "up":up};
                                 if(err){
+                                    rst.success=false;
                                     console.log("board table(추천 수) update error");
                                 }
                                 else{
                                     console.log("update");
                                     rst.up=up+1;
+                                    rst.success=true;
                                     res.json(rst); //success=true 값 전송되면 추천 완료
                                 }
                             });       
@@ -89,7 +126,7 @@ app.post('/board/down',function(req,res){
     var index = body.index;
     var user = body.user;
     var up = body.up;
-    var rst={"success":false, "dup":false, "up":up};
+   
 
     //이미 추천했는지 확인
     var qry2 = "SELECT * FROM boardUp WHERE boardIdx = \'"+index+"\' AND userIdx= \'"+user+"\'";
@@ -99,9 +136,11 @@ app.post('/board/down',function(req,res){
             }
             else{
                 if(rows.length>0){
-                //추천 가능일 경우 추천 테이블에 등록
+                //추천 했을 경우 삭제
                 var qry1="DELETE FROM boardUp WHERE idx = "+rows[0].idx;
                 connection.query(qry1,function(err,rows,fields){
+                    var rst={"success":false, "dup":false};
+                   
                     if(err){
                         console.log("error: recommend in reviewboard");
                         rst.success=false;
@@ -116,10 +155,10 @@ app.post('/board/down',function(req,res){
                             else{
                                 console.log("update");
                                 rst.up=up-1;
-                                res.json(rst); //success=true 값 전송되면 추천 완료
                             }
                         });       
                     }
+                    res.json(rst); //success=true 값 전송되면 추천 완료
                 });
                 }
                 else{
@@ -133,26 +172,37 @@ app.post('/board/down',function(req,res){
 
 //게시글 삭제
 app.delete('/board/:idx',function(req,res){
-    var body = req.body;
-    var index = body.index;
-    var rst = {"success":false};
-    var qry = "DELECT FROM boardInfo WHERE idx = ?";
-    connection.query(qry,req.param.idx,function(err,rows,fields){
-        if(err){
-            console.log("error: delete board");
+    var qry = "DELETE FROM boardInfo WHERE idx = ?";
+    var qry2 = "SELECT * FROM boardInfo WHERE idx =?";
+    console.log(req.params.idx);
+    connection.query(qry2,req.params.idx,function(err,rows,fields){
+        var rst = {"success":false};
+        if(err){     
+            rst.success=false;
+            console.log("there is no board in db");
         }
         else{
-            rst.success = true;
-            res.json(rst);
+            rst.success=true;
+            connection.query(qry,req.params.idx,function(err,rows_delete,fields){
+                
+                if(err){
+                    console.log("error: delete board");
+                }
+                else{
+                    updatescore(rows[0].tag1);
+                }
+            })
         }
+        res.json(rst);
+
     })
+   
 })
 
 //해당 개시글의 답글 불러오기
 app.get('/board/reply/:idx',function(req,res){
-    var body = req.body;
     var qry="SELECT * FROM replyInfo WHERE boardIdx =?";
-    connection.query(qry,req.param.idx,function(err,rows,fields){
+    connection.query(qry,req.params.idx,function(err,rows,fields){
         if(err)
             console.log("error: getting in reply");
         else{
@@ -170,8 +220,8 @@ app.post('/board/reply',function(req,res){
     var date = moment().format('YYYY-MM-DD HH:mm:ss');
     var content = body.body;
     var qry="INSERT INTO replyInfo (boardIdx, authorIdx, date, content) values (\'"+index+"\',\'"+user+"\',\'"+date+"\',\'"+content+"\')";
-    var rst={"success":false};
     connection.query(qry,function(err,rows,fields){
+        var rst={"success":false};
         if(err)
             console.log("error: can't write reply");
         else{
@@ -184,11 +234,11 @@ app.post('/board/reply',function(req,res){
 
 //답글 삭제
 app.delete('/board/reply/:idx',function(req,res){
-    var body = req.body;
-    var index = body.index;
-    var rst = {"success":false};
-    var qry = "DELECT FROM replyInfo WHERE idx = ?";
-    connection.query(qry,req.param.index,function(err,rows,fields){
+    var index = req.params.idx;
+    
+    var qry = "DELETE FROM replyInfo WHERE idx = ?";
+    connection.query(qry,index,function(err,rows,fields){
+        var rst = {"success":false};
         if(err){
             console.log("error: delete board");
         }
@@ -202,19 +252,21 @@ app.delete('/board/reply/:idx',function(req,res){
 app.put('/board/:idx',function(req,res){
 
     var body= req.body;
-    var index = body.index;
+    var index = req.params.idx;
     var content = body.body;
     var qry = 'UPDATE boardInfo SET body = \''+content+'\' WHERE idx = ?';
-    var rst = {"success":false};
-    connection.query(qry,req.param.idx,function(err,rows){
+    
+    connection.query(qry,index,function(err,rows){
+        var rst = {"success":false};
         if(error){
             console.log("error : error modify")
             rst.success=false;
         }
         else{
             rst.success=true;
-            res.json(rst);
+            
         }
+        res.json(rst);
 
     })
  
@@ -225,7 +277,7 @@ app.put('/board/:idx',function(req,res){
 app.post('/board',function(req,res){
     //front에서 게시판 쓸 정보 받아옴.
     var body = req.body;
-    var user = body.user;
+    var user = body.author;
     var title=body.title;
     var score = body.score;
     var content = body.body
@@ -236,6 +288,7 @@ app.post('/board',function(req,res){
     var tag3 = body.tag3;
     var tag4 = body.tag4;
     var tag5 = body.tag5;
+    
 
     if(type==1){
         //중복 확인 (같은 보험에 같은 유저인지)
@@ -244,67 +297,33 @@ app.post('/board',function(req,res){
         console.log(qry);
         console.log(qry2);
         connection.query(qry,function(err,rows,fields){
-            var rst={"success":false,"score":false};
-            //score 합산 boardInfo 적용
-            var count_score = 0;
-            var count_user = 0;
-            var insure_score = 0; 
-
-            console.log("rows :"+rows.length);
-
             if(err){//보드에 작성
-                console.log("error: write in reviewboard")
+                console.log("error: write in reviewboard");
             }
             else{
                 if(rows.length>0){
-                    rst.success=false;
                     console.log("insert fail");
                 }
                 else{
-                    connection.query(qry2,function(err,rows,fields){
+                    connection.query(qry2,function(err,rows_insert,fields){
+                        var rst={"success":false};
+
                         if(err){
                             console.log("error: write in reviewboard");
                             rst.success=false;
                         }
                         else{
+                            //score
                             rst.success=true;
+                            console.log("rst score : "+rst.success.toString());
+                            updatescore(tag1);
+                            
                         }
-                    
+                        res.json(rst);
                     });
                 }
             }
-
-            //score 업데이트
-            var qry3 = "SELECT * FROM boardInfo WHERE tag1 = "+tag1+" AND type = 1";
-            console.log(qry3);
-             connection.query(qry3,function(err,rows,fields){
-            if(err){
-                console.log("error: update score in boardInfo > get total score of the reviewboard");
-                rst.success = false;
-            }
-            else{
-                count_user = rows.length;
-                for(var i=0; i<count_user; i++) {
-                    count_score = count_score + rows[i].score;
-                }
-                insure_score=parseFloat(count_score/count_user).toFixed(2);
-                var qry4= "UPDATE INSURANCE SET score = " + insure_score + " WHERE idx = "+tag1;
-                console.log("insure_score"+insure_score);
-                console.log(qry4);
-                connection.query(qry4,function(err,rows,fields){
-                    if(err){
-                        console.log("error : update insurance score");
-                        console.log(err);
-                        rst.score=false;
-                    }
-                    else{
-                        rst.score=true;
-                    }
-                })
-            }
-            });
-      
-            res.json(rst);
+            
         });
 
         

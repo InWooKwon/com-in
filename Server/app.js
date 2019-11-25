@@ -19,6 +19,7 @@ app.get('/insurances', function (req, res) {
         var rst = {"insurances" : result[0], "coverages" : result[1]};
         res.json(rst);
     });
+    console.log("보험조회");
 });
 
 
@@ -143,6 +144,20 @@ app.post('/register', function (req, res) {
 
         })
     }
+});
+
+
+app.get('/board',function(req,res){
+    var qry="SELECT * FROM boardinfo;";
+    connection.query(qry,function(err,rows,fields){
+        if(err){
+            console.log("error: getting in board");
+        }
+        var rst={"board":rows};
+        res.json(rst);
+    });
+    
+    console.log("보드조회");
 });
 
 module.exports = router;
