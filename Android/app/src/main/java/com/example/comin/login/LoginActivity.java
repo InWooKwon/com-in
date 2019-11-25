@@ -23,7 +23,9 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.comin.R;
 import com.example.comin.insure.TotalInsuranceCheckActivity;
+import com.example.comin.setting.SettingActivity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -129,11 +131,13 @@ public class LoginActivity extends AppCompatActivity {
 
                         //key값에 따라 value값을 쪼개 받아옵니다.
                         Boolean result = jsonResponse.getBoolean("success");
+                        JSONObject userObject = response.getJSONObject("user");
+
 
                         if (result) {
-                            String userID = jsonResponse.getString("userID");
-                            String userPassword=jsonResponse.getString("userPassword");
-                            Intent intent = new Intent(LoginActivity.this, TotalInsuranceCheckActivity.class);
+                            String userID = userObject.getString("id");
+                            String userPassword=userObject.getString("pw");
+                            Intent intent = new Intent(LoginActivity.this, SettingActivity.class);
 
                             intent.putExtra("userID", userID);
                             intent.putExtra("userPassword", userPassword);

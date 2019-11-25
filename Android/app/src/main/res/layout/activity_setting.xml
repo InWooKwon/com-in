@@ -7,10 +7,24 @@
     tools:context=".setting.SettingActivity">
 
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="729dp"
+        android:id="@+id/linearLayout3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="vertical"
-      >
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/modifyButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:ems="10"
+            android:gravity="center_horizontal"
+            android:text="회원 정보 수정"
+            android:textSize="24sp" />
 
         <EditText
             android:id="@+id/logoutButton"
@@ -19,7 +33,18 @@
             android:clickable="true"
             android:ems="10"
             android:gravity="center_horizontal"
-            android:text="로그아웃" />
+            android:text="로그아웃"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/withdrawButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:ems="10"
+            android:gravity="center_horizontal"
+            android:text="회원 탈퇴"
+            android:textSize="24sp" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

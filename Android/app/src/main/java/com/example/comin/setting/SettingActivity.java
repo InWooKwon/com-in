@@ -21,11 +21,32 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
 
         TextView logoutButton = findViewById(R.id.logoutButton);
+        TextView withdrawButton = findViewById(R.id.withdrawButton);
+        TextView modifyButton = findViewById(R.id.modifyButton);
+
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LoginActivity.clearUserName(SettingActivity.this);
                 Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+                finish();
+                startActivity(intent);
+            }
+        });
+
+        modifyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingActivity.this, ModifyUserActivity.class);
+                finish();
+                startActivity(intent);
+            }
+        });
+
+        withdrawButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingActivity.this, withdrawActivity.class);
                 finish();
                 startActivity(intent);
             }

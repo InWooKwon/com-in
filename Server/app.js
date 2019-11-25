@@ -32,7 +32,7 @@ app.get('/insurances/:coverage', function (req, res) {
 
 //login POST
 app.post('/login', function (req, res, next) {
-    var approve = { 'success': false, 'user':""};
+    
 
     var body = req.body;
     var id = body.userID;
@@ -43,17 +43,18 @@ app.post('/login', function (req, res, next) {
     console.log(command);
 
     var query = connection.query(command, function (err, result, fields) {
+        var approve = { 'success': false, 'user':""};
         if (err) {
             approve.success = false;
         }
         else {
 
             if (result.length > 0) {
-                console.log("db userPassword" + result[0].userPassword);
+                console.log("db userPassword" + result[0].pw);
                 if (result[0].pw == password) { //비밀번호 확인
                     approve.success = true;
-                    approve.user=rows[0];
-                    console.log(approve.userID);
+                    approve.user=result[0];
+                    console.log(approve.user);
                     console.log("login success");
                 }
                 else {
@@ -67,9 +68,10 @@ app.post('/login', function (req, res, next) {
             }
 
             console.log("Data inserted");
-            res.send(approve);
-            approve.success = false;
+           
         }
+        console.log(approve);
+        res.send(approve);
 
     })
 })
