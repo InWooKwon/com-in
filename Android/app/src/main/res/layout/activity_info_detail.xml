@@ -14,7 +14,7 @@
         android:background="@android:color/darker_gray">
 
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">

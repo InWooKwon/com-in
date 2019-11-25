@@ -1,18 +1,20 @@
 package com.example.comin;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
 import android.util.Log;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -21,7 +23,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -29,46 +30,116 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
 
-public class CommunityActivity extends AppCompatActivity {
+
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link CommunityFragment.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link CommunityFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class CommunityFragment extends Fragment {
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+    private OnFragmentInteractionListener mListener;
 
     ArrayList<Post> ReviewBoardList = new ArrayList<>();
     ArrayList<Post> QnABoardList = new ArrayList<>();
     ArrayList<Post> FreeBoardList = new ArrayList<>();
+
+    public CommunityFragment() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment CommunityFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static CommunityFragment newInstance(String param1, String param2) {
+        CommunityFragment fragment = new CommunityFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_community);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_menu);
-        navigation.setSelectedItemId(R.id.navi2);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_community, container, false);
 
-        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.navi1:
-                        Intent a = new Intent(CommunityActivity.this , TotalInsuranceCheckActivity.class);
-                        startActivity(a);
-                        overridePendingTransition(0, 0);
-                        finish();
-                    case R.id.navi2:
-                        break;
-                    case R.id.navi3:
-                        break;
-                }
-                return false;
-            }
-        });
 
         getBoardList();
+        return v;
+    }
+
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        /*if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }*/
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
     }
 
     public void getBoardList(){
         //전송
-        final RequestQueue requestQueue = Volley.newRequestQueue(this);
+        final RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getString(R.string.URL) + "board",null, new Response.Listener<JSONObject>() {
 
             //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
@@ -140,13 +211,13 @@ public class CommunityActivity extends AppCompatActivity {
 
         LinearLayout pre = null;
         if(type == 1) {
-            pre = findViewById(R.id.reviewlayer);
+            pre = getView().findViewById(R.id.reviewlayer);
         }
         else if(type == 2) {
-            pre = findViewById(R.id.qnalayer);
+            pre = getView().findViewById(R.id.qnalayer);
         }
         else if(type == 3) {
-            pre = findViewById(R.id.freelayer);
+            pre = getView().findViewById(R.id.freelayer);
         }
 
         TextView name = (TextView) rl.findViewById(R.id.nickName);
@@ -165,7 +236,7 @@ public class CommunityActivity extends AppCompatActivity {
         TextView content = (TextView) rl.findViewById(R.id.content);
         content.setText(board.getBody());
 
-        Button reviewbtn = (Button) findViewById(R.id.reviewbtn);
+        Button reviewbtn = (Button) getView().findViewById(R.id.reviewbtn);
         reviewbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,7 +244,7 @@ public class CommunityActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        Button qnabtn = (Button) findViewById(R.id.qnabtn);
+        Button qnabtn = (Button) getView().findViewById(R.id.qnabtn);
         qnabtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -181,7 +252,7 @@ public class CommunityActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        Button freebtn = (Button) findViewById(R.id.freebtn);
+        Button freebtn = (Button) getView().findViewById(R.id.freebtn);
         freebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
