@@ -23,9 +23,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.comin.MainActivity;
 import com.example.comin.R;
-import com.example.comin.setting.SettingActivity;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -137,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (result) {
                             String userID = userObject.getString("id");
                             String userPassword=userObject.getString("pw");
-                            Intent intent = new Intent(LoginActivity.this, SettingActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 
                             intent.putExtra("userID", userID);
                             intent.putExtra("userPassword", userPassword);

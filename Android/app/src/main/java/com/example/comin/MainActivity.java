@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.comin.community.CommunityFragment;
 import com.example.comin.insure.TotalInsCheckFragment;
+import com.example.comin.setting.SettingFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
@@ -20,8 +21,7 @@ public class MainActivity extends AppCompatActivity {
     // 4개의 메뉴에 들어갈 Fragment들
     private TotalInsCheckFragment totalInsCheckFragment = new TotalInsCheckFragment();
     private CommunityFragment communityFragment = new CommunityFragment();
-
-    // private Menu3Fragment menu3Fragment = new Menu3Fragment();
+    private SettingFragment settingFragment = new SettingFragment();
     // private Menu4Fragment menu4Fragment = new Menu4Fragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager.beginTransaction().add(R.id.frame_layout, communityFragment).commit();
         fragmentManager.beginTransaction().hide(communityFragment).commit();
 
+        fragmentManager.beginTransaction().add(R.id.frame_layout, settingFragment).commit();
+        fragmentManager.beginTransaction().hide(settingFragment).commit();
+
         //하단바 리스너
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_menu);
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -47,13 +50,18 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.navi1:
                         fragmentManager.beginTransaction().hide(communityFragment).commit();
+                        fragmentManager.beginTransaction().hide(settingFragment).commit();
                         fragmentManager.beginTransaction().show(totalInsCheckFragment).commit();
                         break;
                     case R.id.navi2:
                         fragmentManager.beginTransaction().hide(totalInsCheckFragment).commit();
+                        fragmentManager.beginTransaction().hide(settingFragment).commit();
                         fragmentManager.beginTransaction().show(communityFragment).commit();
                         break;
                     case R.id.navi3:
+                        fragmentManager.beginTransaction().hide(totalInsCheckFragment).commit();
+                        fragmentManager.beginTransaction().hide(communityFragment).commit();
+                        fragmentManager.beginTransaction().show(settingFragment).commit();
                         break;
                 }
                 return true;
