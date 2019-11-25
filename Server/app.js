@@ -91,6 +91,7 @@ app.post('/register', function (req, res) {
     var email = body.userEmail;
     var key = body.AuthKey;
     var dup=body.dup;
+    
     if(dup=="1"){//중복 검사
         var command = 'select * from user where id=\'' + id + '\'';
         connection.query(command,function(err,rows,fields){
@@ -126,7 +127,7 @@ app.post('/register', function (req, res) {
         });
     }
 
-    else{
+    else if(dup==3){
         var command = 'INSERT INTO user (id, pw, realName, nickName, birth, email, phoneNumber, authKey) values (\'' + id + '\',\'' + password + '\',\'' + name + '\',\'' + nick + '\',\'' + birth + '\',\'' + email + '\',\'' + phone + '\',\'' + key + '\')';
         console.log(command);
         connection.query(command, function (err, rows, fields) {

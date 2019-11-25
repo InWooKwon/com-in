@@ -12,14 +12,8 @@ var router = express.Router();
 app.use(bodyparser.json());
 
 
-var mysql=require('mysql');
-var connection=mysql.createConnection({
-    host : "127.0.0.1",
-    port : 3306,
-    user : "root",
-    password : "alzlwl258",
-    database : "boardDB"
-});
+
+var connection = require("./DBconfig.js").connection;
 connection.connect();
 
 //게시판 가져오기 

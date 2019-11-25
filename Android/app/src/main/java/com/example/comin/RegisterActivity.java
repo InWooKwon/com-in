@@ -42,6 +42,11 @@ public class RegisterActivity extends AppCompatActivity {
         Button dup_idButton = (Button) findViewById(R.id.dup_idButton);
         Button dup_nickButton = (Button) findViewById(R.id.dup_nickButton);
 
+        user.setUserBirth("2019-01-01");
+        user.setDup_id_check("");
+        user.setDup_nick_check("");
+
+
         userBirth.init(2019, 01, 01, new DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -63,6 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
                     testjson.put("dup", "1");
 
                     if(userID.equals("")){
+                        user.setDup_nick_check("");
                         AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                         builder.setMessage("아이디를 입력해주세요.")
                                 .setNegativeButton("다시시도", null)
@@ -129,6 +135,7 @@ public class RegisterActivity extends AppCompatActivity {
                 JSONObject testjson = new JSONObject();
 
                 if(userNick.equals("")){
+                    user.setDup_nick_check("");
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     builder.setMessage("닉네임을 입력해주세요.")
                             .setNegativeButton("다시시도", null)
@@ -192,8 +199,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-
-            registerButton.setOnClickListener(new View.OnClickListener() {
+        registerButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String userID = idText.getText().toString();
@@ -205,14 +211,16 @@ public class RegisterActivity extends AppCompatActivity {
                     String userEmail = emailText.getText().toString();
                     String userAuth = "12345";
 
-                    if (userID.equals("") || userPassword.equals("") || userName.equals("") || userNick.equals("") || userBirth.equals("") || userPhone.equals("") || userEmail.equals("")) {
+
+                    if (userID.equals("") || userPassword.equals("") || userName.equals("") || userNick.equals("") || (userBirth.length()==0) || (userBirth == null) || userPhone.equals("") || userEmail.equals("")) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                         builder.setMessage("회원 등록에 실패하셨습니다. 입력하였는지 확인해주세요")
                                 .setPositiveButton("다시시도", null)
                                 .create()
                                 .show();
 
-                    } else {
+                    }
+                    else {
                         if (user.getDup_id_check().equals(userID) && user.getDup_nick_check().equals(userNick)){
 
                             JSONObject testjson = new JSONObject();
@@ -251,8 +259,8 @@ public class RegisterActivity extends AppCompatActivity {
                                                         .create()
                                                         .show();
                                                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                                                finish();
                                                 RegisterActivity.this.startActivity(intent);
+                                                finish();
                                             } else {
                                                 AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                                                 builder.setMessage("회원 등록에 실패하셨습니다.")
@@ -279,7 +287,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
-                        } else{
+                        } else if(user.getDup_id_check()==null||user.getDup_nick_check()==null||(user.getDup_id_check().length() == 0) || (user.getDup_nick_check().length()==0)||(user.getDup_id_check().equals(""))||(user.getDup_nick_check().equals(""))){
                             AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                             builder.setMessage("아이디 및 닉네임 중복을 확인해주세요.")
                                     .setNegativeButton("다시 시도", null)
