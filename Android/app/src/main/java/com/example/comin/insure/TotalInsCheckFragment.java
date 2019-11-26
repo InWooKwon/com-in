@@ -293,14 +293,12 @@ public class TotalInsCheckFragment extends Fragment {
                                     }
                                 });
                                 for (Insurance ins : iv) {
-                                    Log.d("cover", "!111");
                                     addInsuranceInfoView(ins);
                                 }
                             }
                             else if(adapterView.getItemAtPosition(position).equals("정렬"))
                             {
                                 for (Insurance ins : insViewList) {
-                                    Log.d("cover", "!111");
                                     addInsuranceInfoView(ins);
                                 }
                             }
@@ -317,7 +315,6 @@ public class TotalInsCheckFragment extends Fragment {
                                     }
                                 });
                                 for (Insurance ins : iv) {
-                                    Log.d("cover", "!111");
                                     addInsuranceInfoView(ins);
                                 }
                             }
@@ -342,8 +339,6 @@ public class TotalInsCheckFragment extends Fragment {
                 error.printStackTrace();
             }
         });
-
-        Log.d("cover22", "333333");
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(jsonObjectRequest);
     }
@@ -360,7 +355,7 @@ public class TotalInsCheckFragment extends Fragment {
         //후기수 필요
 
         TextView reviewCount = (TextView) rl.findViewById(R.id.reviewNum);
-        reviewCount.setText(Integer.toString(ins.getReviewCount()));
+        reviewCount.setText("후기 " + Integer.toString(ins.getReviewCount())+" 개");
 
 
         TextView score = (TextView) rl.findViewById(R.id.score);
