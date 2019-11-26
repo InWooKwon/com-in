@@ -1,19 +1,11 @@
+var express = require('express');
+var router = express.Router();
+
 var moment = require('moment'); //시간정보 받아오기 위해서 (npm install moment, npm install moment-timezone)
 require('moment-timezone');
 moment.tz.setDefault("Asia/Seoul");
 
-var express = require('express');
-var http = require('http');
-var router = express.Router();
-var app = express();
-var bodyParser = require('body-parser');
-
-var connection = require("./DBconfig.js").connection;
-connection.connect();
-
-
-app.use(bodyParser.urlencoded({extended:false}));
-app.use(bodyParser.json());
+var connection = require("../DBconfig.js").connection;
 
 var updatescore = function(tag) {
     // Do Something
@@ -55,7 +47,7 @@ var updatescore = function(tag) {
   };
 
 //게시판 가져오기 
-app.get('/board',function(req,res){
+router.get('/',function(req,res){
     var qry="SELECT * FROM boardInfo";
     connection.query(qry,function(err,rows,fields){
         if(err){
@@ -67,7 +59,7 @@ app.get('/board',function(req,res){
 }); 
 
 //게시글에 추천하기
-app.post('/board/up',function(req,res){
+router.post('/up',function(req,res){
     var body = req.body;
     var index = body.index;
     var user = body.user;
@@ -121,7 +113,7 @@ app.post('/board/up',function(req,res){
 });
 
 //게시글 추천 취소
-app.post('/board/down',function(req,res){
+router.post('/down',function(req,res){
     var body = req.body;
     var index = body.index;
     var user = body.user;
@@ -171,7 +163,7 @@ app.post('/board/down',function(req,res){
 });
 
 //게시글 삭제
-app.delete('/board/:idx',function(req,res){
+router.delete('/:idx',function(req,res){
     var qry = "DELETE FROM boardInfo WHERE idx = ?";
     var qry2 = "SELECT * FROM boardInfo WHERE idx =?";
     console.log(req.params.idx);
@@ -200,7 +192,7 @@ app.delete('/board/:idx',function(req,res){
 })
 
 //해당 개시글의 답글 불러오기
-app.get('/board/reply/:idx',function(req,res){
+router.get('/reply/:idx',function(req,res){
     var qry="SELECT * FROM replyInfo WHERE boardIdx =?";
     connection.query(qry,req.params.idx,function(err,rows,fields){
         if(err)
@@ -213,7 +205,7 @@ app.get('/board/reply/:idx',function(req,res){
 })
 
 //해당 게시글에 답글쓰기
-app.post('/board/reply',function(req,res){
+router.post('/reply',function(req,res){
     var body = req.body;
     var index = body.index;
     var user = body.user;
@@ -233,7 +225,7 @@ app.post('/board/reply',function(req,res){
 });
 
 //답글 삭제
-app.delete('/board/reply/:idx',function(req,res){
+router.delete('/reply/:idx',function(req,res){
     var index = req.params.idx;
     
     var qry = "DELETE FROM replyInfo WHERE idx = ?";
@@ -249,7 +241,7 @@ app.delete('/board/reply/:idx',function(req,res){
     })
 })
 
-app.put('/board/:idx',function(req,res){
+router.put('/:idx',function(req,res){
 
     var body= req.body;
     var index = req.params.idx;
@@ -274,7 +266,7 @@ app.put('/board/:idx',function(req,res){
 });
 
 //데이터 넣기
-app.post('/board',function(req,res){
+router.post('/board',function(req,res){
     //front에서 게시판 쓸 정보 받아옴.
     var body = req.body;
     var user = body.author;
@@ -348,8 +340,4 @@ app.post('/board',function(req,res){
 
 
 module.exports = router;
-
-http.createServer(app).listen(9090,function(){
-    console.log('서버 실행중...');
-});
 

@@ -1,7 +1,8 @@
 package com.example.comin.community;
+import java.io.Serializable;
 import java.util.Date;
 
-public class Post {
+public class Post implements Serializable {
     private int idx;
     private int type;
     private String title;

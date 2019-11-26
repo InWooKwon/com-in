@@ -29,6 +29,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -95,6 +96,33 @@ public class CommunityFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_community, container, false);
 
+        Button reviewbtn = (Button) v.findViewById(R.id.reviewbtn);
+        reviewbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ReviewBoardActivity.class);
+                intent.putExtra("board",ReviewBoardList);
+                startActivity(intent);
+            }
+        });
+        Button qnabtn = (Button) v.findViewById(R.id.qnabtn);
+        qnabtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), QnABoardActivity.class);
+                intent.putExtra("board",QnABoardList);
+                startActivity(intent);
+            }
+        });
+        Button freebtn = (Button) v.findViewById(R.id.freebtn);
+        freebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), FreeBoardActivity.class);
+                intent.putExtra("board",FreeBoardList);
+                startActivity(intent);
+            }
+        });
 
         getBoardList();
         return v;
@@ -207,7 +235,6 @@ public class CommunityFragment extends Fragment {
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(jsonObjectRequest);
     }
-
     public void addBoardPreView(int type, Post board){
         RelativeLayout rl = (RelativeLayout) getLayoutInflater().inflate(R.layout.boardsummary, null);
 
@@ -238,33 +265,7 @@ public class CommunityFragment extends Fragment {
         TextView content = (TextView) rl.findViewById(R.id.content);
         content.setText(board.getBody());
 
-        Button reviewbtn = (Button) getView().findViewById(R.id.reviewbtn);
-        reviewbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ReviewBoardActivity.class);
-                startActivity(intent);
-            }
-        });
-        Button qnabtn = (Button) getView().findViewById(R.id.qnabtn);
-        qnabtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), QnABoardActivity.class);
-                startActivity(intent);
-            }
-        });
-        Button freebtn = (Button) getView().findViewById(R.id.freebtn);
-        freebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), FreeBoardActivity.class);
-                startActivity(intent);
-            }
-        });
         pre.addView(rl);
-        //reviewpreview.addView(rl);
-        //linear.addView(reviewpreview);
     }
     public static String formatTimeString(Date tempDate) {
         long curTime = System.currentTimeMillis();
