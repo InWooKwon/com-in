@@ -290,7 +290,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
-                        } else if(user.getDup_id_check()==null||user.getDup_nick_check()==null||(user.getDup_id_check().length() == 0) || (user.getDup_nick_check().length()==0)||(user.getDup_id_check().equals(""))||(user.getDup_nick_check().equals(""))){
+                        } else {
                             AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                             builder.setMessage("아이디 및 닉네임 중복을 확인해주세요.")
                                     .setNegativeButton("다시 시도", null)
