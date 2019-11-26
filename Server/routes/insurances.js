@@ -5,9 +5,9 @@ var connection = require("../DBconfig.js").connection;
 
 // 모든 보험상품 조회
 router.get('/', function (req, res) {
-    var qry = "SELECT * FROM INSURANCE;" + "SELECT * FROM COVERAGE;";
+    var qry = "SELECT * FROM INSURANCE;" + "SELECT * FROM COVERAGE;" + "SELECT tag1 FROM boardInfo where type = 1;";
     connection.query(qry, function (err, result, fields) {
-        var rst = {"insurances" : result[0], "coverages" : result[1]};
+        var rst = {"insurances" : result[0], "coverages" : result[1], "reviewBoard" : result[2]};
         res.json(rst);
     });
     console.log("보험조회");

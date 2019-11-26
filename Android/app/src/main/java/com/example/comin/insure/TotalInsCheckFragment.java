@@ -28,14 +28,20 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 import android.view.ViewGroup;
 
 import com.example.comin.R;
+import com.example.comin.community.Post;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,7 +54,7 @@ import com.example.comin.R;
 public class TotalInsCheckFragment extends Fragment {
 
     private LinearLayout linear;
-    ArrayList<Insurance> insuranceList = new ArrayList<>();
+    Map<Integer, Insurance> insuranceMap = new LinkedHashMap<>();
     ArrayList<Insurance> insViewList = new ArrayList<>();
     static String selectCompany = "전체보기";
     static String selectType = "전체보기";
@@ -87,7 +93,6 @@ public class TotalInsCheckFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d("cover22", "11111");
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -99,7 +104,6 @@ public class TotalInsCheckFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Log.d("cover22", "11111");
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_total_ins_check, container, false);
 
@@ -149,7 +153,6 @@ public class TotalInsCheckFragment extends Fragment {
 
     public void getIsuraceList(){
         //전송
-        Log.d("cover22", "11111");
         final RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getString(R.string.URL) + "insurances",null, new Response.Listener<JSONObject>() {
 
@@ -163,6 +166,8 @@ public class TotalInsCheckFragment extends Fragment {
                     //key값에 따라 value값을 쪼개 받아옵니다.
                     JSONArray insurancesArray = jsonResponse.getJSONArray("insurances");
                     JSONArray coverageArray = jsonResponse.getJSONArray("coverages");
+                    JSONArray boardsArray = jsonResponse.getJSONArray("reviewBoard");
+
                     Set<String> companySet = new LinkedHashSet<>();
                     companySet.add("전체보기");
                     Set<String> typeSet = new LinkedHashSet<>();
@@ -200,9 +205,19 @@ public class TotalInsCheckFragment extends Fragment {
                             coverages.add(coverage);
                         }
                         insurance.setCoverageList(coverages);
-
-                        insuranceList.add(insurance);
+                        insuranceMap.put(insurance.getIdx(), insurance);
                     }
+
+                    for (int i = 0; i<boardsArray.length(); i++)
+                    {
+                        JSONObject boardObject = boardsArray.getJSONObject(i);
+                        Log.d("insins13",Integer.toString(boardObject.getInt("tag1")));
+                        Log.d("insins11",Integer.toString(insuranceMap.get(boardObject.getInt("tag1")).getReviewCount()));
+                        Insurance ins = insuranceMap.get(boardObject.getInt("tag1"));
+                        ins.setReviewCount(ins.getReviewCount() + 1);
+                        Log.d("insins12",Integer.toString(insuranceMap.get(boardObject.getInt("tag1")).getReviewCount()));
+                    }
+
                     Spinner cs = (Spinner)getView().findViewById(R.id.companSpinner);
                     ArrayList<String> companyList = new ArrayList<>(companySet);
                     ArrayAdapter<String> companyAdapter = new ArrayAdapter<>(getActivity().getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,companyList);
@@ -213,7 +228,7 @@ public class TotalInsCheckFragment extends Fragment {
                             linear.removeAllViews();
                             insViewList.clear();
                             selectCompany = (String)adapterView.getItemAtPosition(position);
-                            for (Insurance ins : insuranceList)
+                            for (Insurance ins : insuranceMap.values())
                             {
                                 if(!(ins.getCompany().equals(adapterView.getItemAtPosition(position)) || position == 0))
                                     continue;
@@ -237,7 +252,7 @@ public class TotalInsCheckFragment extends Fragment {
                             linear.removeAllViews();
                             insViewList.clear();
                             selectType = (String)adapterView.getItemAtPosition(position);
-                            for (Insurance ins : insuranceList)
+                            for (Insurance ins : insuranceMap.values())
                             {
                                 if(!(ins.getProductType().equals(adapterView.getItemAtPosition(position)) || position == 0))
                                     continue;
@@ -289,7 +304,23 @@ public class TotalInsCheckFragment extends Fragment {
                                     addInsuranceInfoView(ins);
                                 }
                             }
-                            //TODO: 후기순 필요
+                            else if(adapterView.getItemAtPosition(position).equals("후기순")){
+                                Collections.sort(iv, new Comparator<Insurance>() {
+                                    @Override
+                                    public int compare(Insurance o1, Insurance o2) {
+                                        if (o1.getReviewCount() < o2.getReviewCount())
+                                            return 1;
+                                        else if (o1.getReviewCount() > o2.getReviewCount())
+                                            return -1;
+                                        else
+                                            return 0;
+                                    }
+                                });
+                                for (Insurance ins : iv) {
+                                    Log.d("cover", "!111");
+                                    addInsuranceInfoView(ins);
+                                }
+                            }
                         }
                         @Override
                         public void onNothingSelected(AdapterView<?> adapterView) {
@@ -327,6 +358,11 @@ public class TotalInsCheckFragment extends Fragment {
         name.setText(ins.getProductName());
 
         //후기수 필요
+
+        TextView reviewCount = (TextView) rl.findViewById(R.id.reviewNum);
+        reviewCount.setText(Integer.toString(ins.getReviewCount()));
+
+
         TextView score = (TextView) rl.findViewById(R.id.score);
         score.setText(Double.toString(ins.getScore()));
 
@@ -355,6 +391,4 @@ public class TotalInsCheckFragment extends Fragment {
 
         linear.addView(rl);
     }
-
-
 }

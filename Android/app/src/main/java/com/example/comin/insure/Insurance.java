@@ -46,6 +46,7 @@ public class Insurance implements Serializable {
     private int price;
     private double score;
     private ArrayList<Coverage> coverageList;
+    private int reviewCount = 0;
 
     public ArrayList<Coverage> getCoverageList() {
         return coverageList;
@@ -54,6 +55,7 @@ public class Insurance implements Serializable {
     public void setCoverageList(ArrayList<Coverage> coverageList) {
         this.coverageList = coverageList;
     }
+
 
     public int getIdx() {
         return idx;
@@ -119,6 +121,11 @@ public class Insurance implements Serializable {
         this.score = score;
     }
 
+    public int getReviewCount() {
+        return reviewCount;
+    }
 
-
+    public void setReviewCount(int reviewCount) {
+        this.reviewCount = reviewCount;
+    }
 }

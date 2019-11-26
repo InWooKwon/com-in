@@ -61,6 +61,7 @@ public class CommunityFragment extends Fragment {
 
     public CommunityFragment() {
         // Required empty public constructor
+
     }
 
     /**
@@ -95,6 +96,7 @@ public class CommunityFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_community, container, false);
+        getBoardList();
 
         Button reviewbtn = (Button) v.findViewById(R.id.reviewbtn);
         reviewbtn.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +126,6 @@ public class CommunityFragment extends Fragment {
             }
         });
 
-        getBoardList();
         return v;
     }
 
