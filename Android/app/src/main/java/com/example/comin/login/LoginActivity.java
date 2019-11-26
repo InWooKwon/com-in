@@ -125,6 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                     try {
                         //받은 json형식의 응답을 받아
                         JSONObject jsonResponse = new JSONObject(response.toString());
+                        Log.d("test",response.toString());
 
 
                         //key값에 따라 value값을 쪼개 받아옵니다.
