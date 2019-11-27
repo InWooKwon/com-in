@@ -12,8 +12,15 @@
         app:showAsAction="ifRoom"
         android:icon="@android:drawable/ic_dialog_info"
         android:title="" />
+
     <item
         android:id="@+id/navi3"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_dialog_info"
+        android:title="" />
+    <item
+        android:id="@+id/navi4"
         app:showAsAction="ifRoom"
         android:enabled="true"
         android:icon="@android:drawable/ic_delete"

@@ -8,6 +8,7 @@ var insurancesRouter = require('./routes/insurances');
 var boardRouter = require('./routes/board');
 var loginRouter = require('./routes/login');
 var registerRouter = require('./routes/register');
+var myinsureRouter = require('./routes/myinsure');
 
 var connection = require("./DBconfig.js").connection;
 
@@ -20,6 +21,7 @@ app.use('/insurances', insurancesRouter);
 app.use('/board', boardRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
+app.use('/myinsure',myinsureRouter);
 
 module.exports = router;
 http.createServer(app).listen(9090, function () {

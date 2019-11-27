@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -29,9 +30,7 @@ import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
     public User user = new User();
-    static final String PREF_USER_ID = "username";
-    static final String PREF_USER_PASSWORD = "password";
-    static boolean is_autoLogin=false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +50,12 @@ public class LoginActivity extends AppCompatActivity {
         }
         */
 
-        if(getUserID(LoginActivity.this).length()==0 || getUserPassword(LoginActivity.this).length()==0){
+        if(user.getUserID(LoginActivity.this).length()==0 || user.getUserPassword(LoginActivity.this).length()==0){
 
         }
         else{
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.putExtra("userID", getUserID(this).toString());
-            startActivity(intent);
-            this.finish();
+            finish();
+            login(user.getUserID(LoginActivity.this),user.getUserPassword(LoginActivity.this));
         }
 
 
@@ -68,10 +65,10 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (((CheckBox)v).isChecked()) {
                     // TODO : CheckBox is checked.
-                    setAutoLogin(LoginActivity.this,true);
+                    user.setAutoLogin(LoginActivity.this,true);
                 } else {
                     // TODO : CheckBox is unchecked.
-                    setAutoLogin(LoginActivity.this,false);
+                    user.setAutoLogin(LoginActivity.this,false);
                 }
             }
         }) ;
@@ -93,9 +90,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 String userID = idText.getText().toString();
                 String userPassword = passwordText.getText().toString();
-                if(getAutoLogin(LoginActivity.this)) {
-                    setUserID(LoginActivity.this,userID);
-                    setUserPassword(LoginActivity.this,userPassword);
+                if(user.getAutoLogin(LoginActivity.this)) {
+                    user.setUserID(LoginActivity.this,userID);
+                    user.setUserPassword(LoginActivity.this,userPassword);
                     login(userID, userPassword);
                 }
                 else
@@ -132,21 +129,27 @@ public class LoginActivity extends AppCompatActivity {
                         Boolean result = jsonResponse.getBoolean("success");
                         JSONObject userObject = response.getJSONObject("user");
 
+                        Log.d("test",userObject.toString());
+                        int idx = userObject.getInt("idx");
+                        String userName = userObject.getString("realName");
+                        String userNick=userObject.getString("nickName");
 
+                        Log.d("test",result.toString());
                         if (result) {
-                            String userID = userObject.getString("id");
-                            String userPassword=userObject.getString("pw");
+                            Log.d("test","success");
+                            user.setUserIdx(LoginActivity.this,idx);
+                            user.setUserName(LoginActivity.this,userName);
+                            user.setUserNick(LoginActivity.this,userNick);
+                            Log.d("test","setshared");
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 
-                            intent.putExtra("userID", userID);
-                            intent.putExtra("userPassword", userPassword);
 
                             startActivity(intent);
                             finish();
                             Log.d("test", "login success");
                         } else {
                             AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                            builder.setMessage("로그인에 실패하셨습니다.")
+                            builder.setMessage("아이디 및 비밀번호를 다시 확인해주세요.")
                                     .setNegativeButton("다시시도", null)
                                     .create()
                                     .show();
@@ -174,47 +177,5 @@ public class LoginActivity extends AppCompatActivity {
             Log.d("test", "json object error");
         }
     }
-//자동로그인
-
-    static SharedPreferences getSharedPreferences(Context ctx) {
-        return PreferenceManager.getDefaultSharedPreferences(ctx);
-    }
-
-    // 계정 정보 저장
-    public static void setUserID(Context ctx, String userID) {
-        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
-        editor.putString(PREF_USER_ID, userID);
-        editor.commit();
-    }
-
-    public static void setUserPassword(Context ctx, String userPassword) {
-        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
-        editor.putString(PREF_USER_PASSWORD, userPassword);
-        editor.commit();
-    }
-
-    public static void setAutoLogin(Context ctx, boolean isAutoLogin){
-        is_autoLogin=isAutoLogin;
-    }
-
-    // 저장된 정보 가져오기
-    public static String getUserID(Context ctx) {
-        return getSharedPreferences(ctx).getString(PREF_USER_ID, "");
-    }
-
-    public static String getUserPassword(Context ctx) {
-        return getSharedPreferences(ctx).getString(PREF_USER_PASSWORD, "");
-    }
-
-    public static boolean getAutoLogin(Context ctx){
-        return is_autoLogin;
-    }
-    // 로그아웃
-    public static void clearUserName(Context ctx) {
-        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
-        editor.clear();
-        editor.commit();
-    }
-
 
 }

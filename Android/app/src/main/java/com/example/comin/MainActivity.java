@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.comin.community.CommunityFragment;
 import com.example.comin.community.Post;
 import com.example.comin.insure.TotalInsCheckFragment;
+import com.example.comin.myinsure.MyInsureFragment;
 import com.example.comin.setting.SettingFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private TotalInsCheckFragment totalInsCheckFragment = new TotalInsCheckFragment();
     private CommunityFragment communityFragment = new CommunityFragment();
     private SettingFragment settingFragment = new SettingFragment();
-    // private Menu4Fragment menu4Fragment = new Menu4Fragment();
+     private MyInsureFragment myinsureFragment = new MyInsureFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager.beginTransaction().add(R.id.frame_layout, settingFragment).commit();
         fragmentManager.beginTransaction().hide(settingFragment).commit();
 
+        fragmentManager.beginTransaction().add(R.id.frame_layout, myinsureFragment).commit();
+        fragmentManager.beginTransaction().hide(myinsureFragment).commit();
 
         //하단바 리스너
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_menu);
@@ -54,18 +57,29 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.navi1:
                         fragmentManager.beginTransaction().hide(communityFragment).commit();
                         fragmentManager.beginTransaction().hide(settingFragment).commit();
+                        fragmentManager.beginTransaction().hide(myinsureFragment).commit();
                         fragmentManager.beginTransaction().show(totalInsCheckFragment).commit();
                         break;
                     case R.id.navi2:
                         fragmentManager.beginTransaction().hide(totalInsCheckFragment).commit();
                         fragmentManager.beginTransaction().hide(settingFragment).commit();
+                        fragmentManager.beginTransaction().hide(myinsureFragment).commit();
                         fragmentManager.beginTransaction().show(communityFragment).commit();
                         break;
                     case R.id.navi3:
                         fragmentManager.beginTransaction().hide(totalInsCheckFragment).commit();
                         fragmentManager.beginTransaction().hide(communityFragment).commit();
+                        fragmentManager.beginTransaction().hide(settingFragment).commit();
+                        fragmentManager.beginTransaction().show(myinsureFragment).commit();
+                        break;
+
+                    case R.id.navi4:
+                        fragmentManager.beginTransaction().hide(totalInsCheckFragment).commit();
+                        fragmentManager.beginTransaction().hide(communityFragment).commit();
+                        fragmentManager.beginTransaction().hide(myinsureFragment).commit();
                         fragmentManager.beginTransaction().show(settingFragment).commit();
                         break;
+
                 }
                 return true;
             }

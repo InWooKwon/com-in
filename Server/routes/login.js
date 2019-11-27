@@ -16,7 +16,7 @@ router.post('/', function (req, res, next) {
     console.log(command);
 
     var query = connection.query(command, function (err, result, fields) {
-        var approve = { 'success': false, 'user': '',  };
+        var approve = { 'success': false, 'user': ''};
         if (err) {
             approve.success = false;
         }

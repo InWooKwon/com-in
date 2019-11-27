@@ -24,7 +24,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class RegisterActivity extends AppCompatActivity {
-    User user = new User();
+    String dup_id_check;
+    String dup_nick_check;
+    String userBirth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,16 +47,16 @@ public class RegisterActivity extends AppCompatActivity {
         Button dup_idButton = (Button) findViewById(R.id.dup_idButton);
         Button dup_nickButton = (Button) findViewById(R.id.dup_nickButton);
 
-        user.setUserBirth("2019-01-01");
-        user.setDup_id_check("");
-        user.setDup_nick_check("");
+        setUserBirth("2019-01-01");
+        setDup_id_check("");
+        setDup_nick_check("");
 
 
         userBirth.init(2019, 01, 01, new DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 String date = year + "-" + monthOfYear + "-" + dayOfMonth;
-                user.setUserBirth(date);
+                setUserBirth(date);
 
             }
         });
@@ -71,7 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
                     testjson.put("dup", "1");
 
                     if(userID.equals("")){
-                        user.setDup_nick_check("");
+                        setDup_nick_check("");
                         AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                         builder.setMessage("아이디를 입력해주세요.")
                                 .setNegativeButton("다시시도", null)
@@ -93,14 +95,14 @@ public class RegisterActivity extends AppCompatActivity {
                                     Boolean result = jsonResponse.getBoolean("dup_id");
 
                                     if (!result) {
-                                        user.setDup_id_check(userID);
+                                        setDup_id_check(userID);
                                         AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                                         builder.setMessage("사용가능한 아이디 입니다.")
                                                 .setNegativeButton("확인", null)
                                                 .create()
                                                 .show();
                                     } else {
-                                        user.setDup_id_check("");
+                                        setDup_id_check("");
                                         AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                                         builder.setMessage("중복된 id 입니다.")
                                                 .setNegativeButton("다시 시도", null)
@@ -138,7 +140,7 @@ public class RegisterActivity extends AppCompatActivity {
                 JSONObject testjson = new JSONObject();
 
                 if(userNick.equals("")){
-                    user.setDup_nick_check("");
+                    setDup_nick_check("");
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     builder.setMessage("닉네임을 입력해주세요.")
                             .setNegativeButton("다시시도", null)
@@ -166,14 +168,14 @@ public class RegisterActivity extends AppCompatActivity {
                                     Boolean result = jsonResponse.getBoolean("dup_nick");
 
                                     if (!result) {
-                                        user.setDup_nick_check(userNick);
+                                        setDup_nick_check(userNick);
                                         AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                                         builder.setMessage("사용가능한 닉네임 입니다.")
                                                 .setNegativeButton("확인", null)
                                                 .create()
                                                 .show();
                                     } else {
-                                        user.setDup_nick_check("");
+                                        setDup_nick_check("");
                                         AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                                         builder.setMessage("중복된 닉네임 입니다.")
                                                 .setNegativeButton("다시 시도", null)
@@ -209,7 +211,7 @@ public class RegisterActivity extends AppCompatActivity {
                     String userPassword = passwordText.getText().toString();
                     String userName = nameText.getText().toString();
                     String userNick = nickText.getText().toString();
-                    String userBirth = user.getUserBirth();
+                    String userBirth = getUserBirth();
                     String userPhone = phoneText.getText().toString();
                     String userEmail = emailText.getText().toString();
                     String userAuth = "12345";
@@ -224,7 +226,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     }
                     else {
-                        if (user.getDup_id_check().equals(userID) && user.getDup_nick_check().equals(userNick)){
+                        if (getDup_id_check().equals(userID) && getDup_nick_check().equals(userNick)){
 
                             JSONObject testjson = new JSONObject();
                             try {
@@ -305,7 +307,36 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         }
+
+    public String getUserBirth() {
+        return userBirth;
     }
+
+    public void setUserBirth(String userBirth) {
+        this.userBirth = userBirth;
+    }
+
+    public String getDup_nick_check() {
+        return dup_nick_check;
+    }
+
+    public void setDup_nick_check(String dup_nick_check) {
+        this.dup_nick_check = dup_nick_check;
+    }
+
+
+
+    public String getDup_id_check() {
+        return dup_id_check;
+    }
+
+    public void setDup_id_check(String dup_id_check) {
+        this.dup_id_check = dup_id_check;
+    }
+
+
+
+}
 
 
 
