@@ -1,6 +1,7 @@
 package com.example.comin.myinsure;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -10,6 +11,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -23,10 +28,9 @@ import com.example.comin.login.User;
 
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
 
 
@@ -43,6 +47,12 @@ public class MyInsureFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private LinearLayout linear;
+
+    ArrayList <String> insureName = new ArrayList<String>();
+    ArrayList <String> insureType = new ArrayList<String>();
+    ArrayList <String> insurePrice = new ArrayList<String>();
+    ArrayList <String> insureDescript = new ArrayList<String>();
 
     User user = new User();
 
@@ -89,11 +99,33 @@ public class MyInsureFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_my_insure, container, false);
 
+        TextView holdText = (TextView)v.findViewById(R.id.HoldText);
+        TextView totalText = (TextView)v.findViewById(R.id.TotalText);
+        int total_price = 0;
 
         Log.d("test","myinsureFragment");
-        getmyinsure();
+        linear = v.findViewById(R.id.linearLayout);
+        //getmyinsure();
 
-        return v;
+        insureName.add("보험명1");
+        insureType.add("보험종류 1");
+        insurePrice.add("1000000");
+        insureDescript.add("설명");
+
+        insureName.add("보험명2");
+        insureType.add("보험종류 2");
+        insurePrice.add("2000000");
+        insureDescript.add("설명2");
+
+        for(int i=0 ; i <insureName.size(); i++){
+            addInsuranceInfoView(insureName.get(i), insureType.get(i), insurePrice.get(i), insureDescript.get(i));
+            total_price=total_price+Integer.parseInt(insurePrice.get(i));
+        }
+
+        holdText.setText("보유 계약\n"+Integer.toString(insureName.size())+"건");
+        totalText.setText("월 보험료 \n 합계 \n"+Integer.toString(total_price)+"원");
+
+       return v;
     }
 
     public void getmyinsure(){
@@ -117,6 +149,16 @@ public class MyInsureFragment extends Fragment {
                     try {
                         //받은 json형식의 응답을 받아
                         JSONObject jsonResponse = new JSONObject(response.toString());
+                        JSONArray insurancesArray = jsonResponse.getJSONArray("Result");
+
+                        for (int i = 0; i<insurancesArray.length(); i++) {
+                            JSONObject insuranceObject = insurancesArray.getJSONObject(i);
+                            insureName.add(insuranceObject.getString("상품명"));
+                            insureType.add(insuranceObject.getString(""));
+                            insurePrice.add(insuranceObject.getString("보험료"));
+                            insureDescript.add(insuranceObject.getString("만기일자"));
+
+                        }
 
                         //key값에 따라 value값을 쪼개 받아옵니다.
                         Log.d("test","test");
@@ -183,5 +225,33 @@ public class MyInsureFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public void addInsuranceInfoView(String insName, String insType, String insPrice, String insDescrypt){
+
+        RelativeLayout rl = (RelativeLayout) getLayoutInflater().inflate(R.layout.my_insurance, null);
+
+        ImageView companyImage = rl.findViewById(R.id.mycompany);
+        //TODO : 이미지추가 후 맞게 수정
+        companyImage.setImageResource(R.drawable.meritz);
+
+        TextView type = (TextView) rl.findViewById(R.id.myinsType);
+
+        type.setText(insType);
+        TextView name = (TextView) rl.findViewById(R.id.myinsName);
+        name.setText(insName);
+
+
+        TextView price = (TextView) rl.findViewById(R.id.myprice);
+        price.setText("월 보험료 : ₩"+ insPrice + "원");
+
+
+        TextView description = (TextView) rl.findViewById(R.id.mydescript);
+        description.setText(insDescrypt);
+
+        Log.d("test","test create view");
+
+
+        linear.addView(rl);
     }
 }

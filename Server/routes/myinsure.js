@@ -13,7 +13,7 @@ var request_json ={"Auth_key": "aidbe124gAtrat10Tage", "Module": "hdfire","Class
 
 var jsondata = URLEncoder.encode(URLEncoder.encode(request_json, "UTF-8"), "UTF- 8"); //안코딩 처리
 
-var url_coocon = "dev2.coocon.co.kr";// 호출주소 
+var url_coocon = "dev2.coocon.co.kr";// 호출주소
 
 var postString= "JSONData="+jsondata;
 console.log(postString);
@@ -34,12 +34,15 @@ router.get('/:idx',function(req,res,next){
 
 // 출처: https://devnauts.tistory.com/95 [devnauts]
 
+//var str = JSON.stringify(request_json);
+//console.log(str);
+
 var options = {
     host: url_coocon,
     method: 'POST',
     port: 8443,
     path : '/sol/gateway/ins_wapi_mobile.jsp',
-    body : postString,
+    body : jsondata,
   };
 
   var req = http.request(options, function(res) {
@@ -55,7 +58,7 @@ var options = {
   });
    
   req.write(
-    postString
+    jsondata
   );
   req.end();
   
