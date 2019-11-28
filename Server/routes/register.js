@@ -71,5 +71,27 @@ router.post('/', function (req, res) {
     }
 });
 
+router.put('/:idx',function(req,res){
+
+});
+
+router.delete('/:idx',function(req,res){
+    
+    var qry = "DELETE FROM USER WHERE idx = ?";
+    connection.query(qry,req.params.idx,function(err, rows, fields){
+        var rst={"success":false};
+        if(err){
+            rst.success=false;
+            console.log("withdraw user error");
+        }
+        else{
+            rst.success=true;
+        }
+        res.json(rst);
+
+    });
+
+});
+
 
 module.exports = router;
