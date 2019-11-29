@@ -275,7 +275,7 @@ public class TotalInsCheckFragment extends Fragment {
                     JSONArray insurancesArray = jsonResponse.getJSONArray("insurances");
                     JSONArray coverageArray = jsonResponse.getJSONArray("coverages");
                     JSONArray boardsArray = jsonResponse.getJSONArray("reviewBoard");
-                    
+
                     Set<String> companySet = new LinkedHashSet<>();
                     companySet.add("전체보기");
                     Set<String> typeSet = new LinkedHashSet<>();
