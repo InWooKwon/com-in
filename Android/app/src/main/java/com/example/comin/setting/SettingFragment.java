@@ -110,8 +110,7 @@ public class SettingFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), withdrawActivity.class);
                 startActivity(intent);
-                getActivity().overridePendingTransition(0,0);
-                getActivity().finish();
+
             }
         });
 
@@ -120,8 +119,7 @@ public class SettingFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), RecentInsureActivity.class);
                 startActivity(intent);
-                getActivity().overridePendingTransition(0,0);
-                getActivity().finish();
+              
             }
         });
 
