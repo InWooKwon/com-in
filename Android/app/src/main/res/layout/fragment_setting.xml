@@ -22,23 +22,6 @@
             android:fontFamily="@font/font2"
             android:textSize="24sp" />
 
-        <TextView
-            android:id="@+id/logoutButton"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:gravity="center_horizontal|center_vertical"
-            android:fontFamily="@font/font2"
-            android:text="로그아웃"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/withdrawButton"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:gravity="center_horizontal|center_vertical"
-            android:fontFamily="@font/font2"
-            android:text="회원 탈퇴"
-            android:textSize="24sp" />
 
 
 
@@ -62,6 +45,16 @@
             android:fontFamily="@font/font2"
             android:textSize="24sp" />
 
+
+        <TextView
+            android:id="@+id/logoutButton"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:fontFamily="@font/font2"
+            android:text="로그아웃"
+            android:textSize="24sp" />
+
         <TextView
             android:id="@+id/modifyButton"
             android:layout_width="match_parent"
@@ -69,6 +62,15 @@
             android:gravity="center_horizontal|center_vertical"
             android:text="회원 정보 수정"
             android:fontFamily="@font/font2"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/withdrawButton"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:fontFamily="@font/font2"
+            android:text="회원 탈퇴"
             android:textSize="24sp" />
 
 
