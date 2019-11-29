@@ -21,7 +21,7 @@ router.get('/', function (req, res) {
 });
 
 router.get('/hot', function (req, res) {
-    var qry = "select insurance.idx, count(boardInfo.tag1) * score as cnt from insurance, boardInfo where boardInfo.tag1 = insurance.idx group by insurance.idx order by cnt desc;";
+    var qry = "select insurance.idx, insurance.company, insurance.productName, count(boardInfo.tag1) * insurance.score as cnt from insurance, boardInfo where boardInfo.type = 1 and boardInfo.tag1 = insurance.idx group by insurance.idx order by cnt desc limit 5;";
     connection.query(qry, function (err, result, fields) {
         var rst = {"hotInsurances" : result};
         res.json(rst);

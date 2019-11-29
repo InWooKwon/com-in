@@ -126,7 +126,6 @@ public class MyInsureFragment extends Fragment {
 
         String idx = Integer.toString(user.getUserIdx(getActivity().getApplicationContext()));
 
-
             final RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getString(R.string.URL)+"myinsure/"+idx, null, new Response.Listener<JSONObject>() {
 

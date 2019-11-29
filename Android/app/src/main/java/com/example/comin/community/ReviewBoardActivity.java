@@ -23,9 +23,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.comin.R;
 import com.example.comin.insure.Insurance;
+import com.example.comin.login.User;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -60,12 +62,15 @@ public class ReviewBoardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),ReviewBoardWriteActivity.class);
+                intent.putExtra("insurancelist",insuranceList);
                 startActivity(intent);
             }
         });
 
+        User user=new User();
+        int useridx = user.getUserIdx(ReviewBoardActivity.this);
         final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getString(R.string.URL) + "insurances",null, new Response.Listener<JSONObject>() {
+        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getString(R.string.URL) + "myinsure/review/"+Integer.toString(useridx),null, new Response.Listener<JSONObject>() {
             //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
             @Override
             public void onResponse(JSONObject response) {
@@ -78,8 +83,14 @@ public class ReviewBoardActivity extends AppCompatActivity {
                         JSONObject insuranceObject = insurancesArray.getJSONObject(i);
                         Insurance insurance = new Insurance();
 
+                        insurance.setIdx(insuranceObject.getInt("idx"));
+                        insurance.setProductName((insuranceObject.getString("productName")));
                         insurance.setCompany(insuranceObject.getString("company"));
                         insurance.setProductType(insuranceObject.getString("productType"));
+                        insurance.setMinAge(insuranceObject.getInt("minAge"));
+                        insurance.setMaxAge(insuranceObject.getInt("maxAge"));
+                        insurance.setPrice(insuranceObject.getInt("price"));
+                        insurance.setScore(insuranceObject.getDouble("score"));
 
                         companySet.add(insurance.getCompany());
                         typeSet.add(insurance.getProductType());
@@ -100,12 +111,29 @@ public class ReviewBoardActivity extends AppCompatActivity {
                             selectCompany = (String)adapterView.getItemAtPosition(position);
                             for (Post board : boardList)
                             {
+                                Iterator<Insurance> it = insuranceList.iterator();
+                                boolean check=false;
+                                while(it.hasNext()){
+                                    Insurance ins=it.next();
+                                    if(ins.getIdx() == board.getTag1() && ins.getCompany().equals(adapterView.getItemAtPosition(position))){
+                                        check=true;
+                                        break;
+                                    }
+                                    if(ins.getIdx() == board.getTag1() && ins.getProductType().equals(selectType)){
+                                        check=true;
+                                        break;
+                                    }
+                                }
+                                if(check || position == 0 || selectType.equals("전체보기")){
+                                    boardViewList.add(board);
+                                    addBoardView(board);
+                                }/*
                                 if(!(insuranceList.get(board.getTag1()).getCompany().equals(adapterView.getItemAtPosition(position)) || position == 0))
                                     continue;
                                 if(!(insuranceList.get(board.getTag1()).getProductType().equals(selectType) || selectType.equals("전체보기")))
                                     continue;
                                 boardViewList.add(board);
-                                addBoardView(board);
+                                addBoardView(board);*/
                             }
                         }
                         @Override
@@ -123,12 +151,30 @@ public class ReviewBoardActivity extends AppCompatActivity {
                             boardViewList.clear();
                             selectType = (String) adapterView.getItemAtPosition(position);
                             for (Post board : boardList) {
+                                Iterator<Insurance> it = insuranceList.iterator();
+                                boolean check=false;
+                                while(it.hasNext()){
+                                    Insurance ins=it.next();
+                                    if(ins.getIdx() == board.getTag1() && ins.getCompany().equals(adapterView.getItemAtPosition(position))){
+                                        check=true;
+                                        break;
+                                    }
+                                    if(ins.getIdx() == board.getTag1() && ins.getProductType().equals(selectCompany)){
+                                        check=true;
+                                        break;
+                                    }
+                                }
+                                if(check || position == 0 || selectCompany.equals("전체보기")){
+                                    boardViewList.add(board);
+                                    addBoardView(board);
+                                }
+                                /*
                                 if (!(insuranceList.get(board.getTag1()).getProductType().equals(adapterView.getItemAtPosition(position)) || position == 0))
                                     continue;
                                 if (!(insuranceList.get(board.getTag1()).getCompany().equals(selectCompany) || selectCompany.equals("전체보기")))
                                     continue;
                                 boardViewList.add(board);
-                                addBoardView(board);
+                                addBoardView(board);*/
                             }
                         }
 
@@ -170,6 +216,16 @@ public class ReviewBoardActivity extends AppCompatActivity {
         TextView content = (TextView) rl.findViewById(R.id.content);
         content.setText(board.getBody());
 
+        final int boardIdx=board.getIdx();
+        rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(v.getContext(), ReviewBoardViewActivity.class);
+                intent.putExtra("insurancelist",insuranceList);
+                intent.putExtra("postIdx",boardIdx);
+                startActivity(intent);
+            }
+        });
         pre.addView(rl);
     }
 

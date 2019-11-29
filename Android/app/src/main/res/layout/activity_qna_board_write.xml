@@ -33,20 +33,25 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/taglayer"
+            <HorizontalScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content">
 
-                <ImageButton
-                    android:id="@+id/addtagbtn"
-                    android:layout_width="60dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentRight="true"
-                    app:srcCompat="@android:drawable/ic_menu_add" />
+                <LinearLayout
+                    android:id="@+id/taglayer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-            </LinearLayout>
+                    <ImageButton
+                        android:id="@+id/addtagbtn"
+                        android:layout_width="60dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentRight="true"
+                        app:srcCompat="@android:drawable/ic_menu_add" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
 
             <EditText
                 android:id="@+id/titletext"

@@ -136,7 +136,6 @@ public class QnABoardActivity extends AppCompatActivity {
                             postlayer.removeAllViews();
                             boardViewList.clear();
                             selectType = (String) adapterView.getItemAtPosition(position);
-                            Log.d("test00000",Integer.toString(boardList.size()));
                             for (Post board : boardList) {
                                 if (!(insuranceList.get(board.getTag1()).getProductType().equals(adapterView.getItemAtPosition(position)) || position == 0))
                                     continue;

@@ -69,10 +69,6 @@ public class QnABoardWriteActivity extends AppCompatActivity {
         Intent intent = getIntent();
         insuranceList = (ArrayList<Insurance>) intent.getSerializableExtra("insurancelist");
 
-        Map<String,Object> insimage=new HashMap<>();
-        insimage.put("메리츠",R.drawable.meritz);
-        insimage.put("삼성화재",R.drawable.samsungfire);
-        insimage.put("동부화재",R.drawable.dbsonhae);
 
         dialogList = new ArrayList<>();
         tempList = new ArrayList<>();
@@ -80,7 +76,7 @@ public class QnABoardWriteActivity extends AppCompatActivity {
 
             Map<String,Object> item = new HashMap<>();
             item.put(TAG_TEXT,ins.getProductName());
-            item.put(TAG_IMAGE,insimage.get(ins.getCompany()));
+            item.put(TAG_IMAGE,getCompanyImageId(ins.getCompany()));
             item.put(TAG_IDX,ins.getIdx());
 
             dialogList.add(item);
@@ -250,5 +246,95 @@ public class QnABoardWriteActivity extends AppCompatActivity {
             e.printStackTrace();
             Log.d("test", "json object error");
         }
+    }
+    public int getCompanyImageId(String company)
+    {
+        if (company.equals("교보라이프플래닛생명"))
+        {
+            return R.drawable.kyobolife;
+        }
+        else if (company.equals("하나생명"))
+        {
+            return R.drawable.hanalife;
+
+        }
+        else if (company.equals("신한생명"))
+        {
+            return R.drawable.sinhanlife;
+        }
+        else if (company.equals("흥국생명"))
+        {
+            return R.drawable.heungkuk;
+        }
+        else if (company.equals("KDB생명"))
+        {
+            return R.drawable.kdblife;
+        }
+        else if (company.equals("라이나생명"))
+        {
+            return R.drawable.laina;
+        }
+        else if (company.equals("에이스손해보험"))
+        {
+            return R.drawable.ace;
+        }
+        else if (company.equals("DB손해보험"))
+        {
+            return R.drawable.dbsonhae;
+        }
+        else if (company.equals("동양생명"))
+        {
+            return R.drawable.dongyang;
+        }
+        else if (company.equals("삼성화재"))
+        {
+            return R.drawable.samsungfire;
+        }
+        else if (company.equals("MG손해보험"))
+        {
+            return R.drawable.mgsonhae;
+        }
+        else if (company.equals("KB손해보험"))
+        {
+            return R.drawable.kbsonhae;
+        }
+        else if (company.equals("한화생명"))
+        {
+            return R.drawable.hanalife;
+        }
+        else if (company.equals("미래에셋생명"))
+        {
+            return R.drawable.miraeasset;
+        }
+        else if (company.equals("한화손해보험"))
+        {
+            return R.drawable.hanhwasonhae;
+        }
+        else if (company.equals("NH농협손해보험"))
+        {
+            return R.drawable.nhsonhae;
+        }
+        else if (company.equals("삼성생명"))
+        {
+            return R.drawable.samsunglife;
+        }
+        else if (company.equals("AIG"))
+        {
+            return R.drawable.aig;
+        }
+        else if (company.equals("롯데손해보험"))
+        {
+            return R.drawable.lottesonhae;
+        }
+        else if (company.equals("현대해상"))
+        {
+            return R.drawable.hyundae;
+        }
+        else if (company.equals("메리츠화재"))
+        {
+            return R.drawable.meritz;
+        }
+        else
+            return -1;
     }
 }

@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.comin.R;
+import com.example.comin.login.User;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -34,6 +35,9 @@ import java.util.Date;
 
 public class FreeBoardViewActivity extends AppCompatActivity {
 
+    boolean check=false;
+    int useridx;
+    TextView ddabongcnt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +47,10 @@ public class FreeBoardViewActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int postIdx = (int) intent.getSerializableExtra("postIdx");
 
+        User user=new User();
+        useridx=user.getUserIdx(FreeBoardViewActivity.this);
         final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getString(R.string.URL) + "board/"+Integer.toString(postIdx),null, new Response.Listener<JSONObject>() {
+        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getString(R.string.URL) + "board/"+Integer.toString(postIdx)+"/"+Integer.toString(useridx),null, new Response.Listener<JSONObject>() {
 
             //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
             @Override
@@ -68,6 +74,7 @@ public class FreeBoardViewActivity extends AppCompatActivity {
                     post.setDate(writeDate);
                     post.setAuthor(boardObject.getString("author"));
                     post.setUp(boardObject.getInt("up"));
+                    check=jsonResponse.getBoolean("check");
                     if(!boardObject.isNull("tag1")) {
                         post.setTag1(boardObject.getInt("tag1"));
                     }
@@ -103,13 +110,65 @@ public class FreeBoardViewActivity extends AppCompatActivity {
     public void setPost(Post post){
         TextView posttitle = (TextView)findViewById(R.id.posttitle);
         TextView postbody = (TextView)findViewById(R.id.postbody);
-        TextView ddabongcnt = (TextView)findViewById(R.id.ddabongcnt);
+        ddabongcnt = (TextView)findViewById(R.id.ddabongcnt);
 
         posttitle.setText(post.getTitle());
         postbody.setText(post.getBody());
-        ddabongcnt.setText(Integer.toString(post.getScore()));
+        final int postup = post.getUp();
+        ddabongcnt.setText(Integer.toString(postup));
 
         final int postIdx=post.getIdx();
+        final ImageButton ddabongbtn = (ImageButton) findViewById(R.id.ddabongbtn);
+
+        final JSONObject info=new JSONObject();
+        try {
+            info.put("index", postIdx);
+            info.put("user", useridx);
+            info.put("up", postup);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        ddabongbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "board/";
+                if (check) { // 눌러져있으면
+                    ddabongbtn.setImageResource(R.drawable.ddabongon);
+                    url = url + "down";
+                } else { // 안눌러져있으면
+                    ddabongbtn.setImageResource(R.drawable.ddabongoff);
+                    url = url + "up";
+                }
+                final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, getString(R.string.URL) + url, info, new Response.Listener<JSONObject>() {
+
+                    //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            //받은 json형식의 응답을 받아
+                            JSONObject jsonResponse = new JSONObject(response.toString());
+                            int up = jsonResponse.getInt("up");
+                            ddabongcnt.setText(Integer.toString(up));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다.
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("test", error.toString());
+                        error.printStackTrace();
+                    }
+                });
+                jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                requestQueue.add(jsonObjectRequest);
+            }
+        });
+
+
 
         setCommentView(postIdx);
 

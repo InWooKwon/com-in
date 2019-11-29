@@ -27,7 +27,6 @@ router.post('/', function (req, res, next) {
                 if (result[0].pw == password) { //비밀번호 확인
                     approve.success = true;
                     approve.user=result[0];
-                    console.log(approve.user);
                     console.log("login success");
                 }
                 else {

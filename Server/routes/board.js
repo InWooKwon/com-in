@@ -57,7 +57,38 @@ router.get('/',function(req,res){
         res.json(rst);
     });
 }); 
-router.get('/:idx',function(req,res){
+router.get('/:boardidx/:useridx',function(req,res){
+    var boardidx=req.params.boardidx;
+    var useridx=req.params.useridx;
+    var qry="SELECT * FROM boardInfo where idx="+boardidx;
+    console.log(qry);
+    connection.query(qry,function(err,rows,fields){
+        if(err){
+            console.log("error: getting in board");
+        }
+        var qry1="SELECT * FROM boardUp where boardIdx = "+boardidx+" and userIdx = "+useridx;
+        connection.query(qry1,function(err,check,fields){
+            if(err){
+                console.log("error:getting in reply");
+            }
+            else{
+                var check=false;
+                if(check.length>0){ // 눌럿으면 true;
+                    check=true;
+                }
+                else{ // 안눌럿으면 false
+                    check=false;
+                }
+                var rst={"board":rows,
+                        "check":check};
+                res.json(rst);
+            }
+        });
+    });
+
+    
+});
+/*router.get('/:idx',function(req,res){
     var idx=req.params.idx;
     var qry="SELECT * FROM boardInfo where idx="+idx;
     console.log(qry);
@@ -68,7 +99,7 @@ router.get('/:idx',function(req,res){
         var rst={"board":rows};
         res.json(rst);
     });
-}); 
+});*/ 
 //게시글에 추천하기
 router.post('/up',function(req,res){
     var body = req.body;
@@ -172,6 +203,7 @@ router.post('/down',function(req,res){
             
         });
 });
+
 
 //게시글 삭제
 router.delete('/:idx',function(req,res){
