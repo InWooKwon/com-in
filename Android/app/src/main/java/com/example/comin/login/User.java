@@ -14,7 +14,8 @@ public class User {
     static final String PREF_USER_IDX = "idx";
     static final String PREF_USER_NICK = "nick";
     static final String PREF_USER_NAME = "name";
-    static boolean is_autoLogin=false;
+    static final String PREF_AUTO ="auto";
+    static final String PREF_USER_EMAIL ="email";
 
 //자동로그인
 
@@ -51,10 +52,18 @@ public class User {
         editor.putString(PREF_USER_NAME, userName);
         editor.commit();
     }
-
-    public static void setAutoLogin(Context ctx, boolean isAutoLogin){
-        is_autoLogin=isAutoLogin;
+    public static void setAutoLogin(Context ctx, boolean dup){
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putBoolean(PREF_AUTO, dup);
+        editor.commit();
     }
+
+    public static void setUserEmail(Context ctx, String email){
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString(PREF_USER_EMAIL, email);
+        editor.commit();
+    }
+
 
     // 저장된 정보 가져오기
     public static String getUserID(Context ctx) {
@@ -75,10 +84,15 @@ public class User {
         return getSharedPreferences(ctx).getString(PREF_USER_NAME, "");
     }
 
-    public static boolean getAutoLogin(Context ctx){
-        return is_autoLogin;
+    public static Boolean getAutoLogin(Context ctx){
+        return getSharedPreferences(ctx).getBoolean(PREF_AUTO,false);
     }
-    // 로그아웃
+
+    public static String getUserEmail(Context ctx){
+        return getSharedPreferences(ctx).getString(PREF_USER_EMAIL, "");
+    }
+
+
     public static void clearUserName(Context ctx) {
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
         editor.clear();

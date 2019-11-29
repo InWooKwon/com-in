@@ -259,10 +259,7 @@ router.put('/:idx',function(req,res){
             
         }
         res.json(rst);
-
     })
- 
-
 });
 
 //데이터 넣기

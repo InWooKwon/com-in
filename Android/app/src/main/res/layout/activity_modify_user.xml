@@ -5,5 +5,170 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".setting.ModifyUserActivity">
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="91dp"
+            android:orientation="horizontal"
+            android:background="@drawable/relativebackgroud">
+
+
+            <TextView
+                android:id="@+id/TextView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:ems="10"
+                android:focusable="auto"
+                android:gravity="center_vertical"
+                android:text="닉네임" />
+
+
+            <EditText
+                android:id="@+id/nickText"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:ems="10"
+                android:focusable="auto"
+                android:gravity="center_horizontal|center_vertical"
+                android:hint="닉네임 변경"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/dup_nickButton"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:gravity="center_horizontal"
+                android:text="중복확인" />
+
+            <Button
+                android:id="@+id/check1"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_horizontal"
+                android:text="수정" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="109dp"
+            android:orientation="horizontal"
+            android:background="@drawable/relativebackgroud">
+
+            <TextView
+                android:id="@+id/TextView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:ems="10"
+                android:focusable="auto"
+                android:gravity="center_vertical"
+                android:text="비밀번호" />
+
+            <EditText
+                android:id="@+id/pwText"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:gravity="center_horizontal|center_vertical"
+                android:hint="비밀번호 변경"
+                android:inputType="textPassword" />
+
+
+            <EditText
+                android:id="@+id/pw_checkText"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:ems="10"
+                android:gravity="center_horizontal|center_vertical"
+                android:hint="비밀번호 확인"
+                android:inputType="textPassword" />
+
+            <Button
+                android:id="@+id/check2"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_horizontal"
+                android:text="수정" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/relativebackgroud">
+
+            <TextView
+                android:id="@+id/TextView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:ems="10"
+                android:focusable="auto"
+                android:gravity="center_vertical"
+                android:text="이메일" />
+
+        <EditText
+            android:id="@+id/emailText"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:gravity="center_horizontal|center_vertical"
+            android:ems="10"
+            android:hint="이메일 변경"
+            android:inputType="textEmailAddress" />
+
+
+            <Button
+                android:id="@+id/check3"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:gravity="center_horizontal"
+                android:text="수정" />
+
+        </RelativeLayout>
+
+
+
+
+
+    </LinearLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

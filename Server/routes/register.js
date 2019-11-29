@@ -71,9 +71,6 @@ router.post('/', function (req, res) {
     }
 });
 
-router.put('/:idx',function(req,res){
-
-});
 
 router.delete('/:idx',function(req,res){
     
@@ -91,6 +88,54 @@ router.delete('/:idx',function(req,res){
 
     });
 
+});
+
+router.put('/:idx',function(req,res){
+
+    var body= req.body;
+    var index = req.params.idx;
+    var content = body.modify;
+   // var content2 = body.modify2;
+  //  var content3=body.modify3;
+    var case_modify = body.case_modify;
+    var qry = '';
+
+
+    if(case_modify==1){
+        qry = 'UPDATE USER SET nickName = \''+content1+'\' WHERE idx = ?';
+    }
+    else if(case_modify==2){
+        qry = 'UPDATE USER SET pw = \''+content1+'\' WHERE idx = ?';
+    }
+    else if(case_modify==3){
+        qry = 'UPDATE USER SET email = \''+content1+'\' WHERE idx = ?';
+    }
+    /*
+    else if(case_modify==4){ //pw and email
+        qry = 'UPDATE USER SET email = \''+content2+'\' and pw = \''+content1 +'\'WHERE idx = ?';
+    }
+    else if(case_modify==5){ //nick and email
+        qry = 'UPDATE USER SET nick = \''+content1+'\' and email =  \''+content2+'\'WHERE idx = ?';
+    }
+    else if(case_modify==6){ //nick and pw
+        qry = 'UPDATE USER SET nick = \''+content1+'\' and pw =  \''+content2+'\' WHERE idx = ?';
+    }
+    else if(case_modify==7){ //all
+        qry = 'UPDATE USER SET nick = \''+content1+'\' and pw =  \''+content2+'\' and email =  \''+content3+'\' WHERE idx = ?';
+    }
+*/
+    connection.query(qry,index,function(err,rows){
+        var rst = {"success":false};
+        if(error){
+            console.log("error : error modify")
+            rst.success=false;
+        }
+        else{
+            rst.success=true;
+            
+        }
+        res.json(rst);
+    })
 });
 
 

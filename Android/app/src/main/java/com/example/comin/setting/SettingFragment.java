@@ -5,16 +5,29 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.comin.R;
 import com.example.comin.login.LoginActivity;
+import com.example.comin.login.RegisterActivity;
 import com.example.comin.login.User;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,6 +95,8 @@ public class SettingFragment extends Fragment {
         TextView recentButton = v.findViewById(R.id.recentButton);
         TextView alarmButton = v.findViewById(R.id.alarmButton);
 
+        int user_idx = user.getUserIdx(getActivity().getApplicationContext());
+
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +121,8 @@ public class SettingFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), withdrawActivity.class);
                 startActivity(intent);
+                getActivity().overridePendingTransition(0,0);
+                getActivity().finish();
             }
         });
 
@@ -114,6 +131,8 @@ public class SettingFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), RecentInsureActivity.class);
                 startActivity(intent);
+                getActivity().overridePendingTransition(0,0);
+                getActivity().finish();
             }
         });
 
@@ -176,4 +195,5 @@ public class SettingFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }

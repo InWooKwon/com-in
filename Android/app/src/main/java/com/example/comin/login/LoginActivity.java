@@ -50,7 +50,10 @@ public class LoginActivity extends AppCompatActivity {
         }
         */
 
-        if(user.getUserID(LoginActivity.this).length()==0 || user.getUserPassword(LoginActivity.this).length()==0){
+        idText.setText("");
+        passwordText.setText("");
+
+        if(user.getAutoLogin(LoginActivity.this)==false){
 
         }
         else{
@@ -65,9 +68,11 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (((CheckBox)v).isChecked()) {
                     // TODO : CheckBox is checked.
+                    //user.setAutoLogin(LoginActivity.this,true);
                     user.setAutoLogin(LoginActivity.this,true);
                 } else {
                     // TODO : CheckBox is unchecked.
+                    //user.setAutoLogin(LoginActivity.this,false);
                     user.setAutoLogin(LoginActivity.this,false);
                 }
             }
@@ -90,13 +95,29 @@ public class LoginActivity extends AppCompatActivity {
 
                 String userID = idText.getText().toString();
                 String userPassword = passwordText.getText().toString();
-                if(user.getAutoLogin(LoginActivity.this)) {
-                    user.setUserID(LoginActivity.this,userID);
-                    user.setUserPassword(LoginActivity.this,userPassword);
-                    login(userID, userPassword);
+                if(userID.equals("")||userID.length()==0||userPassword.equals("")||userPassword.length()==0){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                    builder.setMessage("아이디 및 비밀번호를 입력해주세요.")
+                            .setNegativeButton("다시시도", null)
+                            .create()
+                            .show();
                 }
-                else
-                    login(userID,userPassword);
+                else {
+
+                        user.setUserID(LoginActivity.this, userID);
+                        user.setUserPassword(LoginActivity.this, userPassword);
+                        login(userID, userPassword);
+
+                    /*
+                    if (user.getAutoLogin(LoginActivity.this)) {
+                        user.setUserID(LoginActivity.this, userID);
+                        user.setUserPassword(LoginActivity.this, userPassword);
+                        login(userID, userPassword);
+                    } else
+                        login(userID, userPassword);
+
+                     */
+                }
             }
 
         });
@@ -127,23 +148,30 @@ public class LoginActivity extends AppCompatActivity {
 
                         //key값에 따라 value값을 쪼개 받아옵니다.
                         Boolean result = jsonResponse.getBoolean("success");
-                        JSONObject userObject = response.getJSONObject("user");
 
-                        Log.d("test",userObject.toString());
-                        int idx = userObject.getInt("idx");
-                        String userName = userObject.getString("realName");
-                        String userNick=userObject.getString("nickName");
 
-                        Log.d("test",result.toString());
+
+                        //Log.d("test",String.valueOf(result));
+
+
                         if (result) {
+                            JSONObject userObject = response.getJSONObject("user");
+
+                            Log.d("test",userObject.toString());
+
                             Log.d("test","success");
+
+                            int idx = userObject.getInt("idx");
+                            String userName = userObject.getString("realName");
+                            String userNick=userObject.getString("nickName");
+                            String userEmail = userObject.getString("email");
                             user.setUserIdx(LoginActivity.this,idx);
                             user.setUserName(LoginActivity.this,userName);
                             user.setUserNick(LoginActivity.this,userNick);
+                            user.setUserEmail(LoginActivity.this,userEmail);
                             Log.d("test","setshared");
+
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-
-
                             startActivity(intent);
                             finish();
                             Log.d("test", "login success");
