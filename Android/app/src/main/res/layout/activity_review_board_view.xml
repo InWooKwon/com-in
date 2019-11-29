@@ -42,16 +42,32 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal" >
+                        <ImageView
+                            android:id="@+id/insimg"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginTop="13dp"
+                            android:layout_weight="1" />
+                        <TextView
+                            android:id="@+id/insname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:inputType="textPersonName"
+                            />
+
                     </LinearLayout>
                     <RatingBar
                         android:id="@+id/ratingBar2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/taglayer"
+                        android:layout_below="@id/taglayer"
                         android:layout_weight="1"
                         android:isIndicator="true"
                         android:numStars="5"
                         android:stepSize="0.5"
+                        style="@style/Widget.AppCompat.RatingBar.Indicator"
                         android:max="5"/>
                 </RelativeLayout>
 
@@ -62,7 +78,8 @@
                     android:layout_marginTop="13dp"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="" />
+                    android:text=""
+                    android:textSize="20dp"/>
 
                 <TextView
                     android:id="@+id/postbody"
@@ -72,7 +89,8 @@
                     android:layout_marginTop="13dp"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="" />
+                    android:text=""
+                    android:textSize="30dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -134,7 +152,7 @@
 
             <EditText
                 android:id="@+id/commenttext"
-                android:layout_width="270dp"
+                android:layout_width="700dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"

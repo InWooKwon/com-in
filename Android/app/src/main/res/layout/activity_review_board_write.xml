@@ -57,6 +57,7 @@
             android:max="5"
             android:numStars="5"
             android:rating="3"
+            style="@style/Widget.AppCompat.RatingBar.Indicator"
             android:stepSize="0.5" />
 
         <EditText
@@ -67,17 +68,19 @@
             android:fontFamily="@font/font2"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="title" />
+            android:hint="title"
+            android:text="" />
 
         <EditText
             android:id="@+id/bodytext"
-            android:layout_width="399dp"
+            android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_marginTop="13dp"
             android:fontFamily="@font/font2"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="body" />
+            android:hint="body"
+            android:text="" />
 
 
     </LinearLayout>

@@ -30,9 +30,9 @@
 
                 <Button
                     android:id="@+id/reviewbtn"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/reviewboardtitle"
+                    android:layout_alignParentRight="true"
                     android:fontFamily="@font/font2"
                     android:text="더보기" />
 
@@ -59,10 +59,10 @@
 
                 <Button
                     android:id="@+id/qnabtn"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/font2"
-                    android:layout_toRightOf="@id/qnaboardtitle"
+                    android:layout_alignParentRight="true"
                     android:text="더보기" />
 
                 <LinearLayout
@@ -87,10 +87,10 @@
 
                 <Button
                     android:id="@+id/freebtn"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/font2"
-                    android:layout_toRightOf="@id/freeboardtitle"
+                    android:layout_alignParentRight="true"
                     android:text="더보기" />
 
                 <LinearLayout

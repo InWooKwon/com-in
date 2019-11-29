@@ -270,7 +270,7 @@ public class QnABoardViewActivity extends AppCompatActivity {
         commentview.removeAllViews();
 
         final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getString(R.string.URL) + "board/reply/" + Integer.toString(postIdx), null, new Response.Listener<JSONObject>() {
+        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getString(R.string.URL) + "board/reply/reply/" + Integer.toString(postIdx), null, new Response.Listener<JSONObject>() {
 
             //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
             @Override

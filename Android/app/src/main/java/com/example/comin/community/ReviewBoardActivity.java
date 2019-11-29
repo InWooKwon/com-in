@@ -9,7 +9,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ import com.example.comin.R;
 import com.example.comin.insure.Insurance;
 import com.example.comin.login.User;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -51,8 +54,10 @@ public class ReviewBoardActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_review_board);
 
-        Intent intent = getIntent();
-        boardList = (ArrayList<Post>) intent.getSerializableExtra("board");
+        //Intent intent = getIntent();
+        //boardList = (ArrayList<Post>) intent.getSerializableExtra("board");
+
+        getBoardList();
 
         companySet.add("전체보기");
         typeSet.add("전체보기");
@@ -112,19 +117,20 @@ public class ReviewBoardActivity extends AppCompatActivity {
                             for (Post board : boardList)
                             {
                                 Iterator<Insurance> it = insuranceList.iterator();
-                                boolean check=false;
-                                while(it.hasNext()){
-                                    Insurance ins=it.next();
+                                boolean check1=false;
+                                boolean check2=false;
+                                for(int i=0;i<insuranceList.size();i++){
+                                    Insurance ins=insuranceList.get(i);
                                     if(ins.getIdx() == board.getTag1() && ins.getCompany().equals(adapterView.getItemAtPosition(position))){
-                                        check=true;
+                                        check1=true;
                                         break;
                                     }
                                     if(ins.getIdx() == board.getTag1() && ins.getProductType().equals(selectType)){
-                                        check=true;
+                                        check2=true;
                                         break;
                                     }
                                 }
-                                if(check || position == 0 || selectType.equals("전체보기")){
+                                if((check1 || position == 0) && (check2 || selectType.equals("전체보기"))){
                                     boardViewList.add(board);
                                     addBoardView(board);
                                 }/*
@@ -152,19 +158,20 @@ public class ReviewBoardActivity extends AppCompatActivity {
                             selectType = (String) adapterView.getItemAtPosition(position);
                             for (Post board : boardList) {
                                 Iterator<Insurance> it = insuranceList.iterator();
-                                boolean check=false;
+                                boolean check1=false;
+                                boolean check2=false;
                                 while(it.hasNext()){
                                     Insurance ins=it.next();
                                     if(ins.getIdx() == board.getTag1() && ins.getCompany().equals(adapterView.getItemAtPosition(position))){
-                                        check=true;
+                                        check1=true;
                                         break;
                                     }
                                     if(ins.getIdx() == board.getTag1() && ins.getProductType().equals(selectCompany)){
-                                        check=true;
+                                        check2=true;
                                         break;
                                     }
                                 }
-                                if(check || position == 0 || selectCompany.equals("전체보기")){
+                                if((check1 || position == 0) && (check2 || selectCompany.equals("전체보기"))){
                                     boardViewList.add(board);
                                     addBoardView(board);
                                 }
@@ -201,20 +208,32 @@ public class ReviewBoardActivity extends AppCompatActivity {
         RelativeLayout rl = (RelativeLayout) getLayoutInflater().inflate(R.layout.boardsummary, null);
         LinearLayout pre = findViewById(R.id.postlayer);
 
-        TextView name = (TextView) rl.findViewById(R.id.nickName);
-        name.setText(board.getAuthor());
+        TextView name = (TextView) rl.findViewById(R.id.title);
+        name.setText(board.getTitle());
 
         TextView time = (TextView) rl.findViewById(R.id.time);
         time.setText(formatTimeString(board.getDate()));
 
-        TextView score = (TextView) rl.findViewById(R.id.rating);
-        score.setText(Integer.toString(board.getScore()));
+        float rate=board.getScore();
+        RatingBar ratingbar = (RatingBar)rl.findViewById(R.id.ratingBar3);
+        ratingbar.setRating(rate);
 
         TextView up = (TextView) rl.findViewById(R.id.ddabongcount);
         up.setText(Integer.toString(board.getUp()));
 
         TextView content = (TextView) rl.findViewById(R.id.content);
         content.setText(board.getBody());
+
+        TextView insname = (TextView)rl.findViewById(R.id.insname);
+        for(int i=0;i<insuranceList.size();i++) {
+            Insurance ins = insuranceList.get(i);
+            if (ins.getIdx() == board.getTag1()) {
+                insname.setText(ins.getProductName());
+                ImageView iv = rl.findViewById(R.id.insimg);
+                iv.setImageResource(getCompanyImageId(ins.getCompany()));
+                break;
+            }
+        }
 
         final int boardIdx=board.getIdx();
         rl.setOnClickListener(new View.OnClickListener() {
@@ -227,6 +246,74 @@ public class ReviewBoardActivity extends AppCompatActivity {
             }
         });
         pre.addView(rl);
+    }
+    public void getBoardList(){
+        //전송
+        final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getString(R.string.URL) + "board",null, new Response.Listener<JSONObject>() {
+
+            //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    //받은 json형식의 응답을 받아
+                    JSONObject jsonResponse = new JSONObject(response.toString());
+
+                    //key값에 따라 value값을 쪼개 받아옵니다.
+                    JSONArray boardsArray = jsonResponse.getJSONArray("board");
+                    for (int i = 0; i<boardsArray.length(); i++)
+                    {
+                        JSONObject boardObject = boardsArray.getJSONObject(i);
+
+                        Post post = new Post();
+
+                        post.setIdx(boardObject.getInt("idx"));
+                        post.setType(boardObject.getInt("type"));
+                        post.setTitle(boardObject.getString("title"));
+                        post.setScore(boardObject.getInt("score"));
+                        post.setBody(boardObject.getString("body"));
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        Date writeDate = sdf.parse(boardObject.getString("date"));  ////////
+                        post.setDate(writeDate);
+                        post.setAuthor(boardObject.getString("author"));
+                        post.setUp(boardObject.getInt("up"));
+                        if(!boardObject.isNull("tag1")) {
+                            post.setTag1(boardObject.getInt("tag1"));
+                        }
+                        if(!boardObject.isNull("tag2")) {
+                            post.setTag2(boardObject.getInt("tag2"));
+                        }
+                        if(!boardObject.isNull("tag3")) {
+                            post.setTag3(boardObject.getInt("tag3"));
+                        }
+                        if(!boardObject.isNull("tag4")) {
+                            post.setTag4(boardObject.getInt("tag4"));
+                        }
+                        if(!boardObject.isNull("tag5")) {
+                            post.setTag5(boardObject.getInt("tag5"));
+                        }
+                        if(post.getType() == 1) {
+                            boardList.add(post);
+                        }
+                    }
+
+                    for(Post board : boardList){
+                        addBoardView(board);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다.
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("test",error.toString());
+                error.printStackTrace();
+            }
+        });
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(jsonObjectRequest);
     }
 
     public static String formatTimeString(Date tempDate) {
@@ -254,5 +341,96 @@ public class ReviewBoardActivity extends AppCompatActivity {
             msg = (diffTime) + "년 전";
         }
         return msg;
+    }
+
+    public int getCompanyImageId(String company)
+    {
+        if (company.equals("교보라이프플래닛생명"))
+        {
+            return R.drawable.kyobolife;
+        }
+        else if (company.equals("하나생명"))
+        {
+            return R.drawable.hanalife;
+
+        }
+        else if (company.equals("신한생명"))
+        {
+            return R.drawable.sinhanlife;
+        }
+        else if (company.equals("흥국생명"))
+        {
+            return R.drawable.heungkuk;
+        }
+        else if (company.equals("KDB생명"))
+        {
+            return R.drawable.kdblife;
+        }
+        else if (company.equals("라이나생명"))
+        {
+            return R.drawable.laina;
+        }
+        else if (company.equals("에이스손해보험"))
+        {
+            return R.drawable.ace;
+        }
+        else if (company.equals("DB손해보험"))
+        {
+            return R.drawable.dbsonhae;
+        }
+        else if (company.equals("동양생명"))
+        {
+            return R.drawable.dongyang;
+        }
+        else if (company.equals("삼성화재"))
+        {
+            return R.drawable.samsungfire;
+        }
+        else if (company.equals("MG손해보험"))
+        {
+            return R.drawable.mgsonhae;
+        }
+        else if (company.equals("KB손해보험"))
+        {
+            return R.drawable.kbsonhae;
+        }
+        else if (company.equals("한화생명"))
+        {
+            return R.drawable.hanalife;
+        }
+        else if (company.equals("미래에셋생명"))
+        {
+            return R.drawable.miraeasset;
+        }
+        else if (company.equals("한화손해보험"))
+        {
+            return R.drawable.hanhwasonhae;
+        }
+        else if (company.equals("NH농협손해보험"))
+        {
+            return R.drawable.nhsonhae;
+        }
+        else if (company.equals("삼성생명"))
+        {
+            return R.drawable.samsunglife;
+        }
+        else if (company.equals("AIG"))
+        {
+            return R.drawable.aig;
+        }
+        else if (company.equals("롯데손해보험"))
+        {
+            return R.drawable.lottesonhae;
+        }
+        else if (company.equals("현대해상"))
+        {
+            return R.drawable.hyundae;
+        }
+        else if (company.equals("메리츠화재"))
+        {
+            return R.drawable.meritz;
+        }
+        else
+            return -1;
     }
 }

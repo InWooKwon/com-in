@@ -16,7 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -260,19 +262,27 @@ public class CommunityFragment extends Fragment {
         }
         else if(type == 2) {
             pre = getView().findViewById(R.id.qnalayer);
+            RatingBar ratingbar = (RatingBar)rl.findViewById(R.id.ratingBar3);
+            ratingbar.setVisibility(View.GONE);
         }
         else if(type == 3) {
             pre = getView().findViewById(R.id.freelayer);
+            RatingBar ratingbar = (RatingBar)rl.findViewById(R.id.ratingBar3);
+            ratingbar.setVisibility(View.GONE);
         }
 
-        TextView name = (TextView) rl.findViewById(R.id.nickName);
-        name.setText(board.getAuthor());
+        TextView name = (TextView) rl.findViewById(R.id.title);
+        name.setText(board.getTitle());
 
         TextView time = (TextView) rl.findViewById(R.id.time);
         time.setText(formatTimeString(board.getDate()));
 
-        TextView score = (TextView) rl.findViewById(R.id.rating);
-        score.setText(Integer.toString(board.getScore()));
+        ImageView insimg=(ImageView)rl.findViewById(R.id.insimg);
+        insimg.setVisibility(View.INVISIBLE);
+
+        float rate=board.getScore();
+        RatingBar ratingbar = (RatingBar)rl.findViewById(R.id.ratingBar3);
+        ratingbar.setRating(rate);
 
         TextView up = (TextView) rl.findViewById(R.id.ddabongcount);
         up.setText(Integer.toString(board.getUp()));
