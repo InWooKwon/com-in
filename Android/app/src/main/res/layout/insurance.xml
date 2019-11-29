@@ -8,46 +8,40 @@
 
     <ImageView
         android:id="@+id/companyImage"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="15dp"
         app:srcCompat="@drawable/meritz" />
 
-    <LinearLayout
-        android:id="@+id/nameLayout"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="15dp"
-        android:layout_toRightOf="@id/companyImage"
-        android:orientation="vertical">
 
-        <TextView
+    <TextView
+        android:id="@+id/insName"
+        android:layout_width="150dp"
+        android:layout_height="70dp"
+        android:layout_below="@+id/companyImage"
+        android:gravity="center"
+        android:text="보험이름"
+        android:textSize="20dp" />
+
+    <TextView
             android:id="@+id/insType"
-            android:layout_width="100dp"
+            android:layout_width="70dp"
             android:layout_height="30dp"
             android:gravity="center"
+            android:layout_toLeftOf="@+id/reviewLayout"
+            android:layout_marginRight="30dp"
             android:text="보험타입"
             android:textSize="15dp" />
 
-        <TextView
-            android:id="@+id/insName"
-            android:layout_width="100dp"
-            android:layout_height="70dp"
-            android:gravity="center"
-            android:text="보험이름"
-            android:textSize="20dp" />
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/reviewLayout"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="30dp">
+        android:layout_alignParentRight="true">
 
         <ImageView
             android:id="@+id/imageView"
@@ -73,22 +67,28 @@
             android:text="후기수" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/price"
-        android:layout_width="200dp"
-        android:layout_height="30dp"
-        android:layout_below="@id/reviewLayout"
-        android:layout_toRightOf="@id/nameLayout"
-        android:gravity="center"
-        android:text="보험료" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="115dp"
+        android:orientation="vertical"
+        android:layout_toRightOf="@+id/companyImage"
+        android:layout_below="@+id/reviewLayout">
 
-    <TextView
-        android:id="@+id/coverage"
-        android:layout_width="200dp"
-        android:layout_height="70dp"
-        android:layout_below="@id/price"
-        android:layout_toRightOf="@id/nameLayout"
-        android:gravity="center"
-        android:text="보장내역" />
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="보험료" />
+
+        <TextView
+            android:id="@+id/coverage"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="보장내역" />
+    </LinearLayout>
 
 </RelativeLayout>

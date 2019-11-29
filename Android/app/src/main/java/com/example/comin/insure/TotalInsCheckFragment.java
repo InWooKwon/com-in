@@ -505,9 +505,15 @@ public class TotalInsCheckFragment extends Fragment {
         price.setText("보험료 : 월 " + Integer.toString(ins.getPrice()) + "원");
 
         StringBuilder sb = new StringBuilder();
+        int coverListIndex = 0;
         for (Coverage cover : ins.getCoverageList())
         {
-            sb.append(cover.getType() + " : " + cover.getAmount() + "원\n");
+            if (coverListIndex > 2 ) {
+                sb.append("...");
+                break;
+            }
+            sb.append(cover.getType() + "\n");
+            coverListIndex++;
         }
         TextView coverage = (TextView) rl.findViewById(R.id.coverage);
         coverage.setText(sb);
