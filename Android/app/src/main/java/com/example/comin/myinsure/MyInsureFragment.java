@@ -52,7 +52,12 @@ public class MyInsureFragment extends Fragment {
     ArrayList <String> insurePrice = new ArrayList<String>();
     ArrayList <String> insureDescript = new ArrayList<String>();
 
+    TextView holdText;
+    TextView totalText;
+
     User user = new User();
+
+    int total_price=0;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -97,37 +102,17 @@ public class MyInsureFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_my_insure, container, false);
 
-        TextView holdText = (TextView)v.findViewById(R.id.HoldText);
-        TextView totalText = (TextView)v.findViewById(R.id.TotalText);
-        int total_price = 0;
+        holdText = (TextView)v.findViewById(R.id.HoldText);
+        totalText = (TextView)v.findViewById(R.id.TotalText);
 
         Log.d("test","myinsureFragment");
         linear = v.findViewById(R.id.linearLayout);
-        getmyinsure();
 
-        /*
-        insureName.add("보험명1");
-        insureType.add("보험종류 1");
-        insurePrice.add("1000000");
-        insureDescript.add("설명");
-
-        insureName.add("보험명2");
-        insureType.add("보험종류 2");
-        insurePrice.add("2000000");
-        insureDescript.add("설명2");
-*/
-        for(int i=0 ; i <insureName.size(); i++){
-            addInsuranceInfoView(insureName.get(i), insureType.get(i), insurePrice.get(i), insureDescript.get(i));
-            total_price=total_price+Integer.parseInt(insurePrice.get(i));
-        }
-
-        holdText.setText("보유 계약\n"+Integer.toString(insureName.size())+"건");
-        totalText.setText("월 보험료 \n 합계 \n"+Integer.toString(total_price)+"원");
-
+       getmyinsure();
        return v;
     }
 
-    public void getmyinsure(){
+    public boolean getmyinsure(){
 
         //int idx = user.getUserIdx(MyInsureFragment.this);
 
@@ -136,6 +121,7 @@ public class MyInsureFragment extends Fragment {
             //testjson.put("idx", "");
            // String jsonString = testjson.toString(); //완성된 json 포맷
            // Log.d("test", jsonString);
+
 
         String idx = Integer.toString(user.getUserIdx(getActivity().getApplicationContext()));
 
@@ -149,16 +135,51 @@ public class MyInsureFragment extends Fragment {
                     try {
                         //받은 json형식의 응답을 받아
                         JSONObject jsonResponse = new JSONObject(response.toString());
-                        JSONArray insurancesArray = jsonResponse.getJSONArray("Result");
+                        Log.d("test","1"+response.toString());
+                        JSONObject outputJson = jsonResponse.getJSONObject("Output");
+                        Log.d("test","2"+outputJson.toString());
+                        JSONObject resultjson = outputJson.getJSONObject("Result");
+                        Log.d("test","3"+resultjson.toString());
 
-                        for (int i = 0; i<insurancesArray.length(); i++) {
-                            JSONObject insuranceObject = insurancesArray.getJSONObject(i);
+
+                        JSONArray insuranceArray = resultjson.getJSONArray("보험계약내용조회");
+                        Log.d("test","5"+Integer.toString(insuranceArray.length()));
+                        Log.d("test",insuranceArray.getJSONObject( 0).getString("상품명"));
+
+
+
+                        for (int i = 0; i<insuranceArray.length(); i++) {
+                            Log.d("test","for");
+                            JSONObject insuranceObject = insuranceArray.getJSONObject(i);
                             insureName.add(insuranceObject.getString("상품명"));
-                            insureType.add(insuranceObject.getString(""));
+                            Log.d("test","1");
                             insurePrice.add(insuranceObject.getString("보험료"));
+                            Log.d("test","3");
                             insureDescript.add(insuranceObject.getString("만기일자"));
+                            Log.d("test","4");
+
+                            Log.d("test","check array add"+insureName.get(i));
+                            Log.d("test","check array add"+insurePrice.get(i));
+                            Log.d("test","check array add"+insureDescript.get(i));
+
+
+                            Log.d("test",insuranceObject.getString("상품명"));
+                            Log.d("test",insuranceObject.getString("보험료"));
+                            Log.d("test",insuranceObject.getString("만기일자"));
 
                         }
+
+                        Log.d("test", "check array list" + Integer.toString(insureName.size()));
+                        for (int i = 0; i < insureName.size(); i++) {
+                            addInsuranceInfoView(insureName.get(i), "보험Type", insurePrice.get(i), insureDescript.get(i));
+
+                            total_price = total_price + Integer.parseInt(insurePrice.get(i));
+                        }
+
+                        holdText.setText("보유 계약\n" + Integer.toString(insureName.size()) + "건");
+                        totalText.setText("월 보험료 \n 합계 \n" + Integer.toString(total_price) + "원");
+
+
 
                         //key값에 따라 value값을 쪼개 받아옵니다.
                         Log.d("test","test");
@@ -180,7 +201,7 @@ public class MyInsureFragment extends Fragment {
             jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             requestQueue.add(jsonObjectRequest);
 
-
+        return true;
     }
 
 
@@ -247,7 +268,7 @@ public class MyInsureFragment extends Fragment {
 
 
         TextView description = (TextView) rl.findViewById(R.id.mydescript);
-        description.setText(insDescrypt);
+        description.setText("만기일자 : "+insDescrypt);
 
         Log.d("test","test create view");
 
