@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                         fragmentManager.beginTransaction().hide(myinsureFragment).commit();
                         fragmentManager.beginTransaction().hide(homeFragment).commit();
                         fragmentManager.beginTransaction().show(communityFragment).commit();
-                        mTitleTextView.setText("내보험통합조회");
+                        mTitleTextView.setText("커뮤니티");
                         break;
                     case R.id.myinsure:
                         fragmentManager.beginTransaction().hide(totalInsCheckFragment).commit();
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                         fragmentManager.beginTransaction().hide(settingFragment).commit();
                         fragmentManager.beginTransaction().hide(homeFragment).commit();
                         fragmentManager.beginTransaction().show(myinsureFragment).commit();
-                        mTitleTextView.setText("커뮤니티");
+                        mTitleTextView.setText("내보험통합조회");
                         break;
 
                     case R.id.setting:
