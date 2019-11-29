@@ -33,23 +33,26 @@ router.get('/ins/:insIdx', function (req, res) {
     var qry = "SELECT productName, company FROM Insurance WHERE idx =" + Number(insIdx);
     connection.query(qry, function (err, result, fields) {
         var rst = {"recentIns" : result};
+    });
 });
 router.get('/hot/:idx', function (req, res) {
     var age = req.params.idx;
     var qry;
-    if(idx==1){
+    if(age==1){
         qry= "select insurance.idx,insurance.productName,insurance.company,insurance.productType from user,userins,insurance where birth between '1990-01-01' AND '2000-01-01' and user.idx=userins.idx and userins.insuranceidx = insurance.idx;";
     }
-    else if(idx==2){
+    else if(age==2){
         qry= "select insurance.idx,insurance.productName,insurance.company,insurance.productType from user,userins,insurance where birth between '1980-01-01' AND '1989-01-01' and user.idx=userins.idx and userins.insuranceidx = insurance.idx;";
     }
-    else if(idx==3){
+    else if(age==3){
         qry="select insurance.idx,insurance.productName,insurance.company,insurance.productType from user,userins,insurance where birth between '1970-01-01' AND '1979-01-01' and user.idx=userins.idx and userins.insuranceidx = insurance.idx;"
     }
+    console.log("111111111111111"+qry);
     connection.query(qry, function (err, result, fields) {
         var rst = {"hotInsurances" : result};
         res.json(rst);
     });
+});
 
 router.get('/:coverage', function (req, res) {
     var coverage = req.params.coverage;
@@ -93,4 +96,5 @@ router.get('/myins/:name', function (req, res) {
         res.json(rst);
     });
 });
+
 module.exports = router;
