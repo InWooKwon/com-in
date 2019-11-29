@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,10 +54,11 @@ import com.example.comin.R;
 public class TotalInsCheckFragment extends Fragment {
 
     private LinearLayout linear;
-    private  SearchView sv;
-    private  Spinner cs;
-    private  Spinner ts;
-    private  Spinner ss;
+    private SearchView sv;
+    private Spinner cs;
+    private Spinner ts;
+    private Spinner ss;
+    private SwipeRefreshLayout srl;
 
     Map<Integer, Insurance> insuranceMap = new LinkedHashMap<>();
     ArrayList<Insurance> insSearchList = new ArrayList<>();
@@ -192,6 +194,21 @@ public class TotalInsCheckFragment extends Fragment {
         });
 
         getIsuraceList();
+
+
+        srl = v.findViewById(R.id.swipeRefresh);
+        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to make your refresh action
+                // CallYourRefreshingMethod();
+                linear.removeAllViews();
+                getIsuraceList();
+                srl.setRefreshing(false);
+            }
+
+        });
+
         return v;
     }
 
@@ -243,6 +260,14 @@ public class TotalInsCheckFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 try {
+                    //초기화 진행
+                    insuranceMap.clear();
+                    insSearchList.clear();
+                    insViewList.clear();
+                    selectCompany = "전체보기";
+                    selectType = "전체보기";
+                    sortType = "정렬";
+
                     //받은 json형식의 응답을 받아
                     JSONObject jsonResponse = new JSONObject(response.toString());
 
