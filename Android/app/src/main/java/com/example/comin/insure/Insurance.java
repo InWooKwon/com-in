@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 class Coverage implements Serializable{
     String type;
-    int amount;
+    String amount;
     String content;
 
     public String getType() {
@@ -17,11 +17,11 @@ class Coverage implements Serializable{
         this.type = type;
     }
 
-    public int getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 

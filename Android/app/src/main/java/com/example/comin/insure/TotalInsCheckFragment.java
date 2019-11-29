@@ -275,7 +275,7 @@ public class TotalInsCheckFragment extends Fragment {
                     JSONArray insurancesArray = jsonResponse.getJSONArray("insurances");
                     JSONArray coverageArray = jsonResponse.getJSONArray("coverages");
                     JSONArray boardsArray = jsonResponse.getJSONArray("reviewBoard");
-
+                    
                     Set<String> companySet = new LinkedHashSet<>();
                     companySet.add("전체보기");
                     Set<String> typeSet = new LinkedHashSet<>();
@@ -306,7 +306,7 @@ public class TotalInsCheckFragment extends Fragment {
                                 continue;
                             Coverage coverage = new Coverage();
                             coverage.setType(coverageObject.getString("coverageType"));
-                            coverage.setAmount(coverageObject.getInt("amount"));
+                            coverage.setAmount(coverageObject.getString("amount"));
                             coverage.setContent(coverageObject.getString("content"));
                             coverages.add(coverage);
                         }
@@ -322,9 +322,14 @@ public class TotalInsCheckFragment extends Fragment {
                         Insurance ins = insuranceMap.get(boardObject.getInt("tag1"));
                         ins.setReviewCount(ins.getReviewCount() + 1);
                     }
+                    Log.d("cover11", "1111");
 
                     cs = (Spinner)getView().findViewById(R.id.companSpinner);
                     ArrayList<String> companyList = new ArrayList<>(companySet);
+                    for(String stt : companySet)
+                    {
+                        Log.d("cover123",stt);
+                    }
                     ArrayAdapter<String> companyAdapter = new ArrayAdapter<>(getActivity().getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,companyList);
                     cs.setAdapter(companyAdapter);
                     cs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
