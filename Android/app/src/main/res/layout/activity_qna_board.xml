@@ -6,23 +6,60 @@
     android:layout_height="match_parent"
     tools:context=".community.QnABoardActivity">
 
-    <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/postlayer"
+        <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/companSpinner"
+                android:layout_width="120dp"
+                android:layout_height="50dp" />
+
+            <Spinner
+                android:id="@+id/typeSpinner"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:layout_toRightOf="@id/companSpinner"/>
+
+            <Spinner
+                android:id="@+id/sortSpinner"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/writebtn"
+                android:layout_width="112dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="글쓰기" />
+        </RelativeLayout>
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="403dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="1dp">
+
+            <LinearLayout
+                android:id="@+id/postlayer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </ScrollView>
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

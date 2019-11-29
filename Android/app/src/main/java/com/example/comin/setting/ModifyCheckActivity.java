@@ -3,25 +3,15 @@ package com.example.comin.setting;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.comin.MainActivity;
 import com.example.comin.R;
-import com.example.comin.login.LoginActivity;
-import com.example.comin.login.User;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 public class ModifyCheckActivity extends AppCompatActivity {

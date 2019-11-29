@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.example.comin.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -35,6 +36,14 @@ public class FreeBoardActivity extends AppCompatActivity {
         ArrayList<Post> boardList = new ArrayList<>();
         boardList = (ArrayList<Post>) intent.getSerializableExtra("board");
 
+        Button writebtn = (Button)findViewById(R.id.writebtn);
+        writebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(),FreeBoardWriteActivity.class);
+                startActivity(intent);
+            }
+        });
         for(Post board : boardList){
             setBoardPreView(board);
         }
@@ -58,13 +67,23 @@ public class FreeBoardActivity extends AppCompatActivity {
         TextView content = (TextView) rl.findViewById(R.id.content);
         content.setText(board.getBody());
 
+        final int boardIdx=board.getIdx();
+        rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(v.getContext(), FreeBoardViewActivity.class);
+                intent.putExtra("postIdx",boardIdx);
+                startActivity(intent);
+            }
+        });
+
         pre.addView(rl);
     }
 
     public static String formatTimeString(Date tempDate) {
         long curTime = System.currentTimeMillis();
         long regTime = tempDate.getTime();
-        long diffTime = (curTime - regTime) / 1000;
+        long diffTime = Math.abs(curTime - regTime) / 1000;
 
         String msg = null;
         if (diffTime < 60) {

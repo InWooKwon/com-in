@@ -21,12 +21,12 @@ CREATE TABLE `boardInfo` (
   `body` varchar(800) NOT NULL,
   `date` datetime NOT NULL,
   `author` varchar(45) NOT NULL,
-  `up` int(11) DEFAULT NULL COMMENT '추천수',
-  `tag1` int(11) DEFAULT NULL COMMENT '어떤 보험에 대한 게시글인지',
-  `tag2` int(11) DEFAULT NULL,
-  `tag3` int(11) DEFAULT NULL,
-  `tag4` int(11) DEFAULT NULL,
-  `tag5` int(11) DEFAULT NULL,
+  `up` int(11) DEFAULT 0 COMMENT '추천수',
+  `tag1` int(11) DEFAULT 0 COMMENT '어떤 보험에 대한 게시글인지',
+  `tag2` int(11) DEFAULT 0,
+  `tag3` int(11) DEFAULT 0,
+  `tag4` int(11) DEFAULT 0,
+  `tag5` int(11) DEFAULT 0,
   PRIMARY KEY (`idx`)
 );
 

@@ -10,7 +10,6 @@ router.get('/', function (req, res) {
         var rst = {"insurances" : result[0], "coverages" : result[1], "reviewBoard" : result[2]};
         res.json(rst);
     });
-    console.log("보험조회");
 });
 
 

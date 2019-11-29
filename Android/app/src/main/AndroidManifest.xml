@@ -18,6 +18,15 @@
         <activity android:name=".setting.ModifyCheckActivity" />
         <activity android:name=".setting.RecentInsureActivity" />
         <activity android:name=".setting.MyActivity" />
+        <activity android:name=".community.ReviewBoardViewActivity"></activity>
+        <activity android:name=".community.QnABoardViewActivity" />
+        <activity android:name=".community.FreeBoardViewActivity" />
+        <activity android:name=".community.ReviewBoardWriteActivity"
+            android:windowSoftInputMode="adjustResize|adjustPan" />
+        <activity android:name=".community.QnABoardWriteActivity"
+            android:windowSoftInputMode="adjustResize|adjustPan" />
+        <activity android:name=".community.FreeBoardWriteActivity"
+            android:windowSoftInputMode="adjustResize|adjustPan" />
         <activity android:name=".setting.ModifyUserActivity" />
 
         <meta-data
@@ -27,17 +36,15 @@
         <activity android:name=".community.FreeBoardActivity" />
         <activity android:name=".community.QnABoardActivity" />
         <activity android:name=".community.ReviewBoardActivity" />
-        <activity android:name=".login.RegisterActivity" />
-        <activity android:name=".login.LoginActivity">
+
+        <activity android:name=".login.LoginActivity" />
+        <activity android:name=".insure.InfoDetailActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".insure.InfoDetailActivity" />
-        <activity android:name=".MainActivity">
-
         </activity>
 
         <service android:name="setting.MessagingService">

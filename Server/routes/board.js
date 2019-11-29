@@ -57,7 +57,18 @@ router.get('/',function(req,res){
         res.json(rst);
     });
 }); 
-
+router.get('/:idx',function(req,res){
+    var idx=req.params.idx;
+    var qry="SELECT * FROM boardInfo where idx="+idx;
+    console.log(qry);
+    connection.query(qry,function(err,rows,fields){
+        if(err){
+            console.log("error: getting in board");
+        }
+        var rst={"board":rows};
+        res.json(rst);
+    });
+}); 
 //게시글에 추천하기
 router.post('/up',function(req,res){
     var body = req.body;
@@ -193,8 +204,10 @@ router.delete('/:idx',function(req,res){
 
 //해당 개시글의 답글 불러오기
 router.get('/reply/:idx',function(req,res){
-    var qry="SELECT * FROM replyInfo WHERE boardIdx =?";
-    connection.query(qry,req.params.idx,function(err,rows,fields){
+    var idx=req.params.idx;
+    var qry="SELECT * FROM replyInfo WHERE boardIdx ="+idx;
+    console.log(qry);
+    connection.query(qry,function(err,rows,fields){
         if(err)
             console.log("error: getting in reply");
         else{
@@ -207,11 +220,12 @@ router.get('/reply/:idx',function(req,res){
 //해당 게시글에 답글쓰기
 router.post('/reply',function(req,res){
     var body = req.body;
+    console.log(body);
     var index = body.index;
     var user = body.user;
     var date = moment().format('YYYY-MM-DD HH:mm:ss');
-    var content = body.body;
-    var qry="INSERT INTO replyInfo (boardIdx, authorIdx, date, content) values (\'"+index+"\',\'"+user+"\',\'"+date+"\',\'"+content+"\')";
+    var content = body.content;
+    var qry="INSERT INTO replyInfo (boardIdx, authorIdx, date, content) values ("+index+","+user+",\'"+date+"\',\'"+content+"\')";
     connection.query(qry,function(err,rows,fields){
         var rst={"success":false};
         if(err)
@@ -263,20 +277,22 @@ router.put('/:idx',function(req,res){
 });
 
 //데이터 넣기
-router.post('/board',function(req,res){
+router.post('/',function(req,res){
     //front에서 게시판 쓸 정보 받아옴.
     var body = req.body;
+    console.log(body);
     var user = body.author;
     var title=body.title;
     var score = body.score;
     var content = body.body
     var type = body.type;
     var date = moment().format('YYYY-MM-DD HH:mm:ss');
-    var tag1 =body.tag1; //쓸 보험 index
-    var tag2 = body.tag2;
-    var tag3 = body.tag3;
-    var tag4 = body.tag4;
-    var tag5 = body.tag5;
+    var tag1 =body.tag1 ? body.tag1 : 0; //쓸 보험 index
+    var tag2 = body.tag2 ? body.tag2 : 0;
+    var tag3 = body.tag3 ? body.tag3 : 0;
+    var tag4 = body.tag4 ? body.tag4 : 0;
+    var tag5 = body.tag5 ? body.tag5 : 0;
+    var rst={"success":false};
     
 
     if(type==1){
@@ -295,7 +311,6 @@ router.post('/board',function(req,res){
                 }
                 else{
                     connection.query(qry2,function(err,rows_insert,fields){
-                        var rst={"success":false};
 
                         if(err){
                             console.log("error: write in reviewboard");
@@ -319,10 +334,12 @@ router.post('/board',function(req,res){
     }
 
     else{
-        var qry="INSERT INTO boardInfo (type, title, body, date,author, tag1, tag2, tag3, tag4, tag5) values ("+type+",\'"+title+"\',\'"+content+"\',\'"+date+"\',\'"+user+"\',\'"+tag1+"\',\'"+tag2+"\',\'"+tag3+"\',\'"+tag4+"\',\'"+tag5+"\')";
+        var qry="INSERT INTO boardInfo (type, title, body, date,author, tag1, tag2, tag3, tag4, tag5) values ("+
+        type+",\'"+title+"\',\'"+content+"\',\'"+date+"\',\'"+user+"\'"+","+
+        tag1+","+tag2+","+tag3+","+tag4+","+tag5+")";
         connection.query(qry,function(err,rows,fields){
             if(err){
-                console.log("error: write in questionboard & freeboard");
+                console.log(err);
                 rst.success=false;
                 res.json(rst); //success=true 값 전송되면 게시글 작성 완료
             }

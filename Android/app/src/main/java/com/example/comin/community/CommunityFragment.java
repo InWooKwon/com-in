@@ -182,7 +182,6 @@ public class CommunityFragment extends Fragment {
 
                     //key값에 따라 value값을 쪼개 받아옵니다.
                     JSONArray boardsArray = jsonResponse.getJSONArray("board");
-                    Log.d("test_length", Integer.toString(boardsArray.length()));
                     for (int i = 0; i<boardsArray.length(); i++)
                     {
                         JSONObject boardObject = boardsArray.getJSONObject(i);
@@ -199,12 +198,21 @@ public class CommunityFragment extends Fragment {
                         post.setDate(writeDate);
                         post.setAuthor(boardObject.getString("author"));
                         post.setUp(boardObject.getInt("up"));
-                        post.setTag1(boardObject.getInt("tag1"));
-                        post.setTag2(boardObject.getInt("tag2"));
-                        post.setTag3(boardObject.getInt("tag3"));
-                        post.setTag4(boardObject.getInt("tag4"));
-                        post.setTag5(boardObject.getInt("tag5"));
-
+                        if(!boardObject.isNull("tag1")) {
+                            post.setTag1(boardObject.getInt("tag1"));
+                        }
+                        if(!boardObject.isNull("tag2")) {
+                            post.setTag2(boardObject.getInt("tag2"));
+                        }
+                        if(!boardObject.isNull("tag3")) {
+                            post.setTag3(boardObject.getInt("tag3"));
+                        }
+                        if(!boardObject.isNull("tag4")) {
+                            post.setTag4(boardObject.getInt("tag4"));
+                        }
+                        if(!boardObject.isNull("tag5")) {
+                            post.setTag5(boardObject.getInt("tag5"));
+                        }
                         if(post.getType() == 1) {
                             ReviewBoardList.add(post);
                         }
@@ -261,7 +269,6 @@ public class CommunityFragment extends Fragment {
 
         TextView up = (TextView) rl.findViewById(R.id.ddabongcount);
         up.setText(Integer.toString(board.getUp()));
-        Log.d("test_type1", board.getBody());
 
         TextView content = (TextView) rl.findViewById(R.id.content);
         content.setText(board.getBody());
@@ -271,7 +278,7 @@ public class CommunityFragment extends Fragment {
     public static String formatTimeString(Date tempDate) {
         long curTime = System.currentTimeMillis();
         long regTime = tempDate.getTime();
-        long diffTime = (curTime - regTime) / 1000;
+        long diffTime = Math.abs(curTime - regTime) / 1000;
 
         String msg = null;
         if (diffTime < 60) {

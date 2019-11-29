@@ -1,7 +1,6 @@
 package com.example.comin;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -10,13 +9,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.comin.community.CommunityFragment;
-import com.example.comin.community.Post;
-import com.example.comin.insure.TotalInsCheckFragment;
 import com.example.comin.myinsure.MyInsureFragment;
 import com.example.comin.setting.SettingFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
