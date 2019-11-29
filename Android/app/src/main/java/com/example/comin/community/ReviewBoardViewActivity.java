@@ -115,7 +115,7 @@ public class ReviewBoardViewActivity extends AppCompatActivity {
         ddabongcnt.setText(Integer.toString(postup));
 
         float rate=post.getScore();
-        RatingBar ratingbar = (RatingBar)findViewById(R.id.ratingBar);
+        RatingBar ratingbar = (RatingBar)findViewById(R.id.ratingBar2);
         ratingbar.setRating(rate);
 
         int tag1 = post.getTag1();
