@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.comin.R;
 import com.example.comin.login.LoginActivity;
+import com.example.comin.login.User;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.comin.R;
+import com.example.comin.login.User;
 
 
 public class ModifyCheckActivity extends AppCompatActivity {

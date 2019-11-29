@@ -20,6 +20,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.comin.R;
 import com.example.comin.login.LoginActivity;
+import com.example.comin.login.User;
 
 import org.json.JSONObject;
 

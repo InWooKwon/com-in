@@ -29,6 +29,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.comin.R;
 import com.example.comin.insure.Insurance;
+import com.example.comin.login.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
