@@ -102,28 +102,16 @@ router.put('/:idx',function(req,res){
 
 
     if(case_modify==1){
-        qry = 'UPDATE USER SET nickName = \''+content1+'\' WHERE idx = ?';
+        qry = 'UPDATE USER SET nickName = \''+content+'\' WHERE idx = ?';
     }
     else if(case_modify==2){
-        qry = 'UPDATE USER SET pw = \''+content1+'\' WHERE idx = ?';
+        qry = 'UPDATE USER SET pw = \''+content+'\' WHERE idx = ?';
     }
     else if(case_modify==3){
-        qry = 'UPDATE USER SET email = \''+content1+'\' WHERE idx = ?';
+        qry = 'UPDATE USER SET email = \''+content+'\' WHERE idx = ?';
     }
-    /*
-    else if(case_modify==4){ //pw and email
-        qry = 'UPDATE USER SET email = \''+content2+'\' and pw = \''+content1 +'\'WHERE idx = ?';
-    }
-    else if(case_modify==5){ //nick and email
-        qry = 'UPDATE USER SET nick = \''+content1+'\' and email =  \''+content2+'\'WHERE idx = ?';
-    }
-    else if(case_modify==6){ //nick and pw
-        qry = 'UPDATE USER SET nick = \''+content1+'\' and pw =  \''+content2+'\' WHERE idx = ?';
-    }
-    else if(case_modify==7){ //all
-        qry = 'UPDATE USER SET nick = \''+content1+'\' and pw =  \''+content2+'\' and email =  \''+content3+'\' WHERE idx = ?';
-    }
-*/
+    console.log(qry);
+    
     connection.query(qry,index,function(err,rows){
         var rst = {"success":false};
         if(error){

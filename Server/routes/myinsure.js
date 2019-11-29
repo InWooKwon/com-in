@@ -56,11 +56,7 @@ var options = {
     console.log('problem with request: ' + e.message);
   });
 
- /*
-  req.write(
-    postString
-  );
-  */
+ 
 
   req.end();
   
