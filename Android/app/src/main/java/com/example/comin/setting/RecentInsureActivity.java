@@ -86,7 +86,8 @@ public class RecentInsureActivity extends AppCompatActivity {
                         JSONArray recentInsArray = jsonResponse.getJSONArray("recentIns");
                         JSONObject recentIns = recentInsArray.getJSONObject(0);
 
-                        hotLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.hotinsure, null);
+                        Log.d("cover123", "2222");
+                        hotLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.hotinsurevertical, null);
 
                         TextView tv = hotLayout.findViewById(R.id.hotName);
                         tv.setText(recentIns.getString("productName"));
@@ -96,8 +97,7 @@ public class RecentInsureActivity extends AppCompatActivity {
 
 
                         recentLayout = findViewById(R.id.recentLayout1);
-                        recentLayout.addView(tv);
-                        recentLayout.addView(iv);
+                        recentLayout.addView(hotLayout);
 
 
                     } catch (Exception e) {
@@ -122,6 +122,8 @@ public class RecentInsureActivity extends AppCompatActivity {
         int rv2 = PreferenceManager.getDefaultSharedPreferences(this).getInt("recentView2", 0);
         if(rv2 != 0)
         {
+
+            Log.d("cpver123123","insurances/ins/" + Integer.toString(rv2));
             final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getString(R.string.URL) + "insurances/ins/" + Integer.toString(rv2),null, new Response.Listener<JSONObject>() {
 
@@ -135,19 +137,20 @@ public class RecentInsureActivity extends AppCompatActivity {
                         JSONArray recentInsArray = jsonResponse.getJSONArray("recentIns");
                         JSONObject recentIns = recentInsArray.getJSONObject(0);
 
-                        hotLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.hotinsure, null);
 
-
+                        Log.d("cpver123123","123123");
+                        hotLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.hotinsurevertical, null);
                         TextView tv = hotLayout.findViewById(R.id.hotName);
                         tv.setText(recentIns.getString("productName"));
 
+                        Log.d("cpver123123","123123");
                         ImageView iv = hotLayout.findViewById(R.id.hotCompany);
                         iv.setImageResource(getCompanyImageId(recentIns.getString("company")));
 
 
+                        Log.d("cpver123123","123123");
                         recentLayout = findViewById(R.id.recentLayout2);
-                        recentLayout.addView(tv);
-                        recentLayout.addView(iv);
+                        recentLayout.addView(hotLayout);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -181,7 +184,7 @@ public class RecentInsureActivity extends AppCompatActivity {
                         JSONArray recentInsArray = jsonResponse.getJSONArray("recentIns");
                         JSONObject recentIns = recentInsArray.getJSONObject(0);
 
-                        hotLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.hotinsure, null);
+                        hotLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.hotinsurevertical, null);
 
                         TextView tv = hotLayout.findViewById(R.id.hotName);
                         tv.setText(recentIns.getString("productName"));
@@ -191,8 +194,7 @@ public class RecentInsureActivity extends AppCompatActivity {
 
 
                         recentLayout = findViewById(R.id.recentLayout3);
-                        recentLayout.addView(tv);
-                        recentLayout.addView(iv);
+                        recentLayout.addView(hotLayout);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -227,7 +229,7 @@ public class RecentInsureActivity extends AppCompatActivity {
                         JSONArray recentInsArray = jsonResponse.getJSONArray("recentIns");
                         JSONObject recentIns = recentInsArray.getJSONObject(0);
 
-                        hotLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.hotinsure, null);
+                        hotLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.hotinsurevertical, null);
 
 
                         TextView tv = hotLayout.findViewById(R.id.hotName);
@@ -238,8 +240,7 @@ public class RecentInsureActivity extends AppCompatActivity {
 
 
                         recentLayout = findViewById(R.id.recentLayout4);
-                        recentLayout.addView(tv);
-                        recentLayout.addView(iv);
+                        recentLayout.addView(hotLayout);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -274,7 +275,7 @@ public class RecentInsureActivity extends AppCompatActivity {
                         JSONArray recentInsArray = jsonResponse.getJSONArray("recentIns");
                         JSONObject recentIns = recentInsArray.getJSONObject(0);
 
-                        hotLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.hotinsure, null);
+                        hotLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.hotinsurevertical, null);
 
 
                         TextView tv = hotLayout.findViewById(R.id.hotName);
@@ -285,8 +286,7 @@ public class RecentInsureActivity extends AppCompatActivity {
 
 
                         recentLayout = findViewById(R.id.recentLayout5);
-                        recentLayout.addView(tv);
-                        recentLayout.addView(iv);
+                        recentLayout.addView(hotLayout);
 
                     } catch (Exception e) {
                         e.printStackTrace();
