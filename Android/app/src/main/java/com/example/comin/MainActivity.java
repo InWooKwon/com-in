@@ -23,7 +23,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    TextView mTitleTextView;
     private FragmentManager fragmentManager = getSupportFragmentManager();
     // 4개의 메뉴에 들어갈 Fragment들
 
@@ -50,16 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
         //layout을 가지고 와서 actionbar에 포팅을 시킵니다.
         View mCustomView = LayoutInflater.from(this).inflate(R.layout.custombar, null);
-        TextView mTitleTextView = (TextView) mCustomView.findViewById(R.id.title);
-        mTitleTextView.setText("");
-
-        ImageButton backButton = (ImageButton) mCustomView.findViewById(R.id.btnBack);
-        backButton.setVisibility(View.INVISIBLE);
-
-        actionBar.setCustomView(mCustomView);
-
-
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.argb(255,255,255,255)));
+        mTitleTextView = (TextView) mCustomView.findViewById(R.id.title);
+        mTitleTextView.setText("HOT 보험");
 
 
         //첫화면 지정
@@ -80,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
         //하단바 리스너
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_menu);
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -93,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                         fragmentManager.beginTransaction().hide(myinsureFragment).commit();
                         fragmentManager.beginTransaction().hide(settingFragment).commit();
                         fragmentManager.beginTransaction().show(homeFragment).commit();
+                        mTitleTextView.setText("최근 인기 보험");
                         break;
                     case R.id.insure:
                         fragmentManager.beginTransaction().hide(communityFragment).commit();
@@ -100,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
                         fragmentManager.beginTransaction().hide(myinsureFragment).commit();
                         fragmentManager.beginTransaction().hide(homeFragment).commit();
                         fragmentManager.beginTransaction().show(totalInsCheckFragment).commit();
+                        mTitleTextView.setText("보험통합조회");
                         break;
                     case R.id.community:
                         fragmentManager.beginTransaction().hide(totalInsCheckFragment).commit();
@@ -107,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
                         fragmentManager.beginTransaction().hide(myinsureFragment).commit();
                         fragmentManager.beginTransaction().hide(homeFragment).commit();
                         fragmentManager.beginTransaction().show(communityFragment).commit();
+                        mTitleTextView.setText("내보험통합조회");
                         break;
                     case R.id.myinsure:
                         fragmentManager.beginTransaction().hide(totalInsCheckFragment).commit();
@@ -114,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
                         fragmentManager.beginTransaction().hide(settingFragment).commit();
                         fragmentManager.beginTransaction().hide(homeFragment).commit();
                         fragmentManager.beginTransaction().show(myinsureFragment).commit();
+                        mTitleTextView.setText("커뮤니티");
                         break;
 
                     case R.id.setting:
@@ -122,10 +120,21 @@ public class MainActivity extends AppCompatActivity {
                         fragmentManager.beginTransaction().hide(myinsureFragment).commit();
                         fragmentManager.beginTransaction().hide(homeFragment).commit();
                         fragmentManager.beginTransaction().show(settingFragment).commit();
+                        mTitleTextView.setText("설정");
                         break;
                 }
                 return true;
             }
         });
+
+
+        ImageButton backButton = (ImageButton) mCustomView.findViewById(R.id.btnBack);
+        backButton.setVisibility(View.INVISIBLE);
+
+        actionBar.setCustomView(mCustomView);
+
+
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.argb(255,255,255,255)));
+
     }
 }

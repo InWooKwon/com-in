@@ -28,7 +28,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/font2"
                     android:gravity="center"
-                    android:text="HOT보험"
+                    android:text="최근 인기 보험"
                     android:textSize="20dp"></TextView>
 
                 <HorizontalScrollView
