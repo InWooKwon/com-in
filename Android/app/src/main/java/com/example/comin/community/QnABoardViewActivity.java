@@ -123,7 +123,7 @@ public class QnABoardViewActivity extends AppCompatActivity {
         Map<String,Object> insimage=new HashMap<>();
         insimage.put("메리츠",R.drawable.meritz);
         insimage.put("삼성화재",R.drawable.samsungfire);
-        insimage.put("동부화재",R.drawable.dongbufire);
+        insimage.put("동부화재",R.drawable.dbsonhae);
 
         LinearLayout taglayer = (LinearLayout)findViewById(R.id.taglayer);
         final RelativeLayout rl = (RelativeLayout) getLayoutInflater().inflate(R.layout.tagpannel, null);

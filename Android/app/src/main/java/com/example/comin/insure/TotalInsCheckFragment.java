@@ -268,6 +268,7 @@ public class TotalInsCheckFragment extends Fragment {
                     selectType = "전체보기";
                     sortType = "정렬";
 
+                    Log.d("cover123","!111");
                     //받은 json형식의 응답을 받아
                     JSONObject jsonResponse = new JSONObject(response.toString());
 
@@ -287,6 +288,7 @@ public class TotalInsCheckFragment extends Fragment {
 
                         Insurance insurance = new Insurance();
 
+                        Log.d("cover123","!111");
                         insurance.setIdx(insuranceObject.getInt("idx"));
                         insurance.setProductName((insuranceObject.getString("productName")));
                         insurance.setCompany(insuranceObject.getString("company"));
@@ -322,14 +324,10 @@ public class TotalInsCheckFragment extends Fragment {
                         Insurance ins = insuranceMap.get(boardObject.getInt("tag1"));
                         ins.setReviewCount(ins.getReviewCount() + 1);
                     }
-                    Log.d("cover11", "1111");
+                    Log.d("cover123", "1111");
 
                     cs = (Spinner)getView().findViewById(R.id.companSpinner);
                     ArrayList<String> companyList = new ArrayList<>(companySet);
-                    for(String stt : companySet)
-                    {
-                        Log.d("cover123",stt);
-                    }
                     ArrayAdapter<String> companyAdapter = new ArrayAdapter<>(getActivity().getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,companyList);
                     cs.setAdapter(companyAdapter);
                     cs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -493,18 +491,8 @@ public class TotalInsCheckFragment extends Fragment {
         type.setText(ins.getProductType());
         TextView name = (TextView) rl.findViewById(R.id.insName);
         name.setText(ins.getProductName());
-
         ImageView image = (ImageView)  rl.findViewById(R.id.companyImage);
-
-        //TODO :  추후 추가 필요
-        if(ins.getCompany().equals("메리츠"))
-            image.setImageResource(R.drawable.meritz);
-        else if(ins.getCompany().equals("삼성화재"))
-            image.setImageResource(R.drawable.samsughj);
-        else if(ins.getCompany().equals("동부화재"))
-            image.setImageResource(R.drawable.dongbuhj);
-        else if(ins.getCompany().equals("동부"))
-            image.setImageResource(R.drawable.dongbu);
+        image.setImageResource(getCompanyImageId(ins.getCompany()));
 
         TextView reviewCount = (TextView) rl.findViewById(R.id.reviewNum);
         reviewCount.setText("(" + Integer.toString(ins.getReviewCount()) + ")");
@@ -537,5 +525,95 @@ public class TotalInsCheckFragment extends Fragment {
 
 
         linear.addView(rl);
+    }
+    public int getCompanyImageId(String company)
+    {
+        if (company.equals("교보라이프플래닛생명"))
+        {
+            return R.drawable.kyobolife;
+        }
+        else if (company.equals("하나생명"))
+        {
+            return R.drawable.hanalife;
+
+        }
+        else if (company.equals("신한생명"))
+        {
+            return R.drawable.sinhanlife;
+        }
+        else if (company.equals("흥국생명"))
+        {
+            return R.drawable.heungkuk;
+        }
+        else if (company.equals("KDB생명"))
+        {
+            return R.drawable.kdblife;
+        }
+        else if (company.equals("라이나생명"))
+        {
+            return R.drawable.laina;
+        }
+        else if (company.equals("에이스손해보험"))
+        {
+            return R.drawable.ace;
+        }
+        else if (company.equals("DB손해보험"))
+        {
+            return R.drawable.dbsonhae;
+        }
+        else if (company.equals("동양생명"))
+        {
+            return R.drawable.dongyang;
+        }
+        else if (company.equals("삼성화재"))
+        {
+            return R.drawable.samsungfire;
+        }
+        else if (company.equals("MG손해보험"))
+        {
+            return R.drawable.mgsonhae;
+        }
+        else if (company.equals("KB손해보험"))
+        {
+            return R.drawable.kbsonhae;
+        }
+        else if (company.equals("한화생명"))
+        {
+            return R.drawable.hanalife;
+        }
+        else if (company.equals("미래에셋생명"))
+        {
+            return R.drawable.miraeasset;
+        }
+        else if (company.equals("한화손해보험"))
+        {
+            return R.drawable.hanhwasonhae;
+        }
+        else if (company.equals("NH농협손해보험"))
+        {
+            return R.drawable.nhsonhae;
+        }
+        else if (company.equals("삼성생명"))
+        {
+            return R.drawable.samsunglife;
+        }
+        else if (company.equals("AIG"))
+        {
+            return R.drawable.aig;
+        }
+        else if (company.equals("롯데손해보험"))
+        {
+            return R.drawable.lottesonhae;
+        }
+        else if (company.equals("현대해상"))
+        {
+            return R.drawable.hyundae;
+        }
+        else if (company.equals("메리츠화재"))
+        {
+            return R.drawable.meritz;
+        }
+        else
+            return -1;
     }
 }
