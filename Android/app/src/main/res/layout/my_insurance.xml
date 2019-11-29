@@ -15,7 +15,7 @@
 
     <LinearLayout
         android:id="@+id/mynameLayout"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:layout_marginTop="15dp"
         android:layout_toRightOf="@id/mycompany"
@@ -26,6 +26,7 @@
             android:layout_width="100dp"
             android:layout_height="30dp"
             android:gravity="center"
+            android:fontFamily="@font/font2"
             android:text="보험타입"
             android:textSize="15dp" />
 
@@ -33,9 +34,10 @@
             android:id="@+id/myinsName"
             android:layout_width="100dp"
             android:layout_height="70dp"
+            android:fontFamily="@font/font2"
             android:gravity="center"
             android:text="보험이름"
-            android:textSize="20dp" />
+            android:textSize="14sp" />
 
     </LinearLayout>
 
@@ -47,6 +49,8 @@
         android:layout_height="30dp"
         android:layout_toRightOf="@id/mynameLayout"
         android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        android:fontFamily="@font/font2"
         android:gravity="center"
         android:text="보험료" />
 
@@ -56,6 +60,8 @@
         android:layout_height="70dp"
         android:layout_below="@id/myprice"
         android:layout_toRightOf="@id/mynameLayout"
+        android:fontFamily="@font/font2"
+        android:layout_gravity="center"
         android:gravity="center"
         android:text="보험 설명" />
 

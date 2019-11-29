@@ -52,13 +52,5 @@ router.get('/:idx',function(req,res_client,next){
     });
 });
 
-// 출처: https://devnauts.tistory.com/95 [devnauts]
-
-
-
-
-
-
-
 
 module.exports = router;

@@ -2,6 +2,7 @@ package com.example.comin.setting;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -119,7 +120,7 @@ public class SettingFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), RecentInsureActivity.class);
                 startActivity(intent);
-              
+
             }
         });
 

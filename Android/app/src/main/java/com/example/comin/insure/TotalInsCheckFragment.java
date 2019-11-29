@@ -115,6 +115,7 @@ public class TotalInsCheckFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_total_ins_check, container, false);
 
+
         linear = v.findViewById(R.id.linearLayout);
 
         sv = v.findViewById(R.id.searchView);
