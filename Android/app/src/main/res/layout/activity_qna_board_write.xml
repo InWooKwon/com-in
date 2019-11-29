@@ -60,6 +60,7 @@
                 android:layout_marginTop="13dp"
                 android:ems="10"
                 android:inputType="textPersonName"
+                android:fontFamily="@font/font2"
                 android:text="title" />
 
             <EditText
@@ -67,6 +68,7 @@
                 android:layout_width="399dp"
                 android:layout_height="274dp"
                 android:layout_marginTop="13dp"
+                android:fontFamily="@font/font2"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:text="body" />

@@ -18,6 +18,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="@font/font2"
         tools:text="회원 정보 수정을 위해, 아이디 및 비밀번호 입력을 다시 한번 해주십시오. " />
 
     <EditText
@@ -28,6 +29,7 @@
         android:ems="10"
         android:hint="아이디"
         android:inputType="textPersonName"
+        android:fontFamily="@font/font2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -39,6 +41,7 @@
         android:layout_marginTop="27dp"
         android:ems="10"
         android:hint="비밀번호"
+        android:fontFamily="@font/font2"
         android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="@+id/idText"
         app:layout_constraintTop_toBottomOf="@+id/idText" />
@@ -48,6 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
+        android:fontFamily="@font/font2"
         android:layout_marginTop="28dp"
         android:text="확인"
         app:layout_constraintHorizontal_chainStyle="packed"

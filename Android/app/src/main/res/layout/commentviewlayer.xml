@@ -11,6 +11,7 @@
         android:id="@+id/commentbody"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/font2"
         android:text="TextView" />
 
     <TextView
@@ -18,6 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/commentbody"
+        android:fontFamily="@font/font2"
         android:text="TextView" />
 
     <ImageButton
@@ -26,6 +28,7 @@
         android:layout_height="43dp"
         android:layout_below="@id/commentbody"
         android:layout_alignParentRight="true"
+        android:fontFamily="@font/font2"
         app:srcCompat="@drawable/deletebtn" />
 
 </RelativeLayout>

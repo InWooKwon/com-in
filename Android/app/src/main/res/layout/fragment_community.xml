@@ -24,6 +24,7 @@
                     android:id="@+id/reviewboardtitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/font2"
                     android:text="후기 게시판"
                     android:textSize="40dp" />
 
@@ -32,6 +33,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/reviewboardtitle"
+                    android:fontFamily="@font/font2"
                     android:text="더보기" />
 
                 <LinearLayout
@@ -39,6 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/reviewboardtitle"
+                    android:fontFamily="@font/font2"
                     android:orientation="vertical" />
             </RelativeLayout>
 
@@ -49,6 +52,7 @@
                 <TextView
                     android:id="@+id/qnaboardtitle"
                     android:layout_width="wrap_content"
+                    android:fontFamily="@font/font2"
                     android:layout_height="wrap_content"
                     android:text="질문 게시판"
                     android:textSize="40dp" />
@@ -57,6 +61,7 @@
                     android:id="@+id/qnabtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/font2"
                     android:layout_toRightOf="@id/qnaboardtitle"
                     android:text="더보기" />
 
@@ -75,6 +80,7 @@
                 <TextView
                     android:id="@+id/freeboardtitle"
                     android:layout_width="wrap_content"
+                    android:fontFamily="@font/font2"
                     android:layout_height="wrap_content"
                     android:text="자유 게시판"
                     android:textSize="40dp" />
@@ -83,6 +89,7 @@
                     android:id="@+id/freebtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/font2"
                     android:layout_toRightOf="@id/freeboardtitle"
                     android:text="더보기" />
 

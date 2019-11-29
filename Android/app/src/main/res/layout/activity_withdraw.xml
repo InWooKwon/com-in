@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="114dp"
         android:layout_marginEnd="7dp"
+        android:fontFamily="@font/font2"
         android:text="회원 탈퇴를 위해, 아이디 및 비밀번호 입력을 다시 한번 해주십시오. "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,6 +25,7 @@
         android:ems="10"
         android:hint="아이디"
         android:inputType="textPersonName"
+        android:fontFamily="@font/font2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -33,6 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/font2"
         android:ems="10"
         android:hint="비밀번호"
         android:inputType="textPassword"
@@ -42,6 +45,7 @@
     <Button
         android:id="@+id/withdrawButton"
         android:layout_width="wrap_content"
+        android:fontFamily="@font/font2"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="1dp"

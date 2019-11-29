@@ -9,6 +9,7 @@
         android:id="@+id/tagname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/font2"
         android:inputType="textPersonName"
         android:layout_margin="20dp"
         android:text="" />
@@ -26,6 +27,7 @@
             <ListView
                 android:id="@+id/taglistview"
                 android:layout_width="match_parent"
+                android:fontFamily="@font/font2"
                 android:layout_height="200dp"
                 android:divider="@null"
                 android:dividerHeight="10dp"></ListView>

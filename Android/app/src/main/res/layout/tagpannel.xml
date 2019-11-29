@@ -11,6 +11,7 @@
         android:id="@+id/tagname"
         android:layout_width="60dp"
         android:layout_height="50dp"
+        android:fontFamily="@font/font2"
         android:text="" />
 
 </RelativeLayout>
