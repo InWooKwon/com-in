@@ -130,13 +130,17 @@ public class withdrawActivity extends AppCompatActivity {
                     if (result) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(withdrawActivity.this);
                         builder.setMessage("회원 탈퇴에 성공하셨습니다.")
-                                .setPositiveButton("확인", null)
+                                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        user.clearUserName(withdrawActivity.this);
+                                        Intent intent = new Intent(withdrawActivity.this, LoginActivity.class);
+                                        finish();
+                                        intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                        startActivity(intent);
+                                    }
+                                })
                                 .create()
                                 .show();
-                        user.clearUserName(withdrawActivity.this);
-                        Intent intent = new Intent(withdrawActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        finish();
 
                         Log.d("test","withdraw success");
                     } else {

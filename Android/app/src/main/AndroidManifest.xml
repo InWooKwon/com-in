@@ -38,14 +38,17 @@
         <activity android:name=".community.FreeBoardActivity" />
         <activity android:name=".community.QnABoardActivity" />
         <activity android:name=".community.ReviewBoardActivity" />
-        <activity android:name=".login.LoginActivity" />
+        <activity android:name=".login.RegisterActivity"/>
+        <activity android:name=".login.LoginActivity" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity android:name=".insure.InfoDetailActivity" />
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <service android:name="setting.MessagingService">

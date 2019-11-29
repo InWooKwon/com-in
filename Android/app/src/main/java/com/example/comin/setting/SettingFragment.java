@@ -89,9 +89,11 @@ public class SettingFragment extends Fragment {
             public void onClick(View v) {
                 user.clearUserName(getActivity().getApplicationContext());
                 Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
                 getActivity().overridePendingTransition(0,0);
                 getActivity().finish();
+                intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
+
             }
         });
 
