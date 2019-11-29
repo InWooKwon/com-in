@@ -96,7 +96,8 @@ public class RecentInsureActivity extends AppCompatActivity {
 
 
                         recentLayout = findViewById(R.id.recentLayout1);
-                        recentLayout.addView(hotLayout);
+                        recentLayout.addView(tv);
+                        recentLayout.addView(iv);
 
 
                     } catch (Exception e) {
@@ -145,7 +146,9 @@ public class RecentInsureActivity extends AppCompatActivity {
 
 
                         recentLayout = findViewById(R.id.recentLayout2);
-                        recentLayout.addView(hotLayout);
+                        recentLayout.addView(tv);
+                        recentLayout.addView(iv);
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -188,7 +191,9 @@ public class RecentInsureActivity extends AppCompatActivity {
 
 
                         recentLayout = findViewById(R.id.recentLayout3);
-                        recentLayout.addView(hotLayout);
+                        recentLayout.addView(tv);
+                        recentLayout.addView(iv);
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -233,7 +238,9 @@ public class RecentInsureActivity extends AppCompatActivity {
 
 
                         recentLayout = findViewById(R.id.recentLayout4);
-                        recentLayout.addView(hotLayout);
+                        recentLayout.addView(tv);
+                        recentLayout.addView(iv);
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -278,7 +285,9 @@ public class RecentInsureActivity extends AppCompatActivity {
 
 
                         recentLayout = findViewById(R.id.recentLayout5);
-                        recentLayout.addView(hotLayout);
+                        recentLayout.addView(tv);
+                        recentLayout.addView(iv);
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

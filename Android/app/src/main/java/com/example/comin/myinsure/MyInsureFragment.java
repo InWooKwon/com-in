@@ -254,11 +254,19 @@ public class MyInsureFragment extends Fragment {
 
         ImageView companyImage = rl.findViewById(R.id.mycompany);
         //TODO : 이미지추가 후 맞게 수정
-        companyImage.setImageResource(R.drawable.meritz);
+        companyImage.setImageResource(R.drawable.samsunglife);
 
         TextView type = (TextView) rl.findViewById(R.id.myinsType);
 
-        type.setText(insType);
+
+
+        if(insName.equals("무)삼성생명미니암보험")){
+            type.setText("암보험");
+        }
+        else{
+            type.setText("일반보험");
+        }
+
         TextView name = (TextView) rl.findViewById(R.id.myinsName);
         name.setText(insName);
 
