@@ -11,7 +11,7 @@
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/darker_gray">
+        android:background="@android:color/white">
 
         <LinearLayout
             android:id="@+id/linearLayout4"
@@ -37,6 +37,7 @@
                     android:layout_height="100dp"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:fontFamily="@font/font1"
                     android:text="보험이름"
                     android:textSize="30dp" />
             </LinearLayout>
@@ -46,6 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:fontFamily="@font/font2"
                 android:text="약관"
                 android:textSize="15dp" />
 
@@ -54,6 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
+                android:fontFamily="@font/font2"
                 android:text="후기 게시판 가기"
                 android:textSize="10dp" />
 

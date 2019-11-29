@@ -43,7 +43,10 @@ public class HomeFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private LinearLayout linear;
+    private LinearLayout linear1;
+    private LinearLayout linear2;
+    private LinearLayout linear3;
+    private LinearLayout linear4;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -87,8 +90,14 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_home, container, false);
-        linear = v.findViewById(R.id.homelinearLayout);
+        linear1 = v.findViewById(R.id.homelinearLayout1);
         getHotInsuranceList();
+        linear2 = v.findViewById(R.id.homelinearLayout2);
+        getAgeInsuranceList(1);
+        linear3 = v.findViewById(R.id.homelinearLayout3);
+        getAgeInsuranceList(2);
+        linear4 = v.findViewById(R.id.homelinearLayout4);
+        getAgeInsuranceList(3);
 
         return v;
     }
@@ -151,18 +160,6 @@ public class HomeFragment extends Fragment {
                         LinearLayout hotLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.hotinsure, null);
                         JSONObject hotinsObject = hotinsArray.getJSONObject(i);
 
-                        ImageView hotImage = hotLayout.findViewById(R.id.hot);
-                        if(i==0)
-                            hotImage.setImageResource(R.drawable.hot1);
-                        else if(i==1)
-                            hotImage.setImageResource(R.drawable.hot2);
-                        else if (i==2)
-                            hotImage.setImageResource(R.drawable.hot3);
-                        else if (i==3)
-                            hotImage.setImageResource(R.drawable.hot4);
-                        else if (i==4)
-                            hotImage.setImageResource(R.drawable.hot5);
-
                         ImageView imageView = hotLayout.findViewById(R.id.hotCompany);
                         imageView.setImageResource(getCompanyImageId(hotinsObject.getString("company")));
                         TextView textView = hotLayout.findViewById(R.id.hotName);
@@ -172,7 +169,9 @@ public class HomeFragment extends Fragment {
                         layoutParams.setMargins(0, 0,0, 25);
                         hotLayout.setLayoutParams(layoutParams);
 
-                        linear.addView(hotLayout);
+                        linear1.addView(hotLayout);
+
+
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -188,6 +187,59 @@ public class HomeFragment extends Fragment {
         });
         jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(jsonObjectRequest);
+    }
+
+    public void getAgeInsuranceList(int i){
+            //전송
+            final RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+            final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getString(R.string.URL) + "insurances/hot/"+Integer.toString(i),null, new Response.Listener<JSONObject>() {
+
+                //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        //받은 json형식의 응답을 받아
+                        JSONObject jsonResponse = new JSONObject(response.toString());
+
+                        //key값에 따라 value값을 쪼개 받아옵니다.
+                        JSONArray hotinsArray = jsonResponse.getJSONArray("hotInsurances");
+                        for (int i = 0; i<hotinsArray.length(); i++) {
+                            LinearLayout hotLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.hotinsure, null);
+                            JSONObject hotinsObject = hotinsArray.getJSONObject(i);
+
+
+                            ImageView imageView = hotLayout.findViewById(R.id.hotCompany);
+                            imageView.setImageResource(getCompanyImageId(hotinsObject.getString("company")));
+                            TextView textView = hotLayout.findViewById(R.id.hotName);
+                            textView.setText(hotinsObject.getString("productName"));
+
+                            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            layoutParams.setMargins(0, 0,0, 25);
+                            hotLayout.setLayoutParams(layoutParams);
+                            if(i==1) {
+                                linear2.addView(hotLayout);
+                            }
+                            else if(i==2){
+                                linear3.addView(hotLayout);
+                            }
+                            else if(i==3){
+                                linear4.addView(hotLayout);
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다.
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("test",error.toString());
+                    error.printStackTrace();
+                }
+            });
+            jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            requestQueue.add(jsonObjectRequest);
     }
 
     public int getCompanyImageId(String company)

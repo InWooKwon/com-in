@@ -7,14 +7,130 @@
     tools:context=".HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/homelinearLayout"
-        android:layout_marginTop="50dp">
+        android:layout_height="match_parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/outline"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/hot보험"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font2"
+                    android:gravity="center"
+                    android:text="HOT보험"
+                    android:textSize="20dp"></TextView>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/homelinearLayout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/customborder"
+                    android:layout_below="@id/hot보험"
+                    android:layout_marginTop="50dp"
+                    android:orientation="horizontal" />
+                </HorizontalScrollView>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/twenty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font2"
+                    android:text="20대 HOT 보험"
+                    android:gravity="center"
+                    android:textSize="20dp"></TextView>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/homelinearLayout2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/twenty"
+                        android:background="@drawable/customborder"
+                        android:layout_marginTop="50dp"
+                        android:orientation="horizontal" />
+                </HorizontalScrollView>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/thirty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font2"
+                    android:text="30대 HOT 보험"
+                    android:gravity="center"
+                    android:textSize="20dp"></TextView>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/homelinearLayout3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/thirty"
+                        android:background="@drawable/customborder"
+                        android:layout_marginTop="50dp"
+                        android:orientation="horizontal" />
+                </HorizontalScrollView>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/forty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font2"
+                    android:text="40대 HOT 보험"
+                    android:gravity="center"
+                    android:textSize="20dp"></TextView>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/homelinearLayout4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/forty"
+                        android:background="@drawable/customborder"
+                        android:layout_marginTop="50dp"
+                        android:orientation="horizontal" />
+                </HorizontalScrollView>
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>
