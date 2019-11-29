@@ -28,6 +28,15 @@ router.get('/hot', function (req, res) {
     });
 });
 
+router.get('/ins/:insIdx', function (req, res) {
+    var insIdx = req.params.insIdx;
+    var qry = "SELECT productName, company FROM Insurance WHERE idx =" + Number(insIdx);
+    connection.query(qry, function (err, result, fields) {
+        var rst = {"recentIns" : result};
+        res.json(rst);
+    });
+});
+
 router.get('/:coverage', function (req, res) {
     var coverage = req.params.coverage;
     var qry = "SELECT * FROM COVERAGE WHERE insurance_idx =" + Number(coverage);

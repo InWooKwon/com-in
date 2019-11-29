@@ -2,12 +2,14 @@ package com.example.comin.insure;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -526,6 +528,46 @@ public class TotalInsCheckFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), InfoDetailActivity.class);
                 intent.putExtra("insurance", (Insurance)v.getTag());
+
+                Log.d("cover123", "11111");
+
+                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext()).edit();
+                int rv4 = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext()).getInt("recentView4", 0);
+                if(rv4 != 0)
+                {
+                    editor.putInt("recentView5", rv4);
+                    editor.commit();
+                }
+
+
+                editor = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext()).edit();
+
+                int rv3 = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext()).getInt("recentView3", 0);
+                if(rv3 != 0)
+                {
+                    editor.putInt("recentView4", rv3);
+                    editor.commit();
+                }
+
+                editor = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext()).edit();
+                int rv2 = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext()).getInt("recentView2", 0);
+                if(rv2 != 0)
+                {
+                    editor.putInt("recentView3", rv2);
+                    editor.commit();
+                }
+
+                editor = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext()).edit();
+                int rv1 = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext()).getInt("recentView1", 0);
+                if(rv1 != 0)
+                {Log.d("cover123", "11111");
+                    editor.putInt("recentView2", rv1);
+                    editor.commit();
+                }
+
+                editor = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext()).edit();
+                editor.putInt("recentView1", ((Insurance) v.getTag()).getIdx());
+                editor.commit();
                 startActivity(intent);
             }
         });
