@@ -8,9 +8,10 @@ CREATE TABLE `USER` (
   `birth` datetime NOT NULL,
   `email` varchar(32) NOT NULL,
   `phoneNumber` int(32) NOT NULL,
-  `authKey` int(32) NOT NULL,
+  `authKey` varchar(32) NOT NULL,
   PRIMARY KEY (`idx`)
 );
+
 #INSURANCE TABLE CREATE
 CREATE TABLE INSURANCE (
   idx INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,

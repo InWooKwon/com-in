@@ -105,8 +105,9 @@ public class MyInsureFragment extends Fragment {
 
         Log.d("test","myinsureFragment");
         linear = v.findViewById(R.id.linearLayout);
-        //getmyinsure();
+        getmyinsure();
 
+        /*
         insureName.add("보험명1");
         insureType.add("보험종류 1");
         insurePrice.add("1000000");
@@ -116,7 +117,7 @@ public class MyInsureFragment extends Fragment {
         insureType.add("보험종류 2");
         insurePrice.add("2000000");
         insureDescript.add("설명2");
-
+*/
         for(int i=0 ; i <insureName.size(); i++){
             addInsuranceInfoView(insureName.get(i), insureType.get(i), insurePrice.get(i), insureDescript.get(i));
             total_price=total_price+Integer.parseInt(insurePrice.get(i));
@@ -131,7 +132,6 @@ public class MyInsureFragment extends Fragment {
     public void getmyinsure(){
 
         //int idx = user.getUserIdx(MyInsureFragment.this);
-        int idx = 1;
 
             //JSONObject testjson = new JSONObject();
            // JSONObject input_object = new JSONObject();
@@ -139,9 +139,11 @@ public class MyInsureFragment extends Fragment {
            // String jsonString = testjson.toString(); //완성된 json 포맷
            // Log.d("test", jsonString);
 
+        String idx = Integer.toString(user.getUserIdx(getActivity().getApplicationContext()));
+
 
             final RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-            final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getString(R.string.URL)+"myinsure/"+Integer.toString(idx), null, new Response.Listener<JSONObject>() {
+            final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getString(R.string.URL)+"myinsure/"+idx, null, new Response.Listener<JSONObject>() {
 
                 //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
                 @Override

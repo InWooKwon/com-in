@@ -73,7 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
                     testjson.put("dup", "1");
 
                     if(userID.equals("")){
-                        setDup_nick_check("");
+                        setDup_id_check("");
                         AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                         builder.setMessage("아이디를 입력해주세요.")
                                 .setNegativeButton("다시시도", null)
@@ -214,7 +214,7 @@ public class RegisterActivity extends AppCompatActivity {
                     String userBirth = getUserBirth();
                     String userPhone = phoneText.getText().toString();
                     String userEmail = emailText.getText().toString();
-                    String userAuth = "12345";
+                    String userAuth = "aidbe124gAtrat10Tage";
 
 
                     if (userID.equals("") || userPassword.equals("") || userName.equals("") || userNick.equals("") || (userBirth.length()==0) || (userBirth == null) || userPhone.equals("") || userEmail.equals("")) {

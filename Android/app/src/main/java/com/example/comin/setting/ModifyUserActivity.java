@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,7 +33,6 @@ public class ModifyUserActivity extends AppCompatActivity {
     String email;
     boolean result;
 
-    String alert_message;
 
     User user = new User();
     @Override
@@ -47,7 +47,6 @@ public class ModifyUserActivity extends AppCompatActivity {
         final EditText pw_checkText = findViewById(R.id.pw_checkText);
         final EditText emailText = findViewById(R.id.emailText);
 
-        dup_nick_check="";
         Button check1Button = findViewById(R.id.check1);
         Button check2Button = findViewById(R.id.check2);
         Button check3Button = findViewById(R.id.check3);
@@ -56,15 +55,26 @@ public class ModifyUserActivity extends AppCompatActivity {
         pw="";
         pw_check="";
         email="";
-        alert_message="";
+
+        setDup_nick_check("");
 
         check1Button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
                 userNick=nickText.getText().toString();
+                Log.d("test","uesrNick :"+userNick);
 
                 //null 처리
-                if(userNick.length()!=0 || !(userNick.equals(""))){
+                if(userNick.length()==0 || userNick.equals("")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ModifyUserActivity.this);
+                    builder.setMessage("변경할 닉네임을 입력해주세요.")
+                            .setNegativeButton("다시시도", null)
+                            .create()
+                            .show();
+
+                }
+                else{
+
                     if(user.getUserNick(ModifyUserActivity.this).equals(userNick)){
                         AlertDialog.Builder builder = new AlertDialog.Builder(ModifyUserActivity.this);
                         builder.setMessage("현재 사용중인 닉네임입니다. 다시 시도해주세요.")
@@ -74,29 +84,24 @@ public class ModifyUserActivity extends AppCompatActivity {
 
                     }
                     else {
-                        if (userNick.equals(dup_nick_check)) {
+                        if (userNick.equals(getDup_nick_check())) {
                             if (request_modify(1, userNick)) {
+                                Log.d("test","succcess modify nickname");
                                 AlertDialog.Builder builder = new AlertDialog.Builder(ModifyUserActivity.this);
                                 builder.setMessage("닉네임 변경에 성공하였습니다.")
-                                        .setNegativeButton("확", null)
+                                        .setNegativeButton("확인", null)
                                         .create()
                                         .show();
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(ModifyUserActivity.this);
-                                builder.setMessage("닉네임 변경에 실하였습니다.")
+                                builder.setMessage("닉네임 변경에 실패하였습니다.")
                                         .setNegativeButton("다시시도", null)
                                         .create()
                                         .show();
                             }
                         }
                     }
-                }
-                else{
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ModifyUserActivity.this);
-                    builder.setMessage("변경할 닉네임을 입력해주세요.")
-                            .setNegativeButton("다시시도", null)
-                            .create()
-                            .show();
+
                 }
             }
         });
@@ -194,7 +199,7 @@ public class ModifyUserActivity extends AppCompatActivity {
                 JSONObject testjson = new JSONObject();
 
                 if(userNick.equals("")){
-
+                    setDup_nick_check("");
                     AlertDialog.Builder builder = new AlertDialog.Builder(ModifyUserActivity.this);
                     builder.setMessage("닉네임을 입력해주세요.")
                             .setNegativeButton("다시시도", null)
@@ -219,17 +224,19 @@ public class ModifyUserActivity extends AppCompatActivity {
                                     JSONObject jsonResponse = new JSONObject(response.toString());
 
                                     //key값에 따라 value값을 쪼개 받아옵니다.
-                                    Boolean result = jsonResponse.getBoolean("dup_nick");
+                                    Boolean result = jsonResponse.getBoolean("success");
+                                    Log.d("test","check dup"+String.valueOf(result));
 
-                                    if (!result) {
-                                        dup_nick_check=userNick;
+
+                                    if (result) {
+                                        setDup_nick_check(userNick);
                                         AlertDialog.Builder builder = new AlertDialog.Builder(ModifyUserActivity.this);
                                         builder.setMessage("사용가능한 닉네임 입니다.")
                                                 .setNegativeButton("확인", null)
                                                 .create()
                                                 .show();
                                     } else {
-                                        dup_nick_check="";
+                                        setDup_nick_check("");
                                         AlertDialog.Builder builder = new AlertDialog.Builder(ModifyUserActivity.this);
                                         builder.setMessage("중복된 닉네임 입니다.")
                                                 .setNegativeButton("다시 시도", null)
@@ -273,7 +280,7 @@ public class ModifyUserActivity extends AppCompatActivity {
 
             //전송
             final RequestQueue requestQueue = Volley.newRequestQueue(ModifyUserActivity.this);
-            final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, getString(R.string.URL) + "register/"+user.getUserIdx(ModifyUserActivity.this), testjson, new Response.Listener<JSONObject>() {
+            final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, getString(R.string.URL) + "register/"+Integer.toString(user.getUserIdx(ModifyUserActivity.this)), testjson, new Response.Listener<JSONObject>() {
 
                 //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
                 @Override
@@ -330,6 +337,14 @@ public class ModifyUserActivity extends AppCompatActivity {
                 return false;
             }
         }
+    }
+
+    public String getDup_nick_check() {
+        return dup_nick_check;
+    }
+
+    public void setDup_nick_check(String dup_nick_check) {
+        this.dup_nick_check = dup_nick_check;
     }
 
 }
