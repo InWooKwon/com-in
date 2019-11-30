@@ -134,8 +134,9 @@
 
             <EditText
                 android:id="@+id/commenttext"
-                android:layout_width="270dp"
+                android:layout_width="700dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:text="" />
