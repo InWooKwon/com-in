@@ -42,6 +42,7 @@ public class RecentInsureActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recent_insure);
 
 
+        Log.d("cpver123123","1111");
         ActionBar actionBar = getSupportActionBar();
 
         // Custom Actionbar를 사용하기 위해 CustomEnabled을 true 시키고 필요 없는 것은 false 시킨다
@@ -86,19 +87,22 @@ public class RecentInsureActivity extends AppCompatActivity {
                         JSONArray recentInsArray = jsonResponse.getJSONArray("recentIns");
                         JSONObject recentIns = recentInsArray.getJSONObject(0);
 
-                        Log.d("cover123", "2222");
+                        Log.d("cpver123123", "2222");
                         hotLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.hotinsurevertical, null);
 
                         TextView tv = hotLayout.findViewById(R.id.hotName);
                         tv.setText(recentIns.getString("productName"));
 
+                        Log.d("cpver123123", "2222");
                         ImageView iv = hotLayout.findViewById(R.id.hotCompany);
                         iv.setImageResource(getCompanyImageId(recentIns.getString("company")));
 
 
+                        Log.d("cpver123123", "2222");
                         recentLayout = findViewById(R.id.recentLayout1);
                         recentLayout.addView(hotLayout);
 
+                        Log.d("cpver123123", "2222");
 
                     } catch (Exception e) {
                         e.printStackTrace();

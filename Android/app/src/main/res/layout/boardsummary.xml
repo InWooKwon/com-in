@@ -8,38 +8,34 @@
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="139dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/font2"
+        android:layout_alignParentLeft="true"
         android:textSize="20dp" />
 
     <TextView
         android:id="@+id/time"
-        android:layout_width="149dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:fontFamily="@font/font2"
+        android:layout_alignParentRight="true"
         android:text="ttiimmee"
         android:textSize="20dp" />
 
+
     <TextView
         android:id="@+id/content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="13dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         android:fontFamily="@font/font2"
-        android:layout_below="@id/title"
+        android:layout_below="@id/ratingBar3"
         android:textSize="30dp" />
-
-
 
     <ImageView
         android:id="@+id/ddabong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="13dp"
         android:layout_below="@id/time"
         android:layout_toLeftOf="@id/ddabongcount"
         app:srcCompat="@drawable/ddabongoff" />
@@ -48,9 +44,7 @@
         android:id="@+id/ddabongcount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="9dp"
         android:fontFamily="@font/font2"
-        android:layout_marginTop="13dp"
         android:layout_below="@id/time"
         android:layout_alignParentRight="true"
         android:text="cnt"
@@ -58,27 +52,25 @@
 
     <RatingBar
         android:id="@+id/ratingBar3"
+        style="@style/Widget.AppCompat.RatingBar.Indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:isIndicator="true"
-        style="@style/Widget.AppCompat.RatingBar.Indicator"
-        android:layout_below="@id/ddabong"/>
+        android:layout_toLeftOf="@id/ddabong"
+        android:layout_below="@id/time"
+        android:isIndicator="true" />
 
     <ImageView
         android:id="@+id/insimg"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="13dp"
         android:layout_below="@id/content"
         android:layout_alignParentLeft="true" />
     <TextView
         android:id="@+id/insname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="27dp"
         android:layout_below="@id/content"
+        android:layout_marginTop="15dp"
         android:layout_toRightOf="@id/insimg"/>
 
 
