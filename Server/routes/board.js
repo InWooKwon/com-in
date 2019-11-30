@@ -48,7 +48,7 @@ var updatescore = function(tag) {
 
 //게시판 가져오기 
 router.get('/',function(req,res){
-    var qry="SELECT * FROM boardInfo";
+    var qry="SELECT * FROM boardInfo order by date desc;";
     connection.query(qry,function(err,rows,fields){
         if(err){
             console.log("error: getting in board");
@@ -67,6 +67,7 @@ router.get('/:boardidx/:useridx',function(req,res){
             console.log("error: getting in board");
         }
         var qry1="SELECT * FROM boardUp where boardIdx = "+boardidx+" and userIdx = "+useridx;
+        console.log("board get : "+boardidx+"     "+useridx);
         connection.query(qry1,function(err,check,fields){
             if(err){
                 console.log("error:getting in reply");
@@ -115,15 +116,6 @@ router.post('/up',function(req,res){
                 console.log("error");
             }
             else{
-                
-                if(rows.length>0) //이미존재
-                {
-                    console.log("already up");
-                    rst.success=false;
-                    res.json(rst);
-                }
-                else{ //올리기 가능
-                    //추천 가능일 경우 추천 테이블에 등록
                     var qry1="INSERT INTO boardUp (boardIdx, userIdx) values (\'"+index+"\',\'"+user+"\')"
                     connection.query(qry1,function(err,rows,fields){
                         
@@ -149,7 +141,6 @@ router.post('/up',function(req,res){
                             });       
                         }
                     });
-                }
             }
         });
 });
@@ -235,7 +226,7 @@ router.delete('/:idx',function(req,res){
 })
 
 //해당 개시글의 답글 불러오기
-router.get('/reply/:idx',function(req,res){
+router.get('/reply/reply/:idx',function(req,res){
     var idx=req.params.idx;
     var qry="SELECT * FROM replyInfo WHERE boardIdx ="+idx;
     console.log(qry);
@@ -329,8 +320,8 @@ router.post('/',function(req,res){
 
     if(type==1){
         //중복 확인 (같은 보험에 같은 유저인지)
-        var qry="SELECT * FROM boardInfo WHERE author = \'"+user+"\' AND type=1 "+"AND tag1= \'"+tag1+"\'";
-        var qry2="INSERT INTO boardInfo (type, title, score, body, date,author, tag1) values (1,\'"+title+"\',\'"+score+"\',\'"+content+"\',\'"+date+"\',\'"+user+"\',\'"+tag1+"\')";
+        var qry="SELECT * FROM boardInfo WHERE author = \'"+user+"\' AND type=1 "+"AND tag1= "+tag1+"";
+        var qry2="INSERT INTO boardInfo (type, title, score, body, date,author, tag1) values (1,\'"+title+"\',"+score+",\'"+content+"\',\'"+date+"\',\'"+user+"\',"+tag1+")";
         console.log(qry);
         console.log(qry2);
         connection.query(qry,function(err,rows,fields){

@@ -83,7 +83,6 @@ public class ReviewBoardWriteActivity extends AppCompatActivity {
 
         dialogList = new ArrayList<>();
         tempList = new ArrayList<>();
-        Log.d("test010101",Integer.toString(insuranceList.size()));
         for(Insurance ins:insuranceList){
 
             Map<String,Object> item = new HashMap<>();
@@ -108,6 +107,9 @@ public class ReviewBoardWriteActivity extends AppCompatActivity {
                 String posttitle = titletext.getText().toString();
                 String postbody = bodytext.getText().toString();
                 postQnABoard(posttitle,postbody);
+
+                Intent intent =new Intent(v.getContext(), ReviewBoardActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -217,7 +219,7 @@ public class ReviewBoardWriteActivity extends AppCompatActivity {
             User user=new User();
             postjson.put("title", posttitle);
             postjson.put("body", postbody);
-            postjson.put("type",2);
+            postjson.put("type",1);
             postjson.put("date", sdf.format(date));
             postjson.put("score",rate);
             postjson.put("author", user.getUserNick(ReviewBoardWriteActivity.this));

@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
@@ -57,7 +58,6 @@ public class ReviewBoardViewActivity extends AppCompatActivity {
 
         User user=new User();
         useridx=user.getUserIdx(ReviewBoardViewActivity.this);
-        Log.d("test22222",Integer.toString(useridx));
         final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getString(R.string.URL) + "board/"+Integer.toString(postIdx)+"/"+Integer.toString(useridx),null, new Response.Listener<JSONObject>() {
 
@@ -119,15 +119,19 @@ public class ReviewBoardViewActivity extends AppCompatActivity {
         ratingbar.setRating(rate);
 
         int tag1 = post.getTag1();
-
-
         LinearLayout taglayer = (LinearLayout)findViewById(R.id.taglayer);
         if(tag1 != 0){
-            RelativeLayout rl = (RelativeLayout) getLayoutInflater().inflate(R.layout.tagpannel, null);
-            String insname = insuranceList.get(tag1-1).getProductName();
-            TextView tagname = (TextView) rl.findViewById(R.id.tagname);
-            tagname.setText(insname);
-            taglayer.addView(rl);
+            ImageView insimg = (ImageView) findViewById(R.id.insimg);
+            TextView insname = (TextView)findViewById(R.id.insname);
+            for(int i=0;i<insuranceList.size();i++) {
+                Insurance ins=insuranceList.get(i);
+                if(ins.getIdx() == tag1) {
+                    String name = ins.getProductName();
+                    insimg.setImageResource(getCompanyImageId(ins.getCompany()));
+                    insname.setText(name);
+                    break;
+                }
+            }
         }
 
 
@@ -231,7 +235,7 @@ public class ReviewBoardViewActivity extends AppCompatActivity {
         commentview.removeAllViews();
 
         final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getString(R.string.URL) + "board/reply/" + Integer.toString(postIdx), null, new Response.Listener<JSONObject>() {
+        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, getString(R.string.URL) + "board/reply/reply/" + Integer.toString(postIdx), null, new Response.Listener<JSONObject>() {
 
             //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
             @Override

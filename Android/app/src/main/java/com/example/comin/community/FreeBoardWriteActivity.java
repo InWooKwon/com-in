@@ -2,6 +2,7 @@ package com.example.comin.community;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class FreeBoardWriteActivity extends AppCompatActivity {
@@ -41,7 +43,11 @@ public class FreeBoardWriteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String posttitle = titletext.getText().toString();
                 String postbody = bodytext.getText().toString();
+
                 postFreeBoard(posttitle,postbody);
+
+                Intent intent =new Intent(v.getContext(), FreeBoardActivity.class);
+                startActivity(intent);
             }
         });
     }

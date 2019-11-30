@@ -14,15 +14,6 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/myButton"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:gravity="center_horizontal|center_vertical"
-            android:fontFamily="@font/font2"
-            android:text="나의 활동"
-            android:textSize="24sp" />
-
-        <TextView
             android:id="@+id/recentButton"
             android:layout_width="match_parent"
             android:layout_height="70dp"
@@ -32,6 +23,19 @@
             android:textSize="24sp" />
 
 
+
+
+        <TextView
+            android:id="@+id/myButton"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:fontFamily="@font/font2"
+            android:text="나의 활동"
+            android:textSize="24sp" />
+
+
+
         <TextView
             android:id="@+id/alarmButton"
             android:layout_width="match_parent"
@@ -39,6 +43,16 @@
             android:gravity="center_horizontal|center_vertical"
             android:text="알림 설정"
             android:fontFamily="@font/font2"
+            android:textSize="24sp" />
+
+
+        <TextView
+            android:id="@+id/logoutButton"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:fontFamily="@font/font2"
+            android:text="로그아웃"
             android:textSize="24sp" />
 
         <TextView
@@ -51,15 +65,6 @@
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/logoutButton"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:gravity="center_horizontal|center_vertical"
-            android:fontFamily="@font/font2"
-            android:text="로그아웃"
-            android:textSize="24sp" />
-
-        <TextView
             android:id="@+id/withdrawButton"
             android:layout_width="match_parent"
             android:layout_height="70dp"
@@ -67,6 +72,7 @@
             android:fontFamily="@font/font2"
             android:text="회원 탈퇴"
             android:textSize="24sp" />
+
 
     </LinearLayout>
 </FrameLayout>

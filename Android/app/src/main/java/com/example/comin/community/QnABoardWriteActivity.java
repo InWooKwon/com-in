@@ -96,6 +96,9 @@ public class QnABoardWriteActivity extends AppCompatActivity {
                 String posttitle = titletext.getText().toString();
                 String postbody = bodytext.getText().toString();
                 postQnABoard(posttitle,postbody);
+
+                Intent intent =new Intent(v.getContext(), QnABoardActivity.class);
+                startActivity(intent);
             }
         });
 
